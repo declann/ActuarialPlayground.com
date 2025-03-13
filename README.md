@@ -14,10 +14,9 @@ Also includes testcases in [./test](./test), including static bundle build
 
 ## uses..
 
-- calculang standalone compiler in calculangs `all_cul` branch.
-- calcudata API from same branch
+- calculang standalone compiler in calculangs experimental branches
+- [calcudata](https://github.com/calculang/calculang/blob/f9535c01c2421b0422178ea02f658f1b066c6b45/packages/calcudata/src/index.js#L61) API providing output in arquero format
 
-## 
 
 ## calculang model
 
