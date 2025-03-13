@@ -1,0 +1,2572 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.2">
+<title>Actuarial Playground</title>
+
+<link rel="preload" as="style" href="./_import/layout-styles.ce936962.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.ea9fd553.css">
+<link rel="stylesheet" type="text/css" href="./_import/layout-styles.ce936962.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
+<link rel="modulepreload" href="./_observablehq/client.f2ac0650.js">
+<link rel="modulepreload" href="./_observablehq/runtime.e080113b.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.313a6eb4.js">
+<link rel="modulepreload" href="./_import/cookieconsent-config.88169085.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js">
+<link rel="modulepreload" href="./_import/components/editor.5cada004.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/declann/calculang-js-browser-dev@main/helpers.js">
+<link rel="modulepreload" href="./_import/components/calcuvegadata.e2cb9852.js">
+<link rel="modulepreload" href="./_import/components/Editor.21717d0b.js">
+<link rel="modulepreload" href="./_import/components/cashflows-visual.c73c1892.js">
+<link rel="modulepreload" href="./_npm/vega-embed@6.29.0/b38bc77c.js">
+<link rel="modulepreload" href="./_npm/lodash@4.17.21/0fff0f78.js">
+<link rel="modulepreload" href="./_npm/arquero@8.0.1/8362639c.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/45153d6c.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.c9e8879a.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/642f0d47.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js">
+<link rel="modulepreload" href="./_import/components/snippetarray.24a7d79f.js">
+<link rel="modulepreload" href="./_node/@codemirror/merge@6.6.3/index.00a37615.js">
+<link rel="modulepreload" href="./_node/codemirror@6.0.1/index.8b558dfc.js">
+<link rel="modulepreload" href="./_node/@codemirror/view@6.36.4/index.e009e95f.js">
+<link rel="modulepreload" href="./_node/@codemirror/search@6.5.10/index.2b663735.js">
+<link rel="modulepreload" href="./_node/@codemirror/autocomplete@6.18.6/index.14e525bc.js">
+<link rel="modulepreload" href="./_node/@codemirror/commands@6.8.0/index.a1b8f05d.js">
+<link rel="modulepreload" href="./_node/@codemirror/state@6.5.2/index.4cdf7d00.js">
+<link rel="modulepreload" href="./_node/@codemirror/lint@6.8.4/index.a1a0cc99.js">
+<link rel="modulepreload" href="./_node/eslint-linter-browserify@9.22.0/index.8eddfce0.js">
+<link rel="modulepreload" href="./_node/@codemirror/lang-javascript@6.2.3/index.75ce0233.js">
+<link rel="modulepreload" href="./_node/@codemirror/language@6.10.8/index.4544127e.js">
+<link rel="modulepreload" href="./_node/globals@15.15.0/index.5cb8aa48.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@f9535c0/packages/standalone/index.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@f9535c0/packages/standalone/pre_fetch.mjs">
+<link rel="modulepreload" href="./_node/@viz-js/viz@3.11.0/index.103b05db.js">
+<link rel="modulepreload" href="./_node/htl@0.3.1/index.0caf36e7.js">
+<link rel="modulepreload" href="./_node/codemirror-6-snippetbuilder@1.0.1/index.15716d65.js">
+<link rel="modulepreload" href="./_node/@observablehq/inspector@5.0.1/index.01e7abcd.js">
+<link rel="modulepreload" href="./_node/underscore@1.13.7/index.78a0bd44.js">
+<link rel="modulepreload" href="./_npm/@codemirror/lang-javascript@6.2.3/991176aa.js">
+<link rel="modulepreload" href="./_npm/@codemirror/view@6.36.4/9426135b.js">
+<link rel="modulepreload" href="./_npm/codemirror@6.0.1/d2aea0c6.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
+<link rel="modulepreload" href="./_npm/json-stringify-pretty-compact@4.0.0/4a32b471.js">
+<link rel="modulepreload" href="./_npm/vega@5.32.0/4a2a8742.js">
+<link rel="modulepreload" href="./_npm/vega-interpreter@1.2.0/f1b4a170.js">
+<link rel="modulepreload" href="./_npm/vega-lite@5.23.0/41a62d8c.js">
+<link rel="modulepreload" href="./_npm/vega-schema-url-parser@2.2.0/6d1d9021.js">
+<link rel="modulepreload" href="./_npm/vega-themes@2.15.0/c0f675a6.js">
+<link rel="modulepreload" href="./_npm/vega-tooltip@0.35.2/1eca8721.js">
+<link rel="modulepreload" href="./_npm/acorn@8.14.1/53fec404.js">
+<link rel="modulepreload" href="./_npm/@uwdata/flechette@1.1.2/619ee86d.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/37839b6a.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/bd0afa17.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/6495590f.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/84d7b8e9.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/2c0cdfa2.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/d496a3b3.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/00c41b5d.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/b5f7cdc6.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/ef06b1ff.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/9f467835.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/6f15f633.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/d9a18fcf.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/60bb70b3.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/33fb7288.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/5e427f4b.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/f1db2593.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/034b7bcb.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/4bb53638.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/bbafde58.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/aa5b35a8.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/32c7fec2.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/2bb2815a.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/b6952b03.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/a4e530fb.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/be692bd9.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/3a9ac1c1.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/28d1ef76.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/f31b5398.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/0c259fbf.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/da4a6ccc.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/a62ae5ce.js">
+<link rel="modulepreload" href="./_node/style-mod@4.1.2/index.988d93ad.js">
+<link rel="modulepreload" href="./_node/@lezer/highlight@1.2.1/index.4fa09a25.js">
+<link rel="modulepreload" href="./_node/w3c-keyname@2.2.8/index.91f4ec3f.js">
+<link rel="modulepreload" href="./_node/crelt@1.0.6/index.8ff6b95c.js">
+<link rel="modulepreload" href="./_node/@lezer/common@1.2.3/index.e8667b2c.js">
+<link rel="modulepreload" href="./_node/@marijn/find-cluster-break@1.0.2/index.530af2fc.js">
+<link rel="modulepreload" href="./_node/@lezer/javascript@1.4.21/index.047c6b82.js">
+<link rel="modulepreload" href="./_node/isoformat@0.2.1/index.0882e9d9.js">
+<link rel="modulepreload" href="./_npm/@lezer/javascript@1.4.21/643e70e5.js">
+<link rel="modulepreload" href="./_npm/@codemirror/language@6.10.8/b4bd8acc.js">
+<link rel="modulepreload" href="./_npm/@codemirror/state@6.5.2/fd9a338b.js">
+<link rel="modulepreload" href="./_npm/@codemirror/autocomplete@6.18.6/0d8c5bd0.js">
+<link rel="modulepreload" href="./_npm/@lezer/common@1.2.3/bacbf6df.js">
+<link rel="modulepreload" href="./_npm/style-mod@4.1.2/3a6bbeb2.js">
+<link rel="modulepreload" href="./_npm/w3c-keyname@2.2.8/a35b6c49.js">
+<link rel="modulepreload" href="./_npm/@codemirror/commands@6.8.0/390f2559.js">
+<link rel="modulepreload" href="./_npm/@codemirror/search@6.5.10/d2bad00e.js">
+<link rel="modulepreload" href="./_npm/@codemirror/lint@6.8.4/bfb3bd01.js">
+<link rel="modulepreload" href="./_npm/vega-util@1.17.3/dd61084b.js">
+<link rel="modulepreload" href="./_npm/vega-dataflow@5.7.7/6102b5d2.js">
+<link rel="modulepreload" href="./_npm/vega-transforms@4.12.1/34e7e583.js">
+<link rel="modulepreload" href="./_npm/vega-view-transforms@4.6.1/8c462fab.js">
+<link rel="modulepreload" href="./_npm/vega-encode@4.10.2/1a5046e7.js">
+<link rel="modulepreload" href="./_npm/vega-geo@4.4.3/741da21c.js">
+<link rel="modulepreload" href="./_npm/vega-force@4.2.2/eeb91a5b.js">
+<link rel="modulepreload" href="./_npm/vega-hierarchy@4.1.3/dbda9e61.js">
+<link rel="modulepreload" href="./_npm/vega-label@1.3.1/4f1351bf.js">
+<link rel="modulepreload" href="./_npm/vega-regression@1.3.1/e093afb1.js">
+<link rel="modulepreload" href="./_npm/vega-voronoi@4.2.4/73a8d998.js">
+<link rel="modulepreload" href="./_npm/vega-wordcloud@4.1.6/14b07f95.js">
+<link rel="modulepreload" href="./_npm/vega-crossfilter@4.1.3/3bfb9f82.js">
+<link rel="modulepreload" href="./_npm/vega-statistics@1.9.0/ff7c23dd.js">
+<link rel="modulepreload" href="./_npm/vega-time@2.1.3/cfafa99b.js">
+<link rel="modulepreload" href="./_npm/vega-loader@4.5.3/800e2fe1.js">
+<link rel="modulepreload" href="./_npm/vega-scenegraph@4.13.1/0b07131a.js">
+<link rel="modulepreload" href="./_npm/vega-scale@7.4.2/63535dbe.js">
+<link rel="modulepreload" href="./_npm/vega-projection@1.6.2/c4a86a0a.js">
+<link rel="modulepreload" href="./_npm/vega-view@5.15.0/54b99078.js">
+<link rel="modulepreload" href="./_npm/vega-format@1.1.3/ef5e879c.js">
+<link rel="modulepreload" href="./_npm/vega-functions@5.17.0/8890b916.js">
+<link rel="modulepreload" href="./_npm/vega-parser@6.5.0/2dd4dfb1.js">
+<link rel="modulepreload" href="./_npm/vega-runtime@6.2.1/f2b76662.js">
+<link rel="modulepreload" href="./_npm/vega-expression@5.2.0/c816e3cf.js">
+<link rel="modulepreload" href="./_npm/vega-event-selector@3.0.1/07d2b39d.js">
+<link rel="modulepreload" href="./_npm/vega-expression@5.1.2/787fb960.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/5eed35fd.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/e67acb27.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/1ee6c50d.js">
+<link rel="modulepreload" href="./_node/@lezer/lr@1.4.2/index.5cfd8e9f.js">
+<link rel="modulepreload" href="./_npm/@lezer/lr@1.4.2/5814ca63.js">
+<link rel="modulepreload" href="./_npm/@lezer/highlight@1.2.1/9712eddc.js">
+<link rel="modulepreload" href="./_npm/@marijn/find-cluster-break@1.0.2/71ab897a.js">
+<link rel="modulepreload" href="./_npm/crelt@1.0.6/ca891b8d.js">
+<link rel="modulepreload" href="./_npm/vega-canvas@1.2.7/6c089db6.js">
+<link rel="modulepreload" href="./_npm/topojson-client@3.1.0/80b9191e.js">
+<link rel="modulepreload" href="./_npm/d3-geo-projection@4.0.0/7b6cf8dd.js">
+<link rel="modulepreload" href="./_npm/vega-selections@5.6.0/30c882f5.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
+<meta property="og:title" content="Actuarial Playground">
+  <link href="./_file/thumb.711237bb.png">
+<meta property="og:image" content="https://actuarialplayground.com/_file/thumb.711237bb.png">
+<meta property="twitter:image" content="https://actuarialplayground.com/_file/thumb.711237bb.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Ctext%20y=%22.9em%22%20font-size=%2290%22%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E">
+  <meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.css">
+    
+<script type="module">
+
+import {define} from "./_observablehq/client.f2ac0650.js";
+import {registerFile} from "./_observablehq/stdlib.313a6eb4.js";
+
+registerFile("./cul/basicterm-tables.cul.js", {"name":"./cul/basicterm-tables.cul.js","mimeType":"text/javascript","path":"./_file/cul/basicterm-tables.cul.b51f60f8.js","lastModified":1741868846896,"size":30991});
+registerFile("./cul/basicterm.cul.js", {"name":"./cul/basicterm.cul.js","mimeType":"text/javascript","path":"./_file/cul/basicterm.cul.d3d17af7.js","lastModified":1741868846896,"size":9154});
+registerFile("./cul/playground.cul.js", {"name":"./cul/playground.cul.js","mimeType":"text/javascript","path":"./_file/cul/playground.cul.c4844d5b.js","lastModified":1741868846933,"size":6341});
+
+define({id: "5173d93c", body: () => {
+/*const watcher = window.matchMedia("(max-width: 768px) and (orientation: landscape)")
+
+const orientation = Mutable(!watcher.matches ? "portrait" : "landscape")
+
+watcher.addEventListener("change", e => {
+  orientation.value = watcher.matches ? "portrait" : "landscape"
+})*/
+}});
+
+define({id: "4aa931f4", inputs: ["Mutable"], outputs: ["orientation_condition","orientation"], body: (Mutable) => {
+// FUT: just set width and height as conditions on inner dims ??
+const orientation_condition = () => (window.innerWidth > window.innerHeight*1.2) && window.innerWidth < 1370 ? "landscape" : "portrait"
+
+const orientation = Mutable(orientation_condition())
+
+window.addEventListener("resize", e => {
+  orientation.value = orientation_condition()
+})
+return {orientation_condition,orientation};
+}});
+
+define({id: "f7cb2530", inputs: ["Mutable"], outputs: ["countCursorChgs","incCursorChgs"], body: (Mutable) => {
+const countCursorChgs = Mutable(-4) // 4 on init already ! (many setCursor calls). This makes it start at 0
+
+function incCursorChgs() { countCursorChgs.value = countCursorChgs.value+1 }
+return {countCursorChgs,incCursorChgs};
+}});
+
+define({id: "c170cff6", inputs: ["Mutable"], outputs: ["cursor_count_1","cursor_count_3","cursor_count_20","cursor_count_50","cursor_count_100","hit_cursor_count_1","hit_cursor_count_3","hit_cursor_count_20","hit_cursor_count_50","hit_cursor_count_100"], body: (Mutable) => {
+const cursor_count_1 = Mutable(false)
+const cursor_count_3 = Mutable(false)
+const cursor_count_20 = Mutable(false)
+const cursor_count_50 = Mutable(false)
+const cursor_count_100 = Mutable(false)
+
+function hit_cursor_count_1() { cursor_count_1.value = true }
+function hit_cursor_count_3() { cursor_count_3.value = true }
+function hit_cursor_count_20() { cursor_count_20.value = true }
+function hit_cursor_count_50() { cursor_count_50.value = true }
+function hit_cursor_count_100() { cursor_count_100.value = true }
+return {cursor_count_1,cursor_count_3,cursor_count_20,cursor_count_50,cursor_count_100,hit_cursor_count_1,hit_cursor_count_3,hit_cursor_count_20,hit_cursor_count_50,hit_cursor_count_100};
+}});
+
+define({id: "5f11f447", inputs: ["cursor","incCursorChgs"], body: (cursor,incCursorChgs) => {
+cursor;
+incCursorChgs(cursor)
+}});
+
+define({id: "53fc66d8", inputs: ["countCursorChgs","cursor_count_1","hit_cursor_count_1","cursor_count_20","hit_cursor_count_20","cursor_count_50","hit_cursor_count_50","cursor_count_100","hit_cursor_count_100"], body: (countCursorChgs,cursor_count_1,hit_cursor_count_1,cursor_count_20,hit_cursor_count_20,cursor_count_50,hit_cursor_count_50,cursor_count_100,hit_cursor_count_100) => {
+if (window.plausible) {
+  if (countCursorChgs >= 1 && (!cursor_count_1)) {
+    window.plausible('cursor_count', {props: {cursor_count: 1}})
+    hit_cursor_count_1()
+  }
+  /*if (countCursorChgs >= 3 && (!cursor_count_3)) {
+    window.plausible('cursor_count', {props: {cursor_count: 3}})
+    hit_cursor_count_3()
+  }*/
+  if (countCursorChgs >= 20 && (!cursor_count_20)) {
+    window.plausible('cursor_count', {props: {cursor_count: 20}})
+    hit_cursor_count_20()
+  }
+  if (countCursorChgs >= 50 && (!cursor_count_50)) {
+    window.plausible('cursor_count', {props: {cursor_count: 50}})
+    hit_cursor_count_50()
+  }
+  if (countCursorChgs >= 100 && (!cursor_count_100)) {
+    window.plausible('cursor_count', {props: {cursor_count: 100}})
+    hit_cursor_count_100()
+  }
+}
+}});
+
+define({id: "9b338291", inputs: ["display","html","graphdisplay","stresses_changed","lapse_rate_changed"], body: (display,html,graphdisplay,stresses_changed,lapse_rate_changed) => {
+display(html`
+<style>
+.graphs {
+  display: ${graphdisplay ? "block" : "none"}
+}
+div#checkbox {
+  background: ${(stresses_changed >0) ? "#aaa4" : "none"};
+  border-radius: 2px;
+  font-size: smaller;
+  color:darkblue;
+  padding:1px 1px;
+  cursor: pointer;
+  /*color: red; text-decoration: underline;*/ margin-left: 1em;
+  display:inline-block
+}
+div#checkbox2 {
+  background: ${(lapse_rate_changed) ? "#aaa4" : "none"};
+  border-radius: 2px;
+  font-size: smaller;
+  color:purple;
+  padding: 1px 1px;
+  cursor: pointer;
+  /*color: red; text-decoration: underline;*/ margin-left: 1em;
+  display:inline-block;
+  
+}
+</style>
+`);
+}});
+
+define({id: "97a7f78f", inputs: ["setCursor","update_pricing_lapse_rates_in","discounting_on_in","age_at_entry_in","sex_in","policy_term_in","sum_assured_in","mort_rate_factor_in","lapse_rate_factor_in","t_in"], body: (setCursor,update_pricing_lapse_rates_in,discounting_on_in,age_at_entry_in,sex_in,policy_term_in,sum_assured_in,mort_rate_factor_in,lapse_rate_factor_in,t_in) => {
+setCursor({//...cursor0,
+update_pricing_lapse_rates_in,
+original_lapse_rates_in: null, // errors in selection_fn if i dont have every input, as entire cursor used
+  data_version_in: 0, // how to support this varying with one big setCursor?
+  zero_decrement_experience_in: true,
+discounting_on_in: discounting_on_in,
+policy_count_in: 1,
+timing_in: 'BEF_NB',
+age_at_entry_in: age_at_entry_in,
+sex_in: sex_in,
+policy_term_in: policy_term_in,
+sum_assured_in: sum_assured_in,
+//duration_mth_in: duration_mth_in,
+mort_rate_factor_in: mort_rate_factor_in,
+lapse_rate_factor_in: lapse_rate_factor_in,
+//stress_delay_in: 0,
+t_in: t_in,
+/*expense_acq_in: 300, // draggables can't be set in this cell like this
+expense_maint_in: 60,
+inflation_rate_in: 0.01,
+expenses_factor_in: 1,
+inflation_rate_addition_in: 0,
+loading_prem_in: 0.5,*/
+//gender_neutral_pricing_in,
+});
+}});
+
+define({id: "93679b0e", inputs: ["setCursor"], body: (setCursor) => {
+setCursor({stress_delay_in:0});
+}});
+
+define({id: "5d4f5ce3", inputs: ["cfs_viz","cursor"], body: (cfs_viz,cursor) => {
+cfs_viz.view.signal('marker', cursor.stress_delay_in);
+}});
+
+define({id: "6878a743", inputs: ["cfs_viz","width"], body: (cfs_viz,width) => {
+cfs_viz.view.signal('w', width).run();
+}});
+
+define({id: "1a4fef63", inputs: ["setCursor"], outputs: ["expenses_commissions_defaults"], body: (setCursor) => {
+const expenses_commissions_defaults = ({expense_acq_in: 300,expense_maint_in: 60,inflation_rate_in: 0.02,commission_pc_in: 50,commission_mths_in: 12})
+
+setCursor(expenses_commissions_defaults);
+return {expenses_commissions_defaults};
+}});
+
+define({id: "33f8a615", inputs: ["setCursor"], body: (setCursor) => {
+setCursor({expenses_factor_in: 1,inflation_rate_addition_in: 0, mort_rate_Y1_add_per_mille_in:0});
+}});
+
+define({id: "c7de186e", outputs: ["stress_defaults"], body: () => {
+const stress_defaults = ({expenses_factor_in: 1,inflation_rate_addition_in: 0, mort_rate_factor_in: 1,
+lapse_rate_factor_in: 1,stress_delay_in: 0, mort_rate_Y1_add_per_mille_in: 0});
+return {stress_defaults};
+}});
+
+define({id: "a88afc6f", inputs: ["setCursor"], body: (setCursor) => {
+setCursor({
+duration_mth_in:0,
+//loading_prem_in: 0.5,
+});
+}});
+
+define({id: "5374cb6a", inputs: ["setFormula"], body: (setFormula) => {
+setFormula('pv_fut_net_cf');
+}});
+
+define({id: "d053194b", inputs: ["fmt_default","d3"], outputs: ["fmt_default_1","fmt"], body: (fmt_default,d3) => {
+const fmt_default_1 = fmt_default
+
+function fmt(formula, v) {
+  if (typeof(v) == 'boolean') return v
+  //if (formula.includes('original_lapse_rates')) return v ? true : false
+  if (formula.includes('premium_due')) return v ? true : false
+  if (formula.includes('_term')) return v + ' Years'
+  if (formula.includes('_table')) return "[table]"
+  if (formula.includes('net_cf') || formula.includes('pv_')) return d3.format(',.2f')(v)
+  if (formula.includes('exp') && !formula.includes('factor')) return '€ ' + d3.format(',.2s')(v)
+  if (formula.includes('_mth') && !formula.includes('inflation_rate')) return v + ' months'
+  if (formula == 't') return `month ${v}`
+  if (formula.includes('delay')) return `${v} mth delay`
+  if (formula.includes('rate_addition') || formula.includes('loading_prem')) return d3.format(',.1%')(v)
+  if (formula == 'duration') return `year ${v}`
+  if (formula.includes('premium_pp')) return '€ ' + d3.format(',.2f')(v) // 4 places to be able to show rounding eff
+  if (formula == 'expense_acq_in' || formula == 'expense_maint_in') return '€ ' + d3.format(',.2f')(v);
+  if (formula == 'sum_assured' || formula == 'claim_pp') return '€ ' + d3.format(',.2s')(v);
+  if (formula.includes('premium_rate_per_mille')) return '€ ' + d3.format(',.4f')(v) + ' per mille SA';
+  if (formula == 'mort_rate_Y1_add_per_mille') return d3.format(',.2f')(v) + ' per mille';
+  if (formula == 'inflation_rate') return d3.format(',.1%')(v)
+  if (formula == 'loading_prem') return d3.format(',.0%')(v)
+  if (formula.includes('_rate') && !formula.includes('delay')&& !formula.includes('mth')&& !formula.includes('factor')) return d3.format(',.3%')(v)
+  if (formula.includes('factor')) return d3.format(',.0%')(v)
+  if (formula.includes('_rate') && formula.includes('mth')) return d3.format(',.5%')(v)
+  if (formula == 'duration_mth') return v + ' months'
+  if (formula.includes('_pc')) return v + "%"
+  if (typeof v == "string") return v
+  if (typeof v == 'boolean') return v ? 'true' : 'false'
+  if (formula.includes('pols')) return d3.format(',.5f')(v)
+  if (Math.abs(v) > 1) return d3.format(',.2f')(v)
+  return d3.format(fmt_default_1)(v)
+  //return v
+}
+return {fmt_default_1,fmt};
+}});
+
+define({id: "9f72019d", inputs: ["compilations"], outputs: ["getIntrospection","compile_new","bundleIntoOne","packageCalculang_new","calls_fromDefinition","compiled"], body: async (compilations) => {
+const {introspection: getIntrospection, compile_new, bundleIntoOne, packageCalculang_new, calls_fromDefinition} = await import("https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js");
+ //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//"https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js"
+
+
+const compiled = compilations
+
+//const esm = compiled[0]
+return {getIntrospection,compile_new,bundleIntoOne,packageCalculang_new,calls_fromDefinition,compiled};
+}});
+
+define({id: "6261cc11", outputs: ["scrollIntoViewOpts"], body: () => {
+const scrollIntoViewOpts = {behaviour:'smooth', block:'center'}
+
+return {scrollIntoViewOpts};
+}});
+
+define({id: "4eb21f17", inputs: ["display","html","formulae_hidden"], body: (display,html,formulae_hidden) => {
+display(html`<style>
+
+/*.vega-embed {
+  width: 100%;
+  height: 100%;
+}*/
+  
+  .answer {
+    color: blue !important;
+    font-weight: bold;
+    font-size: 1.2em !important;
+    left: 80px !important;
+    top: 6px;
+}
+  .answer .tooltiptext  {
+    /*border: 2px dashed black;*/
+    background: #af5;
+    padding: 0px 5px;
+    border-radius: 10px;
+    border: 1px solid darkgreen;
+  
+  }
+
+  .answer .tooltiptext::after {
+    /*color: red;*/
+    border: none;
+  }
+  
+.answer:hover {
+  /*font-size:2em !important;*/
+}
+  
+  
+
+pre {
+  line-height: 25px;
+}
+
+.calculang_tooltip {
+  color: red;
+  position: relative;
+
+}
+
+.tooltiptext {
+  position: absolute;
+  bottom: calc(100% - 1em);
+  left: anchor(center);
+  transform: translateX(-50%);
+  width: max-content;
+  font-size:smaller;
+
+ background-color:rgb(100 202 255 / 5%);/*background color and opacity together*/
+    font-weight: bold;
+  border: none; /*1px solid lightgrey;*/
+  /*padding: 4px;*/
+  border-radius:5px;
+  /*overflow-wrap: break-word*/
+  text-wrap: nowrap;
+
+}
+
+.tooltiptext {
+  /*cursor: zoom-in;*/
+}
+
+
+.calculang_tooltip.answer .tooltiptext {
+  bottom: 0;
+} 
+
+calculang_tooltip.answer {
+    background-color: lightorange;
+}
+
+
+pre {
+  cursor:default
+}
+  </style>
+  `)
+
+display(html`<style></style>` ?? html`<style>/* DN DISABLED NAVIGATION STYLES */
+
+.inputs {
+  padding: 20px;
+}
+
+button.btn {
+  background-color: antiquewhite;
+  color: blue;
+  padding:0;
+}
+
+.calculang {
+  line-height: 40px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+  
+}
+div.calculang.cm-line:has(span.calculang_title) {
+  margin-top:20px;
+}
+
+.calculang.calculang_overwritten { /* not getting picked up ? */
+  text-decoration: line-through;
+  font-weight: bold;
+}
+
+${formulae_hidden.length ? `.calculang {
+    background: #aaf3;
+}` : ''}
+
+
+${formulae_hidden.map(d => `.calculang_f_${d} + .calculang_f_${d}`).join(', ')} {
+  filter: blur(7px);
+  line-height: 5px;
+  opacity: 0.5;
+} /* + selector to exclude first! https://coderwall.com/p/uugurw/css-selector-trick-select-all-elements-except-the-first */
+${formulae_hidden.map(d => `.calculang_f_${d}`).join(', ')} {
+  opacity: 0.5;
+  background: white;
+}${formulae_hidden.map(d => `.calculang_f_${d} .calculang_tooltip`).join(', ')} {
+  opacity: 0.1;
+  background: white;
+}
+${formulae_hidden.map(d => `.calculang_f_${d} > .calculang_title`).join(', ')} {
+  background-color: lightgreen;
+  font-size: 0.5em;
+}
+
+
+
+.tooltiptext {/* not all tooltiptexts go under a calculang call span! (single-length ones dont) */
+  /*color: red;*/
+  font-weight: bold;
+
+}
+
+.calculang .calculang_title span {
+  padding: 3px;
+  background: #af54;
+  font-size: 1.5em;
+  font-weight: bold;
+  border: 1px solid grey;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+
+}
+</style>
+`)
+}});
+
+define({id: "e1710d9d", outputs: ["optimize_perf"], body: () => {
+const optimize_perf = true // when flipping this, add sourcemap stuff:
+
+/*
+import { SourceMapConsumer } from 'npm:source-map-js';
+
+const map = new SourceMapConsumer(esm.map);
+
+
+
+
+const maps = compiled.map(d => d.map)
+const mapsc = maps.map(d => new SourceMapConsumer(d))
+*/
+return {optimize_perf};
+}});
+
+define({id: "c30192c7", outputs: ["maps","mapsc"], body: () => {
+const maps = [] // set as empty while optimize_perf = true
+const mapsc = [] // 
+return {maps,mapsc};
+}});
+
+define({id: "3d60f677", inputs: ["optimize_perf","calls_fromDefinition","introspection","mapsc","maps","compiled","cursor","model"], outputs: ["calls_annotations"], body: (optimize_perf,calls_fromDefinition,introspection,mapsc,maps,compiled,cursor,model) => {
+
+// AMAZING THIS ENTIRE THING RUNS ON CURSOR CHANGE (update: conditioning on optimize_perf): NOT JUST THE selection_fn
+// THIS MUST EXPLAIN A LOT OF SLOWNESS AND CONSOLE ERRORS
+// CAN I USE inputs FROM cul_input_map?
+// AND REMOVE THIS DEPENDENCY?
+const calls_annotations = optimize_perf ? [] :
+  calls_fromDefinition(introspection).filter(d => d.reason == 'call' && d.from != '0_undefined')
+  .map (d => ({...d, cul_scope_id: +d.from/*from/to are consistent due to bringing everything into common scope*/.split('_')[0], name: d.from.split('_').slice(1).join('_')}))
+        .map((d) => ({
+        ...d,
+        mjs_loc: {
+          start: mapsc[d.cul_scope_id].generatedPositionFor({
+            ...d.loc.start,
+            source: maps[d.cul_scope_id].sources[0] //`${only_entrypoint_no_cul_js}-nomemo.cul.js` // todo update !
+          }),
+          end: mapsc[d.cul_scope_id].generatedPositionFor({
+            ...d.loc.end,
+            source: maps[d.cul_scope_id].sources[0] //`${only_entrypoint_no_cul_js}-nomemo.cul.js`
+          })
+        }
+      }))
+      .map((d) => ({
+        ...d,
+        mjs: compiled[d.cul_scope_id].code
+          .split("\n")
+        [d.mjs_loc.start.line - 1].substring(
+          d.mjs_loc.start.column,
+          d.mjs_loc.end.column
+        )
+      })) // assuming completely on one line
+      .map(d => ({...d, mjs: d.mjs.slice(-1) == ')' ? d.mjs : d.mjs+')'}))/*issue for simple-loan final call for some reason??*/
+      //.map(d => ({...d, mjs: `s${d.cul_scope_id}_${d.mjs}`}))
+       .map(d => {
+//         if (!(CONFIG.USE_HIGHLIGHTING || 0)) return d;
+//         //return d; I did stop this for some reason? DOESNT WORK FOR LIFE
+//debugger
+   const selection_fn = new Function("model", "{"+Object.keys(cursor).join(",")+"}", `Object.assign(window, model); try { return ({value:s${d.fromDefinition}${d.mjs.slice(d.name.length)}, cursor: ${d.mjs.slice(d.from.length-2)}}) } catch(e) { console.error('trap2', e)}`) // using hacky way to get cursor, for calculang-at-fosdem I used babel: `is` function
+  return {...d, ...selection_fn(model, cursor)} // try important due to cursor often not setup initially (e.g. awaiting)
+ })
+return {calls_annotations};
+}});
+
+define({id: "4f994313", inputs: ["introspection","optimize_perf","model","cursor"], outputs: ["run_renamed_fns","fns_annotations"], body: (introspection,optimize_perf,model,cursor) => {
+//console.log('fns_annotations1')
+
+const run_renamed_fns = true // more important for showing workings; Actuarial Playground doesn't. Mitigates some console errors for s1_pv_fut_pols_if_ sometimes
+
+
+//debugger
+const fns_annotations = [...introspection.cul_functions.values()].filter(d => (optimize_perf == false) || ([/* todo prepend the class that fn_annots updates so that i can easier search for them for this optimization */"status", "premium_pp_0", "premium_rate_per_mille", "sum_assured", "duration_mth", "expense_acq", "expense_maint", "commission_pc", "commission_mths", "inflation_rate", "stress_delay", "mort_rate_Y1_add_per_mille", "expenses_factor", "inflation_rate_addition", "loading_prem"].includes(d.name))).filter(
+        (d) =>
+          d.reason == "definition" || (d.reason == 'definition (renamed)' && run_renamed_fns) /*&&
+          d.cul_scope_id == cul_scope_id*/
+      )
+      .map(d => {
+        //if (d.name == 'leftness') debugger;
+        //debugger;
+        const dd = {...d}
+        //debugger;
+        dd.inputs = [...introspection.cul_input_map.get(d.cul_scope_id+'_'+d.name)]
+
+        // I don't call model[]() directly because the cursor wouldn't be the actual cursor the code calls (we must evaluate cursor changes like {t_in:t()-1} )
+        const selection_fn = new Function("model", "{"+dd.inputs.join(",")+"}", `Object.assign(window, model); try { return s${dd.cul_scope_id}_${d.name}({${dd.inputs.join(",")}}) } catch(e) { console.error('trap', e) }`)
+
+        dd.v = selection_fn(model, cursor)
+
+        return dd //return selection_fn(model, c)
+      })
+
+window.fns_annotations = fns_annotations;
+return {run_renamed_fns,fns_annotations};
+}});
+
+define({id: "be911e62", body: () => {
+
+// F9-eval? see https://www.youtube.com/watch?v=uXUd_-xrycs&t=2s
+//const selection_start = map.generatedPositionFor({...selection.from, source:"unknown"})
+//const selection_end = map.generatedPositionFor({...selection.to, source:"unknown"})
+
+//const esm_split = esm.code.split('\n')
+}});
+
+define({id: "aec11181", inputs: ["introspection","formulae_visible"], outputs: ["formulae_all","formulae_hidden"], body: (introspection,formulae_visible) => {
+const formulae_all = [...introspection.cul_functions.values()].filter(d => d.reason == 'definition').map(d => d.name)
+
+const formulae_hidden = formulae_all.filter((d) => !formulae_visible.includes(d))
+
+
+return {formulae_all,formulae_hidden};
+}});
+
+define({id: "9f48d6d9", inputs: ["fns_annotations","fmt"], body: (fns_annotations,fmt) => {
+/*cul_scope_id;
+console.log('CUL SCOPE ID', cul_scope_id); // 
+*/
+
+//console.log('fns_annotations')
+
+// DOM not updated at this point in scope change !!
+fns_annotations.forEach((d,i) => {
+  // error => breaks follow ups
+  if (0) { // TEMP Answers instead of tooltips
+  if (document.getElementById(d.name)) // TODO replace with fmt?
+  document.getElementById(d.name).innerHTML = JSON.stringify(d.v) /*d3.format(',.2f')(d.v)*/ + "<div class='cm-tooltip-arrow' />"
+  }
+  else {
+    //debugger;
+    let e = document.getElementById('a-'+i)
+    if (e)
+    e.textContent = fmt(d.name, d.v)//fmt(v);
+  }
+});
+}});
+
+define({id: "e496edd6", inputs: ["calls_annotations","fmt"], body: (calls_annotations,fmt) => {
+window.calls_annotations = calls_annotations;
+
+calls_annotations.forEach((d, i) => {
+  // error => breaks follow ups
+  if (document.getElementById('w-'+i))
+  document.getElementById('w-'+i).textContent = fmt(/*d.from.split('_').slice(1).join('_')*/d.name, d.value)//JSON.stringify(d.v) /*d3.format(',.2f')(d.v)*/ + "<div class='cm-tooltip-arrow' />"
+});
+}});
+
+define({id: "761f902b", inputs: ["cursor0"], outputs: ["cursor"], body: (cursor0) => {
+const cursor = {...cursor0} // TODO add extra when I do reactive
+
+window.cursor = cursor
+return {cursor};
+}});
+
+define({id: "ea592580", inputs: ["view","Inputs"], outputs: ["fmt_default","actions"], body: (view,Inputs) => {
+const fmt_default = view(Inputs.text({value:",.4f", label: 'fallback format string (if used)'}))
+const actions = view(Inputs.toggle({label:'vega actions', value: false}))
+return {fmt_default,actions};
+}});
+
+define({id: "3c980f01", inputs: ["display","html"], outputs: ["tabs"], body: (display,html) => {
+const tabs = true;
+
+display(html`
+<style>
+${tabs && `#tabs-container input[type="radio"]:checked + label + .tab {
+  display: block;
+}
+#tabs-container .tab {
+  display: none;
+}
+#tabs-container .tab {
+  order: 1;
+}
+#tabs-container {
+  flex-wrap: wrap;
+}
+
+`}
+</style>
+`)
+return {tabs};
+}});
+
+define({id: "bafa6f85", inputs: ["Mutable"], outputs: ["cursor0","setCursor"], body: (Mutable) => {
+const cursor0 = Mutable({}) // every input should be in, but with what values?
+
+const setCursor = (o) => {
+  let new_cursor = {...cursor0.value}
+  //if (k == 'ray_angle_in') debugger;
+  //if (k == 'keys_stream_function_in') debugger;
+  Object.entries(o).forEach(([k,v]) => {
+  new_cursor[k] = v;
+  })
+  cursor0.value = {...new_cursor}
+}
+return {cursor0,setCursor};
+}});
+
+define({id: "a76371a0", inputs: ["Mutable"], outputs: ["formula","setFormula"], body: (Mutable) => {
+const formula = Mutable("")
+
+const setFormula = (v) => {
+  formula.value = v
+}
+return {formula,setFormula};
+}});
+
+define({id: "3cde0bcd", inputs: ["Mutable","default_fs","setModel","setIntrospection","setCompilations","setCursor","setFormula","fmt","display"], outputs: ["ab","selection","formulae_visible","hover","set_formulae_visible","set_hover","x"], body: async (Mutable,default_fs,setModel,setIntrospection,setCompilations,setCursor,setFormula,fmt,display) => {
+const {ab} = await import("./_import/components/editor.5cada004.js");
+
+const selection = Mutable({from:{line:1,column:1}, to:{line:1,column:2}})
+
+
+const formulae_visible = Mutable([]); // chg to all ? formulae_all
+const hover = Mutable(""); // chg to all ? formulae_all
+
+function set_formulae_visible (d) {
+  formulae_visible.value = [...d]
+}
+
+function set_hover (d) {
+  hover.value = d
+}
+
+
+const x = ab({entrypoint: 'playground.cul.js', defaultFS: default_fs /* optimisation: somehow this vs placeholder= 800ms in babel script (bottom up) vs 1600ms */, setModel, setIntrospection, setCompilations,
+              set_formulae_visible, set_hover,
+              setCursor,
+              setFormula, fmt})
+
+display(x)
+return {ab,selection,formulae_visible,hover,set_formulae_visible,set_hover,x};
+}});
+
+define({id: "897dde68", outputs: ["calcuvizspec","calcuvegadata"], body: async () => {
+const [{calcuvizspec}, {calcuvegadata}] = await Promise.all([import("https://cdn.jsdelivr.net/gh/declann/calculang-js-browser-dev@main/helpers.js"), import("./_import/components/calcuvegadata.e2cb9852.js")]);
+
+
+
+
+return {calcuvizspec,calcuvegadata};
+}});
+
+define({id: "5fa6d536", body: () => {
+//x.compile();
+//await x.setScope(0);
+}});
+
+define({id: "8bc0671c", inputs: ["Mutable"], outputs: ["model","old_model","setModel"], body: (Mutable) => {
+const model = Mutable({});
+const old_model = Mutable({});
+
+function setModel(v) {
+  old_model.value = model.value;
+  model.value = v;
+}
+return {model,old_model,setModel};
+}});
+
+define({id: "db8bcf1f", inputs: ["Mutable"], outputs: ["compilations","setCompilations"], body: (Mutable) => {
+const compilations = Mutable([]);
+
+function setCompilations(v) {
+  compilations.value = [...v];
+}
+return {compilations,setCompilations};
+}});
+
+define({id: "c2aa7f0b", inputs: ["Mutable"], outputs: ["introspection","setIntrospection"], body: (Mutable) => {
+const introspection = Mutable({});
+
+function setIntrospection(v) {
+  introspection.value = v;
+}
+return {introspection,setIntrospection};
+}});
+
+define({id: "ce062e90", body: () => {
+//echos;
+
+// wrap echoed source code by details tag
+// this causes problems in FF mobile??
+/*document.querySelectorAll('.observablehq-pre-container:has(> pre[data-language="js"])').forEach(el => {
+  // no echos on dev server:
+  if (window.location.origin.includes('127.0.0.1')) {
+    el.remove();
+    return;
+  }
+  let wrapper = document.createElement('details');
+  wrapper.className = 'code'
+  let summary = document.createElement('summary')
+  summary.textContent = "code 👀"
+  wrapper.appendChild(summary)
+  el.parentNode.insertBefore(wrapper, el);
+  wrapper.appendChild(el);
+});*/
+}});
+
+define({id: "9bf51115", inputs: ["introspection"], outputs: ["inputs","formulae","formulae_not_inputs"], body: (introspection) => {
+// these need more thought in a modular world
+// or i am overthinking it
+const inputs = [...introspection.cul_functions.values()].filter(d => d.reason == 'input definition' /* Breaks show demand curve && d.cul_scope_id == 0*/).map(d => d.name).sort()
+
+//display(Object.values(introspection.cul_functions))
+//display([...introspection.cul_functions.values()])
+
+const formulae = [...introspection.cul_functions.values()].filter(d => d.reason == 'definition').map(d => d.name)
+
+
+const formulae_not_inputs = [...introspection.cul_functions.values()].filter(d => d.reason == 'definition' && inputs.indexOf(d.name+'_in') == -1).map(d => d.name)
+//display(formulae_not_inputs)
+
+
+
+return {inputs,formulae,formulae_not_inputs};
+}});
+
+define({id: "36850588", body: () => {
+window.dragged = false;
+}});
+
+define({id: "d11a4aba", inputs: ["fmt","setCursor"], outputs: ["draggable_input","clamp","makeDraggable"], body: (fmt,setCursor) => {
+function draggable_input({input, value=13, step=1}) {
+  const ff = input//.slice(0,-3)
+  const el = document.createElement('span')
+  el.type = "number"
+  el.value = value
+  el.dataset.value = value
+  el.textContent = fmt(ff.slice(0,-3), value)
+  el.pattern = "[0-9]+"
+  el.classList.add('input-scrubbable-number')
+  el.classList.add('f')
+  el.classList.add('input')
+  el.classList.add(ff)
+  el.oninput = (e) => {
+    //setCursor(f, input.valueAsNumber)
+    set(+el.dataset.value)
+    console.log(e)
+  }
+
+  function set(v) {
+    //debugger
+    ///setCursor(f, v)
+    value = v
+  }
+
+  let state = {
+    eventToCoordinates(event) { return {x: event.clientX, y: event.clientY}; },
+    dragging: null,
+    get pos() {//debugger
+        return {x: /*el.dataset.value*/window.cursor[input]/* this covers when an input appears twice: dont reset when the dragged one is switched *//step ?? 0, y: 0};
+    },
+    set pos(p) { 
+        if (!window.dragged) {
+          if (window.plausible) window.plausible('dragged')
+          window.dragged = true
+        }
+        // This is a constrained drag that ignores the
+        // y value. The x value gets turned into the
+        // number.
+        //el.value = el.valueAsNumber = Math.round(clamp(p.x, 0, 1000));
+        el.dataset.value = /*Math.round(*//*p.dx*step+p.oldx*/Math.max(p.x*step,0)//)//Math.round(clamp(p.x, 0, 1000));
+        // when zoomed out, the x change is fractional. For integer steps we usually don't want this, and should round instead
+        el.textContent = fmt(ff.slice(0,-3), Number.isInteger(step) ? Math.round(el.dataset.value) : el.dataset.value)
+    },
+  }
+  makeDraggable(state, el, step, input);
+
+
+  return Object.defineProperty(el, "value", {get: () => value, set});
+}
+
+function clamp(x, lo, hi) { return x < lo ? lo : x > hi ? hi : x; }
+
+function makeDraggable(state, el, step, input) {
+    // from https://www.redblobgames.com/making-of/draggable/
+    function start(event) {
+        if (event.button !== 0) return; // left button only
+        let {x, y} = state.eventToCoordinates(event);
+        state.dragging = {dx: state.pos.x - x, dy: state.pos.y - y};
+        el.setPointerCapture(event.pointerId);
+        event.stopPropagation()
+        event.preventDefault()
+    }
+
+    function end(_event) {
+        state.dragging = null;
+        _event.stopImmediatePropagation();
+        _event.stopPropagation()
+        _event.preventDefault()
+    }
+
+    function move(event) {
+        if (!state.dragging) return;
+        let {x, y} = state.eventToCoordinates(event);
+        state.pos = {x: x + state.dragging.dx, y: y + state.dragging.dy, dx: state.dragging.dx, oldx:x, state};
+        setCursor({[input]: Number.isInteger(step) ? (Math.round(+el.dataset.value)) : (+el.dataset.value)})
+        //setCursor(input, Number.isInteger(step) ? (Math.round(+el.dataset.value)) : (+el.dataset.value))
+        event.stopPropagation()
+        event.preventDefault()
+    }
+
+    el.addEventListener('pointerdown', start);
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+    el.addEventListener('pointermove', move)
+    el.addEventListener('touchstart', (e) => {e.preventDefault(); e.stopPropagation});
+
+    // add these to stop collapsing details when inside <summary>
+    el.addEventListener('click', function(event) {
+      event.stopPropagation();
+      event.preventDefault();
+    });
+    el.addEventListener('mousedown', function(event) {
+      event.stopPropagation();
+    });
+
+}
+return {draggable_input,clamp,makeDraggable};
+}});
+
+define({id: "399234be", inputs: ["fns_annotations","fmt"], body: (fns_annotations,fmt) => {
+//console.log('fns_annotations2')
+
+//debugger
+
+/*document.querySelectorAll('.tablet_cost').forEach(d => {
+  d.textContent = model.tablet_cost(cursor) + Math.random()
+  })*/
+fns_annotations.forEach(d => {
+  document.querySelectorAll('.'+d.name + ', .' + d.name+'_in').forEach(e => {
+    //if (e.textContent != fmt(d.name, d.v)) { // LOST PRECISION for this comparison.....
+    if (e.dataset.v != d.v) { // bad comparison?
+      if (e.classList.contains('f')) { // flash off for workings because on code change all flash
+        e.classList.remove('introduce')
+        e.classList.remove('introduce-negative')
+        e.classList.remove('introduce-neutral')
+        e.focus()
+      
+
+      //if ((d.v - e.dataset.v) < -0.00001) e.classList.add('introduce-negative')
+      const impact = d.v - e.dataset.v
+      if (impact > 0.0000001) e.classList.add('introduce')
+      else if (impact < 0.0000001) e.classList.add('introduce-negative')
+      else e.classList.add('introduce-neutral') // neutral because d. pop impact on gigs
+      }
+
+      e.textContent = fmt(d.name,d.v)
+      e.dataset.v = d.v
+      e.value = d.v
+    }
+  })
+});
+
+}});
+
+define({id: "96ed5b9b", inputs: ["Mutable"], outputs: ["option","setOption"], body: (Mutable) => {
+const option = Mutable(13)
+function setOption(v) {
+  option.value = v
+}
+return {option,setOption};
+}});
+
+define({id: "8aef1dae", inputs: ["introspection"], outputs: ["show_renamed_fns","formulae2"], body: (introspection) => {
+const show_renamed_fns = true
+const formulae2 = [...introspection.cul_functions.values()].filter(
+        (d) =>
+          d.reason == "definition" || (d.reason == 'definition (renamed)' && show_renamed_fns) /*&&
+          d.cul_scope_id == cul_scope_id*/
+      ).map(d => 's' + d.cul_scope_id + '_' + d.name)//model['s' + d.cul_scope_id + '_' + d.name](cursor))
+      .sort()
+return {show_renamed_fns,formulae2};
+}});
+
+define({id: "451db9cf", inputs: ["view","Inputs","formulae2"], outputs: ["f"], body: (view,Inputs,formulae2) => {
+const f = view(Inputs.select(formulae2.sort(), {label: 'ƒ', value: 's1_net_cf_' /* this does get run so setting off s0_aaa -> PV calcs */, width: 200})) // TODO keeps resetting on code edit
+return {f};
+}});
+
+define({id: "3949432b", inputs: ["_","model","cursor","f"], outputs: ["claim_pp"], body: (_,model,cursor,f) => {
+//const claim_pp = _.range(0,cursor.policy_term_in+1).map(d => model[f]({...cursor, t_in:d*12-cursor.duration_mth_in}))
+
+const claim_pp = _.range(0,model.proj_len(cursor)+1).map(d => model[f]({...cursor, t_in:d-cursor.duration_mth_in}))
+return {claim_pp};
+}});
+
+define({id: "c9bdec10", mode: "inline", inputs: ["claim_pp_spark","display"], body: async (claim_pp_spark,display) => {
+display(await(
+claim_pp_spark
+))
+}});
+
+define({id: "65dba875", inputs: ["Plot","claim_pp","d3"], outputs: ["claim_pp_spark"], body: (Plot,claim_pp,d3) => {
+const claim_pp_spark = Plot.plot({
+  height: 80,
+  width: 200,
+  marginBottom: 15,
+  marginTop: 15,
+  marginRight: 40,
+  marginLeft: 40,
+  y: {axis: null},
+  x: {axis: null},
+  //title:'claim_pp',
+  //y: {domain: [0,25], percent: true},
+  marks: [
+    //Plot.axisX({anchor: "bottom", label: 'duration (yrs)'}),
+    //Plot.axisY({anchor: "left", label: 'lapse_rate % p.a. (incl. applicable stress)'}),
+    Plot.lineY(claim_pp, {
+      stroke: 'purple',
+      curve: 'step-after',
+      strokeWidth: 3,
+      tip: {
+        format: {
+          x: true,
+          y: true,
+          y: d => d3.format(',.7f')(d)//d.toFixed(1) + '%'//d3.format(',.1%')(d)
+        },
+        stroke: 'transparent',
+      }
+    }),
+
+    Plot.ruleY([0], {stroke: 'black'})
+
+  ]
+})
+return {claim_pp_spark};
+}});
+
+define({id: "be010c47", inputs: ["html","stresses_changed","display"], body: async (html,stresses_changed,display) => {
+display(await(
+html`<style>
+#checkbox {
+  ${(stresses_changed >0) ? `animation-name: colours; 
+    animation-iteration-count: infinite;  
+    animation-duration: 6s;` : ""}
+}
+</style>`
+))
+}});
+
+define({id: "a00b67b4", inputs: ["html","display"], body: async (html,display) => {
+display(await(
+html`🚀 <a class="active-button plausible-event-name=Action+To+Tweeks" style="border-radius: 4px; padding: 1px" href="#action-tweeks" onclick=${(e) => {  e.preventDefault();
+  const element = document.querySelector('#action-tweeks');
+  const elementRect = element.getBoundingClientRect();
+  const absoluteElementTop = elementRect.top + window.scrollY;
+  const middle = absoluteElementTop - (window.innerHeight / 2);
+  window.scrollTo({
+    top: middle,
+    behavior: 'smooth'
+  })}}>Inspect and tweak <strong>model point</strong>, <strong>assumption</strong>, <strong>stress</strong> and <strong>pricing</strong> parameters below the visual ⬇️</a> 🔧`
+))
+}});
+
+define({id: "0b1052dd", mode: "inline", inputs: ["Inputs","html","show_summary_Input","display"], body: async (Inputs,html,show_summary_Input,display) => {
+display(await(
+Inputs.bind(html`<input style="margin-left:3.5em" type="checkbox">`, show_summary_Input)
+))
+}});
+
+define({id: "496195e7", inputs: ["html","Inputs","discounting_on_in_Input","display"], body: async (html,Inputs,discounting_on_in_Input,display) => {
+display(await(
+html`<span class="amount-option" style="-webkit-touch-callout: none; user-select: none; background-color:#e9faffad; border-radius:4px; padding: 2px 5px;"><label class="inlined"><strong style="cursor: pointer">Discount future cashflows? 📉</strong> ${Inputs.bind(html`<input type="checkbox">`, discounting_on_in_Input)}</label></span>`
+))
+}});
+
+define({id: "4f31e1a3", inputs: ["html","display"], body: async (html,display) => {
+display(await(
+html`📙 <span class="l l-premiums">Premiums</span> are a <button class="inlined"  onclick=${() => {    document.querySelectorAll(".concat_0_concat_0_layer_0_marks").forEach(e => {
+      e.firstChild.classList.remove('introduceOO')
+      e.firstChild.focus(); // force reflow? https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+      e.firstChild.classList.add('introduceOO')
+    })
+}} class="amount-option" style="-webkit-touch-callout: none; user-select: none; background-color: color-mix(in srgb, lightgreen 20%, transparent); border-radius:4px; padding: 2px 5px;">➕ cashflow</button> and <span class="l l-expenses">Expenses</span>, <span class="l l-commissions">Commissions</span>, and <span class="l l-claims">Claims</span> are <button onclick=${() => {    document.querySelectorAll(".concat_0_concat_0_layer_1_marks").forEach(e => {
+      e.firstChild.classList.remove('introduceO1')
+      e.firstChild.focus(); // force reflow? https://gist.github.com/paulirish/5d52fb081b3570c81e3a
+      e.firstChild.classList.add('introduceO1')
+    })
+}} class="amount-option inlined" style="-webkit-touch-callout: none; user-select: none; background-color: color-mix(in srgb, orange 20%, transparent); background-opacity:0.1; border-radius:4px; padding: 2px 5px;">➖ cashflows</button>`
+))
+}});
+
+define({id: "69a17583", body: () => {
+//const discounting_on_in = form[1]//view(Inputs.toggle({value:true, label:'Discount future cashflows?'}))
+}});
+
+define({id: "91d513f1", inputs: ["cfs_viz"], body: (cfs_viz) => {
+window.v = cfs_viz.view;
+}});
+
+define({id: "55fb0d58", inputs: ["cfs_viz","show_summary"], body: (cfs_viz,show_summary) => {
+  cfs_viz.view.signal('show_summary', show_summary).run(); // Am I duping on run?
+}});
+
+define({id: "94c78350", body: () => {
+// to inspect cache:
+//Object.keys(model.s1_pv_fut_premiums$m.cache)//
+}});
+
+define({id: "93a3e469", body: () => {
+//model.s1_pv_fut_premiums(cursor)
+}});
+
+define({id: "0b77a8aa", inputs: ["cfs_viz","stats"], body: (cfs_viz,stats) => {
+// ex PV calls here have a big drag on performance profile -
+// A lot of calcs already done in calcudata call, but not discounting which is slow interactively
+// (do sum on calcudata result Fast option?)
+
+cfs_viz.view.signal('pv_fut_net_cf_fut_A', /*model.pv_fut_net_cf({...cursor,t_in:0, mort_rate_factor_in:1, lapse_rate_factor_in:1,stress_delay_in:0, expenses_factor_in:1,mort_rate_Y1_add_per_mille_in:0, inflation_rate_addition_in:0})*/ stats.reduce( (a,v) => (a + ((v.future && (v.input_cursor_id == 0)) ? v.total : 0)), 0) ).run(); // run added to ensure syncing on stress, was redundant when using model calls and not stats
+}});
+
+define({id: "3f0758d7", inputs: ["cfs_data","aq"], outputs: ["stats"], body: (cfs_data,aq) => {
+const stats = cfs_data.derive({future: d => d.t_in >= 0}).groupby('future','input_cursor_id')
+.rollup({
+  total: d => aq.op.sum(d.value)
+}).objects();
+
+//display(Inputs.table(stats))
+return {stats};
+}});
+
+define({id: "a3d02e54", body: () => {
+//display(stats.reduce( (a,v) => (a + ((v.future && (v.input_cursor_id == 0)) ? v.total : 0)), 0))
+
+//stats.reduce((a,v) => a + (v.future && (v.input_cursor_id == 0) ) ? v.total : 0), 0)
+}});
+
+define({id: "8d905460", inputs: ["cfs_viz","stats"], body: (cfs_viz,stats) => {
+cfs_viz.view.signal('pv_fut_net_cf_past', stats.reduce( (a,v) => (a + ((!v.future && (v.input_cursor_id == 0)) ? v.total : 0)), 0) /*model.pv_fut_net_cf({...cursor,t_in:-cursor.duration_mth_in}) - model.pv_fut_net_cf({...cursor,t_in:0})*/);//.run()
+}});
+
+define({id: "aa9f2adb", inputs: ["cfs_viz","stats"], body: (cfs_viz,stats) => {
+cfs_viz.view.signal('pv_fut_net_cf_fut_B', /*model.pv_fut_net_cf({...cursor,t_in:0})*/ stats.reduce( (a,v) => (a + ((v.future && (v.input_cursor_id == 1)) ? v.total : 0)), 0));
+}});
+
+define({id: "c12b5232", mode: "inline", inputs: ["age_at_entry_in","display"], body: async (age_at_entry_in,display) => {
+display(await(
+age_at_entry_in
+))
+}});
+
+define({id: "7fb2ced3", mode: "inline", inputs: ["sex_in","display"], body: async (sex_in,display) => {
+display(await(
+sex_in
+))
+}});
+
+define({id: "a0c53001", mode: "inline", inputs: ["d3","sum_assured_in","display"], body: async (d3,sum_assured_in,display) => {
+display(await(
+d3.format(',.3s')(sum_assured_in)
+))
+}});
+
+define({id: "103ccec2", mode: "inline", inputs: ["cursor","nb","display"], body: async (cursor,nb,display) => {
+display(await(
+cursor.duration_mth_in ? (nb) : ""
+))
+}});
+
+define({id: "30e621d2", inputs: ["html","setCursor"], outputs: ["nb"], body: (html,setCursor) => {
+const nb = html`<button class="reset-btn inlined" title="Go to new business projection (duration = 0 months)" onclick=${(e) => {setCursor({'duration_mth_in': 0});  e.stopPropagation(); if (window.plausible) window.plausible('NB_button') /*e.preventDefault()*/ }}>NB</button>`
+return {nb};
+}});
+
+define({id: "1472c54e", inputs: ["view","Inputs"], outputs: ["sum_assured_in","age_at_entry_in","sex_in","policy_term_in"], body: (view,Inputs) => {
+const sum_assured_in = view(Inputs.range([100000,1000000], {label: 'sum assured', value: 300000, step:1000}))
+const age_at_entry_in = view(Inputs.range([20,59], {label: 'age @ start', value: 40, step:1}))
+const sex_in = view(Inputs.radio(['M','F'], {label: 'sex', value: 'M'}))
+const policy_term_in = view(Inputs.select([10,15,20], {label: 'term (years)', value: 20, width: 100}))
+return {sum_assured_in,age_at_entry_in,sex_in,policy_term_in};
+}});
+
+define({id: "68b35dac", outputs: ["duration_mth_in"], body: () => {
+const duration_mth_in = 0;// view(Inputs.range([-5*12,20*12], {label: 'duration inforce', value: 30, step:1}))
+return {duration_mth_in};
+}});
+
+define({id: "3d6a6389", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'duration_mth_in', value: 0, step:1})
+))
+}});
+
+define({id: "5215d70f", inputs: ["expenses_commissions_defaults","cursor"], outputs: ["expenses_commissions_changed"], body: (expenses_commissions_defaults,cursor) => {
+const expenses_commissions_changed = Object.keys(expenses_commissions_defaults).reduce((a,v) => a + (cursor[v] == expenses_commissions_defaults[v] ? 0 : 1), 0)
+return {expenses_commissions_changed};
+}});
+
+define({id: "32e1631a", inputs: ["expenses_commissions_defaults","cursor"], outputs: ["expenses_commissions_zero_obj","is_expenses_commissions_zero_obj"], body: (expenses_commissions_defaults,cursor) => {
+const expenses_commissions_zero_obj = Object.keys(expenses_commissions_defaults).reduce((a,v) => {a[v] = 0; return a}, ({}))
+
+const is_expenses_commissions_zero_obj = Object.keys(expenses_commissions_defaults).reduce((a,v) => a + cursor[v] == 0 ? 0 : 1, 0)
+return {expenses_commissions_zero_obj,is_expenses_commissions_zero_obj};
+}});
+
+define({id: "cc64a95a", inputs: ["html","setCursor","expenses_commissions_defaults"], outputs: ["expenses_commissions_reset"], body: (html,setCursor,expenses_commissions_defaults) => {
+const expenses_commissions_reset = html`<button class="reset-btn inlined" onclick=${(e) => {setCursor(expenses_commissions_defaults); e.stopPropagation(); if (window.plausible) window.plausible('expenses_reset') /*e.preventDefault()*/ }}>Reset</button>`
+return {expenses_commissions_reset};
+}});
+
+define({id: "491c6f3a", inputs: ["html","setCursor","expenses_commissions_zero_obj"], outputs: ["expenses_commissions_zero"], body: (html,setCursor,expenses_commissions_zero_obj) => {
+const expenses_commissions_zero = html`<button class="reset-btn inlined" style="color:purple" onclick=${(e) => {setCursor(expenses_commissions_zero_obj); e.stopPropagation(); if (window.plausible) window.plausible('expenses_zero') /*e.preventDefault()*/ }}>Zero</button>`
+
+return {expenses_commissions_zero};
+}});
+
+define({id: "24f6092b", mode: "inline", inputs: ["is_expenses_commissions_zero_obj","expenses_commissions_zero","display"], body: async (is_expenses_commissions_zero_obj,expenses_commissions_zero,display) => {
+display(await(
+!is_expenses_commissions_zero_obj ? "" : expenses_commissions_zero
+))
+}});
+
+define({id: "f0372216", mode: "inline", inputs: ["expenses_commissions_changed","expenses_commissions_reset","display"], body: async (expenses_commissions_changed,expenses_commissions_reset,display) => {
+display(await(
+(expenses_commissions_changed >0) ? expenses_commissions_reset : ""
+))
+}});
+
+define({id: "0d92b54b", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'expense_acq_in', value: 300, step:2})
+))
+}});
+
+define({id: "18fa555a", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'expense_maint_in', value: 60, step:2})
+))
+}});
+
+define({id: "b7d8f9c7", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'inflation_rate_in', value: 0.01, step:0.0005})
+))
+}});
+
+define({id: "883b14b9", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'commission_pc_in', value: 100, step:1})
+))
+}});
+
+define({id: "7fa35d7d", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'commission_mths_in', value: 12, step:1})
+))
+}});
+
+define({id: "981ef548", inputs: ["stress_defaults","cursor"], outputs: ["stresses_changed"], body: (stress_defaults,cursor) => {
+const stresses_changed = Object.keys(stress_defaults).reduce((a,v) => a + (cursor[v] == stress_defaults[v] ? 0 : 1), 0)
+return {stresses_changed};
+}});
+
+define({id: "3b3a4e42", inputs: ["html","setCursor","stress_defaults","set","mort_rate_factor_in_Input","lapse_rate_factor_in_Input","stress_delay_in_Input","highlighting_Input"], outputs: ["stresses_reset"], body: (html,setCursor,stress_defaults,set,mort_rate_factor_in_Input,lapse_rate_factor_in_Input,stress_delay_in_Input,highlighting_Input) => {
+const stresses_reset = html`<button class="reset-btn inlined" onclick=${(e) => {setCursor(stress_defaults); set(mort_rate_factor_in_Input,stress_defaults.mort_rate_factor_in); set(lapse_rate_factor_in_Input,stress_defaults.lapse_rate_factor_in);set(stress_delay_in_Input,stress_defaults.stress_delay_in); set(highlighting_Input,false);  e.stopPropagation(); if (window.plausible) window.plausible('highlighting_toggle') /*e.preventDefault()*/ }}>Reset</button>`
+return {stresses_reset};
+}});
+
+define({id: "589e7049", inputs: ["html","stresses_changed","display"], body: async (html,stresses_changed,display) => {
+display(await(
+html`<style>.stress_delay_in {background: color-mix(in srgb, #f52525 60%, transparent) !important; color:black;font-size: smaller; padding: 3px 1px;display: ${(stresses_changed >0) ? 'inline' : 'none'}}</style>`
+))
+}});
+
+define({id: "afa1a97a", mode: "inline", inputs: ["stresses_changed","stresses_reset","display"], body: async (stresses_changed,stresses_reset,display) => {
+display(await(
+(stresses_changed >0) ? stresses_reset : ""
+))
+}});
+
+define({id: "c63385fd", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'stress_delay_in', value: 0, step:1})
+))
+}});
+
+define({id: "b5f11257", mode: "inline", inputs: ["stresses_changed","Inputs","html","highlighting_Input","display"], body: async (stresses_changed,Inputs,html,highlighting_Input,display) => {
+display(await(
+(stresses_changed >0) ? Inputs.bind(html`<input id="highlighting_checkbox" type="checkbox">`, highlighting_Input) : ''
+))
+}});
+
+define({id: "42bb8e23", mode: "inline", inputs: ["stresses_changed","html","display"], body: async (stresses_changed,html,display) => {
+display(await(
+(stresses_changed >0) ? html`<label for="highlighting_checkbox">highlight<!-- impact--></label>`: ''
+))
+}});
+
+define({id: "76276ec3", body: () => {
+// doesn't work as not available on init run, => set marker signal using cursor (slow?)
+/*const el = document.querySelector('.stress_delay_in')
+(new MutationObserver(mutations => {
+  mutations.forEach(mutation => {
+    if (mutation.type === 'attributes' && mutation.attributeName == 'data-v')
+      console.log('UPDATE STRESS DELAY')
+  })
+})).observe(el, {attributes: true})*/
+}});
+
+define({id: "f30d0f8e", inputs: ["Event"], outputs: ["set"], body: (Event) => {
+const set = (input, value) => {
+  input.value = value;
+  input.dispatchEvent(new Event("input", {bubbles: true}));
+}
+return {set};
+}});
+
+define({id: "1726cf38", inputs: ["Inputs","Generators","view"], outputs: ["mort_rate_factor_in_Input","mort_rate_factor_in"], body: (Inputs,Generators,view) => {
+const mort_rate_factor_in_Input = Inputs.input(1)
+const mort_rate_factor_in = Generators.input(mort_rate_factor_in_Input)
+view(Inputs.bind(Inputs.range([0,2], {step:.02, value:1, label:'mortality assumption factor'}), mort_rate_factor_in_Input))
+return {mort_rate_factor_in_Input,mort_rate_factor_in};
+}});
+
+define({id: "b504fa4d", inputs: ["Inputs","Generators","view"], outputs: ["lapse_rate_factor_in_Input","lapse_rate_factor_in"], body: (Inputs,Generators,view) => {
+const lapse_rate_factor_in_Input = Inputs.input(1)
+const lapse_rate_factor_in = Generators.input(lapse_rate_factor_in_Input)
+view(Inputs.bind(Inputs.range([0,2], {step:.05, value:1, label:'lapse assumption factor'}), lapse_rate_factor_in_Input))
+return {lapse_rate_factor_in_Input,lapse_rate_factor_in};
+}});
+
+define({id: "ad33d60e", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'mort_rate_Y1_add_per_mille_in', value: 0, step:.01})
+))
+}});
+
+define({id: "d261c7d9", inputs: ["Inputs","Generators"], outputs: ["highlighting_Input","highlighting"], body: (Inputs,Generators) => {
+const highlighting_Input = Inputs.input(0)
+const highlighting = Generators.input(highlighting_Input)
+//view(Inputs.bind(Inputs.toggle({label:'highlight stress impact'}), highlighting_Input))
+return {highlighting_Input,highlighting};
+}});
+
+define({id: "9c781537", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'expenses_factor_in', value: 1, step:0.05})
+))
+}});
+
+define({id: "53b8de00", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'inflation_rate_addition_in', value: 0, step:0.001})
+))
+}});
+
+define({id: "0d7e25c2", inputs: ["Inputs","Generators"], outputs: ["stress_delay_in_Input","stress_delay_in"], body: (Inputs,Generators) => {
+const stress_delay_in_Input = Inputs.input(0)
+const stress_delay_in = Generators.input(stress_delay_in_Input)
+//view(Inputs.bind(Inputs.range([0,20*12], {label: 'stress delay', value: 0, step:1}), stress_delay_in_Input))
+return {stress_delay_in_Input,stress_delay_in};
+}});
+
+define({id: "a3e07a20", mode: "inline", inputs: ["lapse_rate","zero_lapses","display"], body: async (lapse_rate,zero_lapses,display) => {
+display(await(
+lapse_rate == "0" ? "" : zero_lapses
+))
+}});
+
+define({id: "1b7e5f28", mode: "inline", inputs: ["lapse_rate_changed","lapse_rates_reset","display"], body: async (lapse_rate_changed,lapse_rates_reset,display) => {
+display(await(
+lapse_rate_changed ? lapse_rates_reset : ""
+))
+}});
+
+define({id: "6757caf7", mode: "inline", inputs: ["lapse_rate_changed","Inputs","html","update_pricing_lapse_rates_Input","display"], body: async (lapse_rate_changed,Inputs,html,update_pricing_lapse_rates_Input,display) => {
+display(await(
+lapse_rate_changed ? Inputs.bind(html`<input id="update_pricing_lapse_rates_checkbox" type="checkbox">`, update_pricing_lapse_rates_Input) : ""
+))
+}});
+
+define({id: "cc71a4f7", mode: "inline", inputs: ["lapse_rate_changed","html","display"], body: async (lapse_rate_changed,html,display) => {
+display(await(
+lapse_rate_changed ? html`<label for="update_pricing_lapse_rates_checkbox">+update pricing basis?<!-- todo track this button use--></label>` : ""
+))
+}});
+
+define({id: "77b7c779", inputs: ["Inputs","Generators"], outputs: ["update_pricing_lapse_rates_Input","update_pricing_lapse_rates_in"], body: (Inputs,Generators) => {
+const update_pricing_lapse_rates_Input = Inputs.input(0)
+const update_pricing_lapse_rates_in = Generators.input(update_pricing_lapse_rates_Input)
+return {update_pricing_lapse_rates_Input,update_pricing_lapse_rates_in};
+}});
+
+define({id: "854bdd98", inputs: ["_","cursor","model"], outputs: ["lapse_rates"], body: (_,cursor,model) => {
+const lapse_rates = _.range(0,cursor.policy_term_in+1).map(d => model.lapse_rate({...cursor, t_in:d*12-cursor.duration_mth_in}))
+return {lapse_rates};
+}});
+
+define({id: "1277573e", outputs: ["lapse_rates_default"], body: () => {
+const lapse_rates_default = "Math.max(0.1 - 0.02 * duration(), 0.02) // lapse rate formula\n" //newline necessary to match
+return {lapse_rates_default};
+}});
+
+define({id: "bb6677de", inputs: ["lapse_rate","lapse_rates_default"], outputs: ["lapse_rate_changed"], body: (lapse_rate,lapse_rates_default) => {
+const lapse_rate_changed = lapse_rate != lapse_rates_default
+return {lapse_rate_changed};
+}});
+
+define({id: "426064f1", inputs: ["html","lapse_rate0","lapse_rates_default"], outputs: ["lapse_rates_reset"], body: (html,lapse_rate0,lapse_rates_default) => {
+const lapse_rates_reset = html`<button class="reset-btn inlined" style="color:red; text-decoration: none !important" onclick=${(e) => {
+  lapse_rate0.editor.dispatch({
+    changes: { from: 0, to: lapse_rate0.editor.state.doc.length, insert: lapse_rates_default }
+  });
+  
+  lapse_rate0.run()
+
+   e.stopPropagation(); if (window.plausible) window.plausible('lapses_reset') /*e.preventDefault()*/ }}>Reset <span style="color:black">10% 📉 2%</span></button>`
+return {lapse_rates_reset};
+}});
+
+define({id: "bd09bcbe", inputs: ["lapse_rates","d3"], outputs: ["lapse_rates_obj"], body: (lapse_rates,d3) => {
+let lapse_rates_obj = ({})
+for (let o in lapse_rates)
+  lapse_rates_obj['Y'+(Number(o)+1)] = d3.format('.1%')(lapse_rates[o])
+return {lapse_rates_obj};
+}});
+
+define({id: "2e9ef575", inputs: ["Editor","lapse_rates_default","Inputs","Generators","view"], outputs: ["lapse_rate0","lapse_rate_Input","lapse_rate"], body: (Editor,lapse_rates_default,Inputs,Generators,view) => {
+const lapse_rate0 = Editor({value: lapse_rates_default});
+
+const lapse_rate_Input = Inputs.input(lapse_rates_default)
+
+const lapse_rate = Generators.input(lapse_rate_Input)
+
+view(Inputs.bind(lapse_rate0, lapse_rate_Input))
+return {lapse_rate0,lapse_rate_Input,lapse_rate};
+}});
+
+define({id: "fd060bac", inputs: ["html","lapse_rate0"], outputs: ["zero_lapses"], body: (html,lapse_rate0) => {
+const zero_lapses = html`<button class="reset-btn inlined" style="color:purple" onclick=${(e) => {
+  lapse_rate0.editor.dispatch({
+    changes: { from: 0, to: lapse_rate0.editor.state.doc.length, insert: "0" }
+  });
+  
+  lapse_rate0.run()
+
+   e.stopPropagation(); if (window.plausible) window.plausible('lapses_zero') /*e.preventDefault()*/
+}
+}>Zero</button>`
+return {zero_lapses};
+}});
+
+define({id: "a8d19603", inputs: ["Mutable"], outputs: ["lapse_rates_history","update_lapse_rates_history"], body: (Mutable) => {
+const lapse_rates_history = Mutable([])
+
+const update_lapse_rates_history = function(n) {
+  lapse_rates_history.value = [...lapse_rates_history.value, n]
+}
+return {lapse_rates_history,update_lapse_rates_history};
+}});
+
+define({id: "1419b156", body: () => {
+// disabling (maybe perf) update_lapse_rates_history(lapse_rates);
+}});
+
+define({id: "92f47380", mode: "inline", inputs: ["spark","display"], body: async (spark,display) => {
+display(await(
+spark
+))
+}});
+
+define({id: "c268cc3e", inputs: ["Plot","lapse_rates"], outputs: ["spark"], body: (Plot,lapse_rates) => {
+const spark = Plot.plot({
+  height: 80,
+  width: 200,
+  marginBottom: 15,
+  marginTop: 15,
+  marginRight: 40,
+  marginLeft: 40,
+  y: {domain: [0,25], percent: true},
+  marks: [
+    Plot.axisX({anchor: "bottom", label: 'duration (yrs)'}),
+    Plot.axisY({anchor: "left", label: 'lapse_rate % p.a. (incl. applicable stress)'}),
+    /*Plot.lineY(lapse_rates_history[lapse_rates_history.length-2], {
+      stroke: 'blue',
+      curve: 'step-after',
+      strokeWidth: 2,
+      opacity: 0.5
+    }),*/
+    
+    Plot.lineY(lapse_rates, {
+      stroke: 'orange',
+      curve: 'step-after',
+      strokeWidth: 3,
+      tip: {
+        format: {
+          x: true,
+          y: d => d.toFixed(1) + '%'//d3.format(',.1%')(d)
+        },
+        stroke: 'transparent',
+      }
+    }),
+
+    Plot.ruleY([0], {stroke: 'purple'})
+
+  ]
+})
+return {spark};
+}});
+
+define({id: "252cb890", body: () => {
+// this is informative:
+//lapse_rates_history
+}});
+
+define({id: "45419730", inputs: ["setCursor"], outputs: ["pricing_defaults"], body: (setCursor) => {
+const pricing_defaults = ({loading_prem_in: 0.8, gender_neutral_pricing_in: false }) // turning off before video
+
+setCursor(pricing_defaults);
+return {pricing_defaults};
+}});
+
+define({id: "9af2a414", inputs: ["setCursor","gender_neutral_pricing_in"], body: (setCursor,gender_neutral_pricing_in) => {
+setCursor({gender_neutral_pricing_in});
+}});
+
+define({id: "22c19fda", inputs: ["html","setCursor","pricing_defaults","gender_neutral_pricing_in_Input","Event"], outputs: ["pricing_reset"], body: (html,setCursor,pricing_defaults,gender_neutral_pricing_in_Input,Event) => {
+const pricing_reset = html`<button class="reset-btn inlined" onclick=${(e) => {setCursor(pricing_defaults);  e.stopPropagation(); if (window.plausible) window.plausible('pricing_reset') /*e.preventDefault()*/; gender_neutral_pricing_in_Input.value = (pricing_defaults.gender_neutral_pricing_in); gender_neutral_pricing_in_Input.dispatchEvent(new Event("input", {bubbles: true})) }}>Reset</button>`
+return {pricing_reset};
+}});
+
+define({id: "b83b7877", inputs: ["pricing_defaults","cursor"], outputs: ["pricing_changed"], body: (pricing_defaults,cursor) => {
+const pricing_changed = Object.keys(pricing_defaults).reduce((a,v) => a + (cursor[v] == pricing_defaults[v] ? 0 : 1), 0)
+return {pricing_changed};
+}});
+
+define({id: "c9ec559b", mode: "inline", inputs: ["pricing_changed","pricing_reset","display"], body: async (pricing_changed,pricing_reset,display) => {
+display(await(
+(pricing_changed >0) ? pricing_reset : ""
+))
+}});
+
+define({id: "2c526c47", mode: "inline", inputs: ["draggable_input","display"], body: async (draggable_input,display) => {
+display(await(
+draggable_input({input:'loading_prem_in', value: 0.5, step:0.01})
+))
+}});
+
+define({id: "b400cb80", inputs: ["Inputs","Generators"], outputs: ["gender_neutral_pricing_in_Input","gender_neutral_pricing_in"], body: (Inputs,Generators) => {
+const gender_neutral_pricing_in_Input = Inputs.input(false)
+const gender_neutral_pricing_in = Generators.input(gender_neutral_pricing_in_Input)
+return {gender_neutral_pricing_in_Input,gender_neutral_pricing_in};
+}});
+
+define({id: "be69c34d", inputs: ["html","gender_neutral_pricing_in_Input","Event","gender_neutral_pricing_in","display"], body: async (html,gender_neutral_pricing_in_Input,Event,gender_neutral_pricing_in,display) => {
+display(await(
+html`The rates are <button class="inlined plausible-event-name=Gender+Neutral+Basis" onclick=${() => {gender_neutral_pricing_in_Input.value = (!gender_neutral_pricing_in_Input.value); gender_neutral_pricing_in_Input.dispatchEvent(new Event("input", {bubbles: true}));}}><span class="gn">${gender_neutral_pricing_in_Input.value ? "" : "not "}gender neutral</span></button>${gender_neutral_pricing_in ? html` <i><small>(priced on <strong>female</strong> assumptions)</small></i>` : ""}`
+))
+}});
+
+define({id: "fff11a55", inputs: ["Inputs","Generators"], outputs: ["premium_payment_frequencies","premium_payment_frequency_in_Input","premium_payment_frequency_in"], body: (Inputs,Generators) => {
+const premium_payment_frequencies = ["M","Y",/*"Q","H", Sync options with text array below */"single"/* single premium */]
+const premium_payment_frequency_in_Input = Inputs.input("M")
+const premium_payment_frequency_in = Generators.input(premium_payment_frequency_in_Input)
+return {premium_payment_frequencies,premium_payment_frequency_in_Input,premium_payment_frequency_in};
+}});
+
+define({id: "40f7bee4", inputs: ["premium_payment_frequencies","premium_payment_frequency_in_Input","setCursor","premium_payment_frequency_in"], outputs: ["fi"], body: (premium_payment_frequencies,premium_payment_frequency_in_Input,setCursor,premium_payment_frequency_in) => {
+const fi = premium_payment_frequencies.indexOf(premium_payment_frequency_in_Input.value)
+setCursor({premium_payment_frequency_in: premium_payment_frequency_in});
+return {fi};
+}});
+
+define({id: "bac504e9", inputs: ["html","premium_payment_frequency_in_Input","premium_payment_frequencies","fi","Event"], outputs: ["freq"], body: (html,premium_payment_frequency_in_Input,premium_payment_frequencies,fi,Event) => {
+const freq = html`<button class="inlined plausible-event-name=Premium+Frequency" onclick=${() => {
+  premium_payment_frequency_in_Input.value = premium_payment_frequencies[(fi+1) % premium_payment_frequencies.length]
+  premium_payment_frequency_in_Input.dispatchEvent(new Event("input", {bubbles: true}));}}><span class="gn">${["per month","per annum"/*,"per quarter", "per half-year" Sync with above*/, "single premium"][fi]}</span></button>`
+return {freq};
+}});
+
+define({id: "24f6ed1d", inputs: ["html","freq","display"], body: async (html,freq,display) => {
+display(await(
+// ISSUE: This leads to recreating reactive spans: flashing color loses context
+html`<details open><summary>🔍 Premium = <span class="f premium_pp_0"></span> ${freq}</summary><p><span class="f premium_rate_per_mille"></span> x <span class="f sum_assured"></span> <span title="Sum Assured" style="border-bottom: 1px dotted black">SA</span></p></details>
+`
+))
+}});
+
+define({id: "f32b1e20", inputs: ["Inputs","Generators"], outputs: ["discounting_on_in_Input","discounting_on_in"], body: (Inputs,Generators) => {
+const discounting_on_in_Input = Inputs.input(false)
+const discounting_on_in = Generators.input(discounting_on_in_Input)
+return {discounting_on_in_Input,discounting_on_in};
+}});
+
+define({id: "4c14c7f3", inputs: ["Inputs","Generators"], outputs: ["show_summary_Input","show_summary"], body: (Inputs,Generators) => {
+const show_summary_Input = Inputs.input(true)
+const show_summary = Generators.input(show_summary_Input)
+return {show_summary_Input,show_summary};
+}});
+
+define({id: "385113f2", outputs: ["premiums"], body: () => {
+const premiums = 70
+return {premiums};
+}});
+
+define({id: "04739b26", inputs: ["cfs_viz","highlighting"], body: (cfs_viz,highlighting) => {
+  cfs_viz.view.signal('highlighting', highlighting).run();
+
+  //mort_stress_viz.signal('marker', mort_rate_factor_delay_in).run();
+
+}});
+
+define({id: "a6fb012d", outputs: ["Editor"], body: async () => {
+const {Editor} = await import("./_import/components/Editor.21717d0b.js");
+
+return {Editor};
+}});
+
+define({id: "234b7b57", inputs: ["FileAttachment"], outputs: ["default_fs"], body: async (FileAttachment) => {
+const default_fs = ({
+  "./basicterm.cul.js": (await (await FileAttachment("./cul/basicterm.cul.js")).text())//,
+  //"./pricing.cul.js": (await (await FileAttachment('./cul/pricing.cul.js')).text()),
+  //"./experience.cul.js": (await (await FileAttachment('./cul/experience.cul.js')).text())
+  ,  "playground.cul.js": await (await FileAttachment("./cul/playground.cul.js")).text()
+  ,  "./basicterm-tables.cul.js": await (await FileAttachment("./cul/basicterm-tables.cul.js")).text()
+})
+return {default_fs};
+}});
+
+define({id: "3158ae92", body: () => {
+//debugger
+//const lr = [...x.introspection.cul_functions.values()].find(d => /*d.cul_scope_id == 1 &&*/ (d.name == "lapse_rate" || d.name == "lapse_rate_") && d.reason.includes('definition'))
+}});
+
+define({id: "e8ad6d93", inputs: ["x","replaceByIndexes","lapse_rate","default_fs"], outputs: ["lr"], body: async (x,replaceByIndexes,lapse_rate,default_fs) => {
+// dyn lapse_rate causes 1x addl. run: but it's a fast one
+
+const lr = x.old_fs["./basicterm.cul.js"] ? [...x.introspection.cul_functions.values()].find(d => d.cul_scope_id == [...x.introspection.cul_scope_ids_to_resource].find(d => d[1].includes("./basicterm.cul.js"))[0] && (d.name == "lapse_rate" || d.name == "lapse_rate_") && d.reason.includes('definition')) : undefined
+
+// There are 2x div.compile calls when Lapse 0 button is used
+await x.setFS(x.old_fs["./basicterm.cul.js"] // (x.old_fs['entrypoint.cul.js'])
+? 
+  ({...x.old_fs, // or old?
+    // I can't use lr because that creates a loop (it works but repeats slowing down the UI)
+    // 
+    "./basicterm.cul.js": replaceByIndexes(x.old_fs["./basicterm.cul.js"], lr.loc.start.index+7-1/* what causes shifts when i refactor my code? */, lr.loc.end.index+1-1, lapse_rate).replace(/(all_cul)0+/g, '$1') /*if this keeps showing up, it gets added in editor.js */
+    ,"playground.cul.js": x.old_fs["playground.cul.js"]//,
+    ,"./basicterm-tables.cul.js": x.old_fs["./basicterm-tables.cul.js"]//,
+    //"./pricing.cul.js": x.old_fs["./pricing.cul.js"],
+    //"./experience.cul.js": x.old_fs["./experience.cul.js"]
+  })
+:
+  default_fs
+);
+return {lr};
+}});
+
+define({id: "26a04bb2", outputs: ["cashflows_spec_patch","cashflows_spec","cashflows_keep_add_subtract","cashflows_summary"], body: async () => {
+const {cashflows_spec_patch, cashflows_spec, cashflows_keep_add_subtract, cashflows_summary} = await import("./_import/components/cashflows-visual.c73c1892.js");
+
+return {cashflows_spec_patch,cashflows_spec,cashflows_keep_add_subtract,cashflows_summary};
+}});
+
+define({id: "1e4b576c", outputs: ["calcudata"], body: async () => {
+// f9535c0 is latest all_cul commit:
+
+const calcudata = (await import("https://cdn.jsdelivr.net/gh/calculang/calculang@f9535c0/packages/calcudata/src/index.js")).calcudata
+return {calcudata};
+}});
+
+define({id: "2d6c0ec5", inputs: ["model","calcudata","cursor","_"], outputs: ["outputs","cfs_data"], body: (model,calcudata,cursor,_) => {
+const outputs =  ['pv_premiums','pv_claims','pv_commissions', 'pv_expenses'/*, 'pv_d_reserves'*/, 'pv_placeholder', 'pv_placeholder2'].filter(d => {return model[d] != undefined}) // necessary filter: if I ask for a formula that doesn't exist, will fail
+// there are 2x HEAVY RUNS, why?
+//console.log('RUNNING MODEL', model, cursor) // reacts to model, cursor, multiple times?
+// fut perf idea: split into A/B calls and cursors, but would it make much difference?
+// common params => need to recalc 2x unless I can detect no stress/B, stress params => calc 1x but memo etc?
+
+
+const cfs_data = calcudata({
+  type: 'arquero',
+  orientation: 'rows',
+  models: [model],
+  input_cursors: //[{...cursor, lapse_rate_in:.05}, cursor],
+  [{...cursor, mort_rate_factor_in:1, lapse_rate_factor_in:1,stress_delay_in:0, expenses_factor_in:1, inflation_rate_addition_in:0, mort_rate_Y1_add_per_mille_in: 0},cursor],
+    //[{...cursor, step_in:step_no-1}, {...cursor, step_in:step_no}],
+  input_domains: {
+    duration_mth_in: [cursor.duration_mth_in], // I need this in data atm
+    t_in: _.range(
+      -cursor.duration_mth_in,
+      model.proj_len(cursor)+1
+    )///
+  },
+  outputs,
+})
+
+return {outputs,cfs_data};
+}});
+
+define({id: "5e5c057a", inputs: ["highlighting","cashflows_keep_add_subtract","cfs_data","aq"], outputs: ["cfs_highlights"], body: (highlighting,cashflows_keep_add_subtract,cfs_data,aq) => {
+// don't run this at all if not highlighting
+const cfs_highlights = highlighting ? cashflows_keep_add_subtract({
+  cfs:cfs_data,
+  varying: 'input_cursor_id'
+}) : aq.from({a:[]})
+return {cfs_highlights};
+}});
+
+define({id: "063dae57", inputs: ["highlighting","cfs_viz","cfs_highlights","cfs_data"], body: (highlighting,cfs_viz,cfs_highlights,cfs_data) => {
+{
+  if (highlighting)
+    cfs_viz.view.data('B_or_keep_add_subtract', cfs_highlights.objects()).resize().run();
+  else {
+    // taking out of top-level so that only calcd if highlighting: improves perf
+    /*const cfs_impacts = cashflows_B({
+      cfs:cfs_data,
+      singular: false,
+      varying: 'input_cursor_id'
+    })*/
+
+    cfs_viz.view.data('B_or_keep_add_subtract', cfs_data.derive({
+        //varying: (d, $) => d['input_cursor_id'], Trying to make this col redundant
+        partition: (d, $) => d['input_cursor_id']
+       }).objects()).resize().run();
+  }
+}
+}});
+
+define({id: "f17405db", inputs: ["show_summary","cfs_viz","cashflows_summary","cfs_data"], body: (show_summary,cfs_viz,cashflows_summary,cfs_data) => {
+{
+  if (show_summary)
+    cfs_viz.view.data('summary', cashflows_summary({cfs:cfs_data.filter(d => Math.abs(d.value) > 0.00001),   varying: 'input_cursor_id'}).objects());
+}
+}});
+
+define({id: "5bd57e37", inputs: ["cfs_viz","highlighting","cfs_highlights"], body: (cfs_viz,highlighting,cfs_highlights) => {
+{
+    cfs_viz.view.data('keep_add_subtract', highlighting ? cfs_highlights.objects() : [])
+}
+}});
+
+define({id: "5303567b", inputs: ["cfs_viz","cursor"], body: (cfs_viz,cursor) => {
+cfs_viz.view.signal('panOffset', -cursor.duration_mth_in);
+}});
+
+define({id: "e2cb0855", inputs: ["cfs_viz","cursor"], body: (cfs_viz,cursor) => {
+cfs_viz.view.signal('show_stress_rule', cursor.stress_delay_in != 0);
+}});
+
+define({id: "1122b860", inputs: ["view","Inputs"], outputs: ["graphdisplay"], body: (view,Inputs) => {
+const graphdisplay = view(Inputs.toggle({value:false, label:'graph display?'}))
+return {graphdisplay};
+}});
+
+define({id: "01f0cd1a", outputs: ["t_in"], body: () => {
+// /* cant: resets duration */ const t_in = -cursor.duration_mth_in//view(Inputs.range([-60,250], {label:'t_in', value:0, step:1}))
+// affects results in cells
+const t_in = 0 //view(Inputs.range([-60,250], {label:'t_in', value:0, step:1}))
+// Strictly Fixing to 0 because duration_mth is an input and a formula: bad pattern?
+// when t_in moves, causes problem for it's draggable (Reactive workings would be ok?)
+return {t_in};
+}});
+
+define({id: "3f137b0b", inputs: ["view","Inputs"], outputs: ["tooltip"], body: (view,Inputs) => {
+const tooltip = view(Inputs.toggle({value:false, label:'tooltip?'}))
+return {tooltip};
+}});
+
+define({id: "46a07352", inputs: ["view","Inputs"], outputs: ["renderer"], body: (view,Inputs) => {
+const renderer = view(Inputs.radio(['svg','canvas'], {value: 'svg'}))
+return {renderer};
+}});
+
+define({id: "a431a0ec", inputs: ["view","Inputs"], outputs: ["disable_legend_not"], body: (view,Inputs) => {
+const disable_legend_not = view(Inputs.toggle({label:'legend', value: false}))
+return {disable_legend_not};
+}});
+
+define({id: "23d509c1", inputs: ["disable_legend_not"], outputs: ["disable_legend"], body: (disable_legend_not) => {
+const disable_legend = !disable_legend_not
+return {disable_legend};
+}});
+
+define({id: "3fd7f2c7", inputs: ["orientation","width","embed","cashflows_spec","premiums","renderer","actions","cashflows_spec_patch","disable_legend","tooltip"], outputs: ["w","cfs_viz"], body: (orientation,width,embed,cashflows_spec,premiums,renderer,actions,cashflows_spec_patch,disable_legend,tooltip) => {
+const w = (orientation == "portrait") ? Math.min(width, 700)//Math.min(700,width-100)//*1.3
+            : 300 // landscape rarely has much room ... todo improve i.e. ideally 2-col layout here
+
+const cfs_viz = embed('#viz',
+    cashflows_spec({ orient: 'top',step: 1, premiums, domain:[-10,250], width: w, height:w*.7 /*todo make this better for tablet?*/, highlighting:false, uis: false, formatType: "dn", xTitle:"years from now", formulaScale: {        "domain": ["pv_premiums", "pv_claims","pv_commissions", "pv_expenses", "pv_placeholder", 'pv_placeholder2'], 
+     range: ['#4E79A7','#E15759','#F28E2B','#76B7B2', '#5ba053', '#ae7ca1'] // modified order from tableau10
+}, highlightOpacity: 0.5 })//
+, {renderer, actions, patch: cashflows_spec_patch({disable_legend,domain:[-10,250]}), tooltip, config:{customFormatTypes:true}, expressionFunctions: {
+  dn: function (datum, params) {
+    //debugger
+    return datum/12//"hi"
+  }
+}});
+return {w,cfs_viz};
+}});
+
+define({id: "9cc4ed16", outputs: ["replaceByIndexes"], body: () => {
+const replaceByIndexes = (s, startIndex, endIndex, r) => s.slice(0, startIndex) + r + s.slice(endIndex)
+return {replaceByIndexes};
+}});
+
+define({id: "16d1c160", outputs: ["embed"], body: async () => {
+const {default: embed} = await import("./_npm/vega-embed@6.29.0/b38bc77c.js");
+
+return {embed};
+}});
+
+define({id: "f2a69baf", body: () => {
+/*(new ResizeObserver(entries => {
+  //debugger
+      const contentBoxSize = entries[0].contentBoxSize[0];
+      document.getElementById('ans').style.width = contentBoxSize.inlineSize-10+'px'
+      //document.getElementById('ans').style.height = ''//contentBoxSize.blockSize-10+'px'
+            //document.getElementById('ans').textContent = contentBoxSize.inlineSize
+})).observe(document.getElementById('aa'));*/
+}});
+
+</script>
+</head>
+<body>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<div class="observablehq observablehq--block"><!--:5173d93c:--></div>
+<div class="observablehq observablehq--block"><!--:4aa931f4:--></div>
+<style>
+label[for="interim-tab"]/*, label[for="module-relationships"]*//*, label[for="help-tab"]*/ {
+  display:none
+}
+
+  /*div.card {
+    margin: 0.9rem 0 !important;
+    padding: 0.8rem !important;
+  }*/
+
+/*@media (max-width: 1200px) {*/ /* for small screens */
+  div.card {
+    margin: 0.8rem 0 !important;
+    padding: 0.5rem !important;
+  }
+/*}*/
+</style>
+<div class="observablehq observablehq--block"><!--:f7cb2530:--></div>
+<div class="observablehq observablehq--block"><!--:c170cff6:--></div>
+<div class="observablehq observablehq--block"><!--:5f11f447:--></div>
+<div class="observablehq observablehq--block"><!--:53fc66d8:--></div>
+<style>
+.observablehq--error {
+  display: none !important; /* REALLY BAD for development, OK for publish to remove screen of errors */
+}
+
+#opts {
+  display: none
+}
+
+.box-2 {
+  padding: 10px;
+}
+
+.reset-btn {
+  background: #aaa4 !important;
+  border-radius: 2px !important;
+  border-bottom: none !important;
+  padding: 2px !important;
+  cursor: pointer;
+  color: red !important;  margin-left: 0.7em !important
+}
+
+
+.run-reset-buttons > form {
+  width: fit-content !important
+}
+
+.role-legend {
+  /*display: none;*/ /* now i disable in spec */
+  /*transform: translate(7px, 70px) scale(1.0)*/
+}
+.role-legend-label > text {
+  font-family: monospace;
+}
+</style>
+<div class="observablehq observablehq--block"><!--:9b338291:--></div>
+<div class="observablehq observablehq--block"><!--:97a7f78f:--></div>
+<div class="observablehq observablehq--block"><!--:93679b0e:--></div>
+<div class="observablehq observablehq--block"><!--:5d4f5ce3:--></div>
+<div class="observablehq observablehq--block"><!--:6878a743:--></div>
+<div class="observablehq observablehq--block"><!--:1a4fef63:--></div>
+<div class="observablehq observablehq--block"><!--:33f8a615:--></div>
+<div class="observablehq observablehq--block"><!--:c7de186e:--></div>
+<div class="observablehq observablehq--block"><!--:a88afc6f:--></div>
+<div class="observablehq observablehq--block"><!--:5374cb6a:--></div>
+<div class="observablehq observablehq--block"><!--:d053194b:--></div>
+<script type="module" src="./_import/cookieconsent-config.88169085.js"></script>
+<script defer="" type="text/plain" data-category="analytics" data-domain="actuarialplayground.com">
+// modified from https://plausible.io/js/script.outbound-links.pageview-props.tagged-events.js
+!function(){"use strict";var i=window.location,o=window.document,l=o.currentScript,u=l.getAttribute("data-api")||/*DN new URL(t.src).origin*/"https://plausible.io"+"/api/event",s=l.getAttribute("data-domain");function p(t,e,n){e&&console.warn("Ignoring Event: "+e),n&&n.callback&&n.callback()}function e(t,e){if(/^localhost$|^127(\.[0-9]+){0,2}\.[0-9]+$|^\[::1?\]$/.test(i.hostname)||"file:"===i.protocol)return p(0,"localhost",e);if((window._phantom||window.__nightmare||window.navigator.webdriver||window.Cypress)&&!window.__plausible)return p(0,null,e);try{if("true"===window.localStorage.plausible_ignore)return p(0,"localStorage flag",e)}catch(t){}var n,a={},t=(a.n=t,a.u=i.href,a.d=s,a.r=o.referrer||null,e&&e.meta&&(a.m=JSON.stringify(e.meta)),e&&e.props&&(a.p=e.props),l.getAttributeNames().filter(function(t){return"event-"===t.substring(0,6)})),r=a.p||{};t.forEach(function(t){var e=t.replace("event-",""),t=l.getAttribute(t);r[e]=r[e]||t}),a.p=r,t=u,a=a,n=e,window.fetch&&fetch(t,{method:"POST",headers:{"Content-Type":"text/plain"},keepalive:!0,body:JSON.stringify(a)}).then(function(t){n&&n.callback&&n.callback({status:t.status})})}var t=window.plausible&&window.plausible.q||[];window.plausible=e;for(var n,a=0;a<t.length;a++)e.apply(this,t[a]);function r(t){t&&n===i.pathname||(n=i.pathname,e("pageview"))}function c(){r(!0)}var f,d=window.history;function v(t){return t&&t.tagName&&"a"===t.tagName.toLowerCase()}d.pushState&&(f=d.pushState,d.pushState=function(){f.apply(this,arguments),c()},window.addEventListener("popstate",c)),"prerender"===o.visibilityState?o.addEventListener("visibilitychange",function(){n||"visible"!==o.visibilityState||r()}):r();var h=1;function m(t){var e,n;if("auxclick"!==t.type||t.button===h)return(e=function(t){for(;t&&(void 0===t.tagName||!v(t)||!t.href);)t=t.parentNode;return t}(t.target))&&e.href&&e.href.split("?")[0],!function t(e,n){if(!e||g<n)return!1;if(k(e))return!0;return t(e.parentNode,n+1)}(e,0)&&(n=e)&&n.href&&n.host&&n.host!==i.host?w(t,e,{name:"Outbound Link: Click",props:{url:e.href}}):void 0}function w(t,e,n){var a,r=!1;function i(){r||(r=!0,window.location=e.href)}!function(t,e){if(!t.defaultPrevented)return e=!e.target||e.target.match(/^_(self|parent|top)$/i),t=!(t.ctrlKey||t.metaKey||t.shiftKey)&&"click"===t.type,e&&t}(t,e)?(a={props:n.props},plausible(n.name,a)):(a={props:n.props,callback:i},plausible(n.name,a),setTimeout(i,5e3),t.preventDefault())}function b(t){var t=k(t)?t:t&&t.parentNode,e={name:null,props:{}},n=t&&t.classList;if(n)for(var a=0;a<n.length;a++){var r,i=n.item(a).match(/plausible-event-(.+)(=|--)(.+)/);i&&(r=i[1],i=i[3].replace(/\+/g," "),"name"==r.toLowerCase()?e.name=i:e.props[r]=i)}return e}o.addEventListener("click",m),o.addEventListener("auxclick",m);var g=3;function y(t){if("auxclick"!==t.type||t.button===h){for(var e,n,a,r,i=t.target,o=0;o<=g&&i;o++){if((a=i)&&a.tagName&&"form"===a.tagName.toLowerCase())return;v(i)&&(e=i),k(i)&&(n=i),i=i.parentNode}n&&(r=b(n),e?(r.props.url=e.href,w(t,e,r)):((t={}).props=r.props,plausible(r.name,t)))}}function k(t){var e=t&&t.classList;if(e)for(var n=0;n<e.length;n++)if(e.item(n).match(/plausible-event-name(=|--)(.+)/))return!0;return!1}o.addEventListener("submit",function(t){var e,n=t.target,a=b(n);function r(){e||(e=!0,n.submit())}a.name&&(t.preventDefault(),e=!1,setTimeout(r,5e3),t={props:a.props,callback:r},plausible(a.name,t))}),o.addEventListener("click",y),o.addEventListener("auxclick",y)}();//window.plausible = window.plausible
+window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+</script>
+<!--<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>-->
+<div class="observablehq observablehq--block"><!--:9f72019d:--></div>
+<div class="observablehq observablehq--block"><!--:6261cc11:--></div>
+<div class="observablehq observablehq--block"><!--:4eb21f17:--></div>
+<style>
+.calculang_overwritten {
+  text-decoration: line-through;
+  font-weight: normal;
+}
+.calculang_title span {
+  background: lightblue;
+  border-bottom: 1px solid blue;
+}
+.calculang_title.calculang_title_input span {
+  background: pink;
+  border-bottom: 1px solid hotpink;
+}
+
+span.calculang_call { 
+  white-space:nowrap;
+  /*cursor: zoom-in;*/
+  background-color: lightblue;
+}
+
+.calculang_call.calculang_call_input {
+  /*cursor: none;*/
+  background-color: pink;
+}
+
+.calculang_call.calculang_call_input .tooltiptext {
+  color: #f53 !important;;
+}
+
+
+.calculang_title.calculang_title_renamed {
+  text-decoration: line-through;
+  text-decoration-style: dashed;
+}
+</style>
+<div class="observablehq observablehq--block"><!--:e1710d9d:--></div>
+<div class="observablehq observablehq--block"><!--:c30192c7:--></div>
+<div class="observablehq observablehq--block"><!--:3d60f677:--></div>
+<div class="observablehq observablehq--block"><!--:4f994313:--></div>
+<div class="observablehq observablehq--block"><!--:be911e62:--></div>
+<div class="observablehq observablehq--block"><!--:aec11181:--></div>
+<div class="observablehq observablehq--block"><!--:9f48d6d9:--></div>
+<div class="observablehq observablehq--block"><!--:e496edd6:--></div>
+<div class="observablehq observablehq--block"><!--:761f902b:--></div>
+<details id="opts" style="opacity:0.3; font-size:0.4em"><summary>opts</summary>
+<div class="observablehq observablehq--block"><!--:ea592580:--></div>
+</details>
+<style>
+
+  body {margin: 0}
+
+  #tabs-container {
+    /*border: 4px dotted rgba(200,0,0,0.2);
+    border-radius: 40px;
+    background: rgba(0,100,100,0.01);*/
+    /*border-right: 5px solid red;*/
+    display: flex;
+    /*flex-wrap: nowrap;*/
+  }
+
+  #tabs-container input[type="radio"] {
+    display: none;
+  }
+
+  #tabs-container label {
+    padding: 8px 12px;
+    margin: 2px;
+    border: 1px solid gray;
+  }
+
+  #tabs-container .tab {
+    width: 100%;
+    /*background: gray;*/
+    /*border: 1px solid grey;*/
+    border-top: none;
+    order: 0;
+    /*display: none;*/ /* OPTIONAL */
+  }
+
+  #tabs-container input[type="radio"] + label:hover {
+    /*font-size: 1.3em;*/
+background: linear-gradient(skyblue, lightgreen);    /*border-radius: 4px;*/
+  }
+
+
+  #tabs-container input[type="radio"] + label {
+background: linear-gradient(skyblue, #9198e5);    /*border-radius: 4px;*/
+    border-radius: 10px 10px 0 0;
+    /*border: 1px solid black;*/
+    border-bottom: none;
+    /*display:flex;
+    flex-direction: column;
+    align-items: bottom;*/
+    /*margin: auto 0;*/
+    align-self: flex-end;
+  }
+  #tabs-container input[type="radio"]:checked + label {
+    font-size: 1.5em;
+    background:white;
+    padding: 3px 14px;
+    border: 2px solid black;
+    border-bottom: none;
+  }
+
+  #tabs-container input[type="radio"]:checked + label + .tab {
+    /*display: block;*/ /* OPTIONAL */
+    /*background: white;*/
+    
+  }
+
+
+</style>
+<div class="observablehq observablehq--block"><!--:3c980f01:--></div>
+<style>
+          /*.cm-editor { overflow: "auto" }*/
+
+
+
+  .cm-changedText {
+    /*background: linear-gradient(rgba(200,250,200,0.9), rgba(200,100,200,0.9)) bottom/100% 14px no-repeat !important*/
+    background: lightgreen !important;
+    color: blue;
+    //background: linear-gradient(rgba(2,0,36,0) 0%, rgba(9,9,121,0.5) 35%, rgba(0,212,255,0.1) 100%)
+ !important;
+
+  }
+
+  #c {
+    /*border: 4px dotted rgba(200,0,0,0.2);
+    border-radius: 40px;
+    background: rgba(0,100,100,0.01);*/
+  }
+
+  #divB .cm-line {
+    background-color: rgba(25,20,100,0.04) !important;
+  }
+
+  /*.cm-insertedLine > span:not(.cm-changedText) {
+  }
+  .cm-insertedLine {
+    background: rgba(25,20,20,0.1);//opacity: 0.1;
+  }
+  .cm-line {
+    background: rgba(25,20,20,0.1);//opacity: 0.1;
+  }*/
+</style>
+<style>
+  /* CODEMIRROR STYLES */
+    .cm-changedLineGutter {
+    display: none;
+  }
+
+  .cm-deletedChunk {
+    opacity:0.5;
+    display:none;
+  }
+
+  #module-relationships {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+   #module-relationships svg {
+    border: 0.1px dotted gray;
+    padding: 6px;
+   }
+   #module-relationships svg {
+    width: 100px;
+
+   }
+</style>
+<div class="container">
+<div class="box-1">
+<div class="observablehq observablehq--block"><!--:bafa6f85:--></div>
+<div class="observablehq observablehq--block"><!--:a76371a0:--></div>
+<div class="observablehq observablehq--block"><!--:3cde0bcd:--></div>
+<div class="observablehq observablehq--block"><!--:897dde68:--></div>
+<div class="observablehq observablehq--block"><!--:5fa6d536:--></div>
+<div class="observablehq observablehq--block"><!--:8bc0671c:--></div>
+<div class="observablehq observablehq--block"><!--:db8bcf1f:--></div>
+<div class="observablehq observablehq--block"><!--:c2aa7f0b:--></div>
+<div class="observablehq observablehq--block"><!--:ce062e90:--></div>
+</div>
+<div class="box-2" id="aa">
+<div class="observablehq observablehq--block"><!--:9bf51115:--></div>
+<div class="observablehq observablehq--block"><!--:36850588:--></div>
+<div class="observablehq observablehq--block"><!--:d11a4aba:--></div>
+<style>
+
+.input-scrubbable-number {
+    font-size: 125%;
+    width: 3em;
+    border: none;
+    border-bottom: 1px dashed hsl(0 50% 45%);
+    border-radius: 4px;
+    background: hsl(0 50% 50%);
+    color: white;
+    text-align: center;
+    cursor: ew-resize;
+    user-select: none;
+    -webkit-user-select: none;
+    /* mitigate safari mac context menu event? */
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none; 
+    pointer-events: all;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0.5;background: #39ff14; }
+  50% { background: #39ff14; opacity: 1; }
+  80% { } /*dark theme should be black, but minor*/
+  100% { opacity: 0.8; background:aliceblue /* not transparent, so borders never overlap */ }
+}
+
+
+@keyframes fadeIn-slow {
+  0% {  }
+  50% {  }
+  80% { opacity: 1; background:aliceblue } /*dark theme should be black, but minor*/
+  100% { opacity: 0.8; background:steelblue /* not transparent, so borders never overlap */ }
+}
+
+.introduce {
+  animation: fadeIn ease 500ms;
+  animation-fill-mode: forwards;  
+}
+.introduce.input-scrubbable-number, .introduce-negative.input-scrubbable-number, .introduce-neutral.input-scrubbable-number {
+  animation: fadeIn-slow ease 500ms !important;
+  animation-fill-mode: forwards;  
+}
+
+
+@keyframes fadeIn-negative {
+  0% { opacity: 0.5;background: pink }
+  50% { background: magenta; opacity: 1; }
+  80% { } /*dark theme should be black, but minor*/
+  100% { opacity: 0.8; background:aliceblue /* not transparent, so borders never overlap */ }
+}
+
+@keyframes fadeIn-neutral {
+  0% { opacity: 0.5;background: aqua }
+  50% { background: aqua; opacity: 1; }
+  80% { } /*dark theme should be black, but minor*/
+  100% { opacity: 0.8; background:aliceblue /* not transparent, so borders never overlap */ }
+}
+
+.introduce-negative {
+  animation: fadeIn-negative ease 500ms;
+  animation-fill-mode: forwards;  
+}
+
+
+.introduce-neutral {
+  animation: fadeIn-neutral ease 500ms;
+  animation-fill-mode: forwards;  
+}
+
+.input {
+  background: steelblue !important;
+  color: white;
+  font-family: monospace;
+}
+
+.f {
+  font-size: small;
+  font-weight: bold;
+  border: 1px solid lightgrey;
+  padding: 7px;
+  border-radius:5px;
+  /*overflow-wrap: break-word*/
+  text-wrap: nowrap;
+  }
+</style>
+<div class="observablehq observablehq--block"><!--:399234be:--></div>
+<!--</div>
+
+</div>--> <!--turns off LHS-->
+<h1 id="actuarial-playground" tabindex="-1"><a class="observablehq-header-anchor" href="#actuarial-playground">Actuarial Playground</a></h1>
+<style>
+.amount-option {
+  display: inline-block;
+  border-bottom: 2px dotted orange;
+  border-bottom-style: dotted;
+  padding: 0 0.2em;
+  /*font-style: italic;*/
+  /*font-weight:bold;*/
+  text-wrap: nowrap;
+  color: #0d0852;
+  cursor: pointer;
+}
+
+.amount-option::first-letter {
+  font-style: normal !important
+}
+
+
+.selected-amount-option {
+    border-bottom: 3px dotted orange;
+  border-bottom-style: dotted;
+
+  font-weight: bold;
+}
+</style>
+<div class="observablehq observablehq--block"><!--:96ed5b9b:--></div>
+<details open="" class="graphs" style="background:yellow;border-radius:10px"><summary>📈</summary>
+<!-- hidden for now, I have newer experiments for vizing models -->
+<div class="observablehq observablehq--block"><!--:8aef1dae:--></div>
+<div class="observablehq observablehq--block"><!--:451db9cf:--></div>
+<div class="observablehq observablehq--block"><!--:3949432b:--></div>
+<p><observablehq-loading></observablehq-loading><!--:c9bdec10:--></p>
+<div class="observablehq observablehq--block"><!--:65dba875:--></div>
+</details>
+<details id="msg" open="" style="margin-bottom: 2em; margin-top:1em; background-color:#eef; padding: 1px 5px; border-radius: 10px">
+<summary style="margin-top:4px">For a <strong>simple term insurance product</strong>, this interactive playground calculates and visualizes <strong><a href="https://calcwithdec.dev/posts/actuarial-terms-i" target="_blank" rel="noopener noreferrer">actuarial cashflows</a></strong></summary>
+<style>
+.l {
+  font-weight: bold;
+}
+
+.l-premiums { color:#4E79A7 }
+.l-claims { color:#E15759 }
+.l-expenses { color: #76B7B2 }
+.l-commissions {color: #F28E2B}
+
+/*['#4E79A7','#E15759','#F28E2B','#76B7B2', '#aaa']*/
+
+.circle {
+  margin-bottom:-3px
+}
+</style>
+<div style="margin-top:1em; margin-bottom:0.4em">
+<style>
+/* copying/editing from actuarial-terms-i CalcWithDec.dev */
+  @keyframes colours {  
+  0% { background-color: rgba(0, 255, 128, 0.2); }
+  30% { background-color: rgba(255, 192, 203, 0.2); }
+  51% { background-color: rgba(211, 113, 203, 0.2); }
+  80% { background-color: rgba(255, 165, 0, 0.2); }
+  100% { background-color: rgba(0, 255, 128, 0.2); }
+}
+.active-button {
+    animation-name: colours; 
+    animation-iteration-count: infinite;  
+    animation-duration: 5s;
+  }
+  .slider-box:hover, .active-button:hover, #checkbox:hover, #checkbox:has(input:checked) {
+    animation-play-state: paused;
+  }
+</style>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:be010c47:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:a00b67b4:--></div>
+<p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em; border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
+<span style="font-size:0.8em"><strong>🧪 Experimental</strong>: inspect and tweak <strong><i><a href="https://calculang.dev" target="_blank" rel="noopener noreferrer">calculang</a> formulas</i></strong> under 💬</span>
+</p>
+</div>
+</details>
+<div style="display:flex; gap: 2em; flex-wrap: wrap; align-items: center">
+<p><span class="amount-option" style="-webkit-touch-callout: none; user-select: none; background-color:#e9faffad; border-radius:4px; padding: 2px 5px"><label style="cursor:pointer"><strong>Summary dots</strong> <svg class="circle" viewBox="0 0 10 10" style="display:inline;width:14px; height: 14px;"><circle style="stroke-width:1px; stroke: black; fill:red" cx="50%" cy="50%" r="4"></circle></svg><svg class="circle" viewBox="0 0 10 10" style="display:inline;width:14px; height: 14px;"><circle style="stroke-width:1px; stroke: black; fill:green" cx="50%" cy="50%" r="4"></circle></svg><svg class="circle" viewBox="0 0 10 10" style="display:inline;width:14px; height: 14px;"><circle style="stroke-width:1px; stroke: black; fill:green" cx="50%" cy="50%" r="4"></circle></svg><svg class="circle" viewBox="0 0 10 10" style="display:inline;width:14px; height: 14px;"><circle style="stroke-width:1px; stroke: black; fill:red" cx="50%" cy="50%" r="4"></circle></svg> <observablehq-loading></observablehq-loading><!--:0b1052dd:--><br><small><em>Summarise <strong>average total cashflow</strong> in <strong>each policy year</strong></em></small></label></span></p>
+<style>
+button.inlined { 
+ all: unset;
+ background-color:#e9faffad;
+   border-bottom: 2px dotted orange;
+  border-bottom-style: dotted;
+
+ cursor: pointer;
+ &:focus-visible {
+   outline: 2px solid black;
+ }
+}</style>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:496195e7:--></div>
+</div>
+<br>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:4f31e1a3:--></div>
+<div class="observablehq observablehq--block"><!--:69a17583:--></div>
+<div class="observablehq observablehq--block"><!--:91d513f1:--></div>
+<div class="observablehq observablehq--block"><!--:55fb0d58:--></div>
+<div class="observablehq observablehq--block"><!--:94c78350:--></div>
+<div class="observablehq observablehq--block"><!--:93a3e469:--></div>
+<div class="observablehq observablehq--block"><!--:0b77a8aa:--></div>
+<div class="observablehq observablehq--block"><!--:3f0758d7:--></div>
+<div class="observablehq observablehq--block"><!--:a3d02e54:--></div>
+<div class="observablehq observablehq--block"><!--:8d905460:--></div>
+<div class="observablehq observablehq--block"><!--:aa9f2adb:--></div>
+<style>
+#viz {
+  /*padding: 40px;
+  margin: 20px;
+  border: 10px solid aqua;
+  border-radius: 20px;*/
+}
+
+.vega-embed {
+  touch-action:none !important;
+}
+.vega-embed canvas {
+  touch-action:none !important;
+}
+</style>
+<div id="viz" style="touch-action:none/*;touch-manipulation:none*/ /*margin: 0 auto*/"></div><div id="viz0"></div>
+<div style="opacity:0">
+<h3 id="action-tweeks" tabindex="-1"><a class="observablehq-header-anchor" href="#action-tweeks">action-tweeks</a></h3>
+</div>
+<div class="card">
+<details class="plausible-event-name=Model+Point+Drawer"><summary>model point ⚙️ <span style="margin-left:10px; font-style:italic"><observablehq-loading></observablehq-loading><!--:c12b5232:--> <span title="years old" style="border-bottom: 1px dotted black">yo</span> <observablehq-loading></observablehq-loading><!--:7fb2ced3:-->, € <observablehq-loading></observablehq-loading><!--:a0c53001:--> <span title="sum assured" style="border-bottom: 1px dotted black">SA</span> <!--${policy_term_in} yr term, --><!--${cursor.duration_mth_in ? html`<span title="in-force projection (positive duration)" style="border-bottom: 1px dotted black">IF</span>` : html`<span title="new business projection (duration = 0)" style="border-bottom: 1px dotted black">NB</span>`}--></span> <observablehq-loading></observablehq-loading><!--:103ccec2:--></summary>
+<div class="observablehq observablehq--block"><!--:30e621d2:--></div>
+<div class="observablehq observablehq--block"><!--:1472c54e:--></div>
+<div class="observablehq observablehq--block"><!--:68b35dac:--></div>
+<!-- ZOOM OUT LEVEL CAN MAKE THIS FRACTIONAL - DO A ROUND TO STEP MULTIPLE CHK?   -->
+<p>duration <span style="line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow; display:inline-block">
+<span style="font-size:0.8em">📣 <span class="input f" style="padding:5px;  font-style:italic">drag me</span> ↔️ 👉</span>
+</span>: <observablehq-loading></observablehq-loading><!--:3d6a6389:--></p>
+<!--⇒ projection type <span class="f status"></span>-->
+</details>
+</div>
+<div class="observablehq observablehq--block"><!--:5215d70f:--></div>
+<div class="observablehq observablehq--block"><!--:32e1631a:--></div>
+<!-- plausible/analytics note: I can't track button use inside drawers that are being tracked! (by class) (or because dynamic inserted) => sending custom events for them (stopPropagation prevents drawer event being sent) -->
+<div class="observablehq observablehq--block"><!--:cc64a95a:--></div>
+<div class="observablehq observablehq--block"><!--:491c6f3a:--></div>
+<div class="card">
+<details class="plausible-event-name=Expenses+Commissions+Drawer"><summary><span class="l l-expenses">expenses</span> &amp; <span class="l l-commissions">commissions</span> ⚙️ <observablehq-loading></observablehq-loading><!--:24f6092b:--> <observablehq-loading></observablehq-loading><!--:f0372216:--></summary>
+<!-- TODO show PV_futs someplace? -->
+<p>acquisition expenses <observablehq-loading></observablehq-loading><!--:0d92b54b:-->, maintenance expenses <observablehq-loading></observablehq-loading><!--:18fa555a:--> p.a. payable monthly, inflating by <observablehq-loading></observablehq-loading><!--:b7d8f9c7:--> p.a. from policy start</p>
+<p>commissions <observablehq-loading></observablehq-loading><!--:883b14b9:--> of first <observablehq-loading></observablehq-loading><!--:7fa35d7d:--> of premiums</p>
+<span style="line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow; display:inline-block">
+<span style="font-size:0.8em">📣 <span class="input f" style="padding:5px;  font-style:italic">drag me</span> ↔️ ☝️</span>
+</span>
+</details>
+</div>
+<div class="observablehq observablehq--block"><!--:981ef548:--></div>
+<div class="observablehq observablehq--block"><!--:3b3a4e42:--></div>
+<style>
+#highlighting_checkbox {
+  background: red;
+  cursor:pointer;
+}
+label[for="highlighting_checkbox"] {
+  /*background: red;*/
+  cursor:pointer;
+}
+
+div#checkbox {
+  /*background: pink;
+  display:inline;
+  padding: 2px;*/
+}
+</style>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:589e7049:--></div>
+<!-- tricky to make the delay draggable animate with colours keyframes, probably due to dom mutations? overlay poss but bad -->
+<div class="card">
+<details class="plausible-event-name=Stresses+Drawer"><summary>stresses ⚙️ <observablehq-loading></observablehq-loading><!--:afa1a97a:--><span style="margin-left:0.5em"><observablehq-loading></observablehq-loading><!--:c63385fd:--></span><div id="checkbox"><observablehq-loading></observablehq-loading><!--:b5f11257:--> <observablehq-loading></observablehq-loading><!--:42bb8e23:--></div></summary>
+<div class="observablehq observablehq--block"><!--:76276ec3:--></div>
+<div class="observablehq observablehq--block"><!--:f30d0f8e:--></div>
+<div class="observablehq observablehq--block"><!--:1726cf38:--></div>
+<div class="observablehq observablehq--block"><!--:b504fa4d:--></div>
+<p>one-year mortality shock <observablehq-loading></observablehq-loading><!--:ad33d60e:--></p>
+<div class="observablehq observablehq--block"><!--:d261c7d9:--></div>
+<p>expense assumption factor <observablehq-loading></observablehq-loading><!--:9c781537:-->, additional inflation rate p.a. <observablehq-loading></observablehq-loading><!--:53b8de00:--></p>
+<div class="observablehq observablehq--block"><!--:0d7e25c2:--></div>
+<span style="line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow; display:inline-block">
+<span style="font-size:0.8em">📣 <span class="input f" style="padding:5px;  font-style:italic">drag me</span> ↔️ ☝️</span>
+</span>
+</details>
+</div>
+<div class="card">
+<details class="plausible-event-name=Lapses+Drawer"><summary>lapse rate assumption ⚙️ <observablehq-loading></observablehq-loading><!--:a3e07a20:--> <observablehq-loading></observablehq-loading><!--:1b7e5f28:--> <div id="checkbox2"><observablehq-loading></observablehq-loading><!--:6757caf7:--> <observablehq-loading></observablehq-loading><!--:cc71a4f7:--></div></summary>
+<div class="observablehq observablehq--block"><!--:77b7c779:--></div>
+<p><em>lapse rate ƒ</em><!-- <small>ℹ️ changes not affecting pricing basis</small>--></p>
+<div class="observablehq observablehq--block"><!--:854bdd98:--></div>
+<div class="observablehq observablehq--block"><!--:1277573e:--></div>
+<div class="observablehq observablehq--block"><!--:bb6677de:--></div>
+<div class="observablehq observablehq--block"><!--:426064f1:--></div>
+<div class="observablehq observablehq--block"><!--:bd09bcbe:--></div>
+<div class="observablehq observablehq--block"><!--:2e9ef575:--></div>
+<div class="observablehq observablehq--block"><!--:fd060bac:--></div>
+<div class="observablehq observablehq--block"><!--:a8d19603:--></div>
+<div class="observablehq observablehq--block"><!--:1419b156:--></div>
+<p><observablehq-loading></observablehq-loading><!--:92f47380:--></p>
+<div class="observablehq observablehq--block"><!--:c268cc3e:--></div>
+<div class="observablehq observablehq--block"><!--:252cb890:--></div>
+</details>
+</div>
+<div class="observablehq observablehq--block"><!--:45419730:--></div>
+<div class="observablehq observablehq--block"><!--:9af2a414:--></div>
+<div class="observablehq observablehq--block"><!--:22c19fda:--></div>
+<div class="observablehq observablehq--block"><!--:b83b7877:--></div>
+<div class="card">
+<details class="plausible-event-name=Pricing+Premiums+Drawer"><summary>pricing ⚙️ &amp; <span class="l l-premiums">premium</span> calc 🔍 <observablehq-loading></observablehq-loading><!--:c9ec559b:--></summary>
+<p>Premium rates are derived from expected claims with an <observablehq-loading></observablehq-loading><!--:2c526c47:--> loading, based on discounted present values<!-- If the loading is enough to cover expenses and commissions the policy is profitable - is it?--></p>
+<div class="observablehq observablehq--block"><!--:b400cb80:--></div>
+<style>
+.gn {
+  border-bottom: 2px dotted orange;
+  border-bottom-style: dotted;
+  padding: 0 0.2em;
+  /*font-style: italic;*/
+  text-wrap: nowrap;
+  color: #0a008b;
+  cursor: pointer;
+  font-weight: bold;
+}
+</style>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:be69c34d:--></div>
+<div class="observablehq observablehq--block"><!--:fff11a55:--></div>
+<div class="observablehq observablehq--block"><!--:40f7bee4:--></div>
+<div class="observablehq observablehq--block"><!--:bac504e9:--></div>
+<br>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:24f6ed1d:--></div>
+<!--<br/>
+<span style="line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow; display:inline-block">
+<span style="font-size:0.8em">📣 <span class="input f" style="padding:5px;  font-style:italic">drag me</span> ↔️ ☝️</span>
+</span>-->
+</details>
+</div>
+<div class="observablehq observablehq--block"><!--:f32b1e20:--></div>
+<div class="observablehq observablehq--block"><!--:4c14c7f3:--></div>
+<div class="observablehq observablehq--block"><!--:385113f2:--></div>
+<style>
+@keyframes fadeInOO {
+  0% { opacity: 0.2; fill:lightgreen }
+  60% { fill: lightgreen; opacity: 1; }
+  80% { fill: lightgreen; opacity: 1; } /*dark theme should be black, but minor*/
+  100% { opacity: 0.2; fill:lightgreen }
+}
+
+.introduceOO {
+  animation: fadeInOO ease 2s;
+  animation-fill-mode: forwards;  
+}
+
+@keyframes fadeInO1 {
+  0% { opacity: 0.2; fill:orange }
+  60% { fill: orange; opacity: 1; }
+  80% { fill: orange; opacity: 1; } /*dark theme should be black, but minor*/
+  100% { opacity: 0.2; fill:lightorange }
+}
+
+.introduceO1 {
+  animation: fadeInO1 ease 2s;
+  animation-fill-mode: forwards;  
+}
+
+.concat_0_concat_0_layer_0_marks > path {
+}
+</style>
+<div class="observablehq observablehq--block"><!--:04739b26:--></div>
+<div class="observablehq observablehq--block"><!--:a6fb012d:--></div>
+<div class="observablehq observablehq--block"><!--:234b7b57:--></div>
+<div class="observablehq observablehq--block"><!--:3158ae92:--></div>
+<div class="observablehq observablehq--block"><!--:e8ad6d93:--></div>
+<div class="observablehq observablehq--block"><!--:26a04bb2:--></div>
+<div class="observablehq observablehq--block"><!--:1e4b576c:--></div>
+<div class="observablehq observablehq--block"><!--:2d6c0ec5:--></div>
+<div class="observablehq observablehq--block"><!--:5e5c057a:--></div>
+<div class="observablehq observablehq--block"><!--:063dae57:--></div>
+<div class="observablehq observablehq--block"><!--:f17405db:--></div>
+<div class="observablehq observablehq--block"><!--:5bd57e37:--></div>
+<div class="observablehq observablehq--block"><!--:5303567b:--></div>
+<div class="observablehq observablehq--block"><!--:e2cb0855:--></div>
+<style>
+.info p:first-child {
+  margin-top: 0.2em
+}
+.info p:last-child {
+  margin-bottom: 0.2em
+}
+</style>
+<div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:4em;line-height:1.5em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
+<p>ℹ️ <strong>Actuarial Playground</strong> is a project by <strong><a href="https://calcwithdec.dev/about" target="_blank" rel="noopener noreferrer">Declan Naughton</a></strong> - developing specialized and modern <strong>actuarial modelling</strong> and <strong>actuarial analysis</strong> tools.<br></p>
+<p>☎️ <span class="active-button"><strong><a href="mailto:dcnconsultingactuarial@gmail.com" target="_blank" rel="noopener noreferrer">Contact</a></strong></span> to learn more, to view demos, or to discuss <strong>modelling or visualization</strong> <em>challenges</em> - or if you are interested in <em>guided introductions</em> to the Playground and calculang (especially if you are a <strong>teacher</strong> or <strong>mentor</strong> or if you <strong>manage a team</strong> with actuarial students)</p>
+</div>
+<div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:3em;line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
+<p>⚠️ <strong>Disclaimer</strong>: The assumptions, methodology, limitations and issues of a model should be carefully considered for any purpose you apply it to.</p>
+<p>I haven’t noted these for this Playground: which is presented for demonstration, education &amp; applied research purposes. <span style="font-weight: bold; display:inline-block">Use with caution 🙏</span></p>
+<!--<p>To provide feedback or for customised or purpose-built and documented models, or visualizations of existing models and cashflows ☎️ <span class="active-button"><strong><a href="https://calcwithdec.dev">contact me</a></strong></span></p>-->
+</div>
+<div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:3em;line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
+<p>To provide feedback or else for customised/purpose-built models, <span class="active-button" style="display:inline-block"><strong><a href="mailto:dcnconsultingactuarial@gmail.com" target="_blank" rel="noopener noreferrer">get in touch</a></strong></span></p>
+</div>
+<br>
+<br>
+<style>
+  #repo {
+    margin-right:4em;
+    opacity: 0.4
+  }
+  #repo:hover {
+    opacity: 1
+  }
+  #holder {
+    display: flex;
+    justify-content: flex-end;
+  }
+</style>
+<div id="holder"><a target="_blank" href="https://github.com/declann/ActuarialPlayground.com" rel="noopener noreferrer"><img id="repo" width="25px" height="25px" src="./_file/github-mark.367d5cb2.png"></a></div>
+<details class="plausible-event-name=Easter+Egg+Drawer" style="margin-top:100px; opacity:0.4"><summary>🥚</summary>
+<div class="observablehq observablehq--block"><!--:1122b860:--></div>
+<div class="observablehq observablehq--block"><!--:01f0cd1a:--></div>
+<div class="observablehq observablehq--block"><!--:3f137b0b:--></div>
+<div class="observablehq observablehq--block"><!--:46a07352:--></div>
+<div class="observablehq observablehq--block"><!--:a431a0ec:--></div>
+<div class="observablehq observablehq--block"><!--:23d509c1:--></div>
+</details>
+<div class="observablehq observablehq--block"><!--:3fd7f2c7:--></div>
+<div class="observablehq observablehq--block"><!--:9cc4ed16:--></div>
+<!--<div style="height:100vh"></div>--><!-- Fixes a layout bug, remove when layout works on really large screens -->
+</div>
+</div>
+<div class="observablehq observablehq--block"><!--:16d1c160:--></div>
+<div class="observablehq observablehq--block"><!--:f2a69baf:--></div>
+<!--<div>
+
+<div>-->
+<div style="height:220vh"></div><!-- needed or flex for boxes is messed! --><!-- Actually needed to fix FF mobile, Safari? -->
+<!-- box-2 -->
+ <!-- .container -->
+<img style="display:none" src="./_file/thumb.711237bb.png"></main>
+</div>
+</body>
+</html>
