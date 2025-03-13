@@ -1,0 +1,9 @@
+.DS_Store
+#dist/
+src/.observablehq/cache/
+node_modules/
+yarn-error.log
+#slides.html
+#slides-revealjs.html
+#slides_files
+test*.html

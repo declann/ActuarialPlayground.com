@@ -1,0 +1,239 @@
+@import url("observablehq:default.css");
+@import url("observablehq:theme-air.css");
+
+body {
+  font-family: system-ui;
+}
+
+/*vid #observablehq-center {
+  margin: 0
+}*/
+
+details#msg:not([open]) {
+  /*max-width: 100px;*/
+}
+
+summary {
+  cursor: pointer
+}
+
+#viz {
+  margin-top: 55px;
+  margin-bottom: 0;
+}
+
+:root {
+  --observablehq-max-width: 1440px;
+}
+
+
+p, #observablehq-main {
+  max-width: 1200px;
+}
+.container .observablehq--block {
+    margin: 0;
+  }
+
+  main#observablehq-main {
+    margin: 0 120px;
+    max-width: 900px; /* On a desktop this seems like a big waste of space; but the layout uses height more than width. Better layouts would be interesting. */
+  }
+
+  #viz {
+    margin-left:2.5rem !important;
+  }
+
+  /*.card {
+    max-width: 800px;
+  }*/
+
+  @media (max-width: 800px) { /* for small screens */
+  
+    #viz {
+      margin-left:0 !important;
+    }
+
+    /*.card {
+      max-width: unset;
+    }*/
+
+    main#observablehq-main {
+      max-width: unset;
+
+      margin: 0 120px;
+    }
+  }
+
+  @media (orientation: landscape) {
+    
+  }
+
+
+@media (max-width: 1150px) { /* for small screens */
+  
+
+
+  #observablehq-center {
+    margin: 0;
+  }
+
+  main#observablehq-main {
+    margin: 0 0;
+  }
+  main > .observablehq--block {
+    margin: 0 0;
+  }
+}
+
+label[for="module-relationships"], label[for="input-tab"], label[for="minimize-tab"] {
+  margin-left:8px !important;
+}
+
+label[for="minimize-tab"] {
+  /*display: none;*/
+}
+
+.box-1 {
+  border-bottom: 5px dotted skyblue;
+  border-right: 5px dashed skyblue;
+}
+
+.box-2 {
+  padding-top: 2em;
+}
+
+.box-1 .cm-editor {
+  /*font-size: smaller;*/
+}
+
+.box-1 .cm-scroller {
+  /*line-height: 190% !important;*/
+}
+
+body {
+  margin: 0;
+  max-width: none !important;
+  font-size: small;
+  /*overflow:hidden;*/
+}
+
+.box-2 {
+  /*overflow-y: scroll;*/
+}
+/*.cm-editor {
+  height: calc(100vh - 9em);
+}
+.tab {
+  height: calc(100vh - 5em);
+}*/
+
+.container {
+  /*display: flex;
+  height: 100dvh;
+  gap: 1em;*/
+}
+
+.tab > div {
+  /*height: auto;*/
+  /*flex-grow: 1;*/
+  /*display: flex;*/
+}
+
+
+.box-1 .cm-editor {
+  /*height: 800dvh;*/
+}
+
+.box-1,
+.box-2 {
+  /*auto*/
+  /*flex: 1 1 100%;
+  max-width: 50%;*/ /* perfer to flex allocation due to using fixed heights in media query */
+  /* https://stackoverflow.com/a/32948440 */
+  /*background: lightyellow;
+  border: 3px dashed lightgrey;*/
+  box-sizing: border-box;
+
+  /*height: 100vh;*/
+}
+
+.tab {
+  overflow:auto;
+}
+
+
+/* MEDIA QUERY */
+
+/*@media (max-width: 1200px) and (orientation: portrait) {*/
+
+  .box-1 {
+    border-right: none;
+  }
+
+  label[for="minimize-tab"] {
+    display: block;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 0;
+  }
+  .cm-editor {
+    /*font-size: x-small;
+    height: 150px;*/
+  }
+
+  .tab {
+    background: #fafafa;
+  }
+
+  .box-1,
+.box-2 {
+  /*auto*/
+  flex: auto;
+  max-width: 1500px; /*100%;*/
+}
+
+  /*.cm-editor {
+    height: calc(50vh - 9em);
+  }*/
+
+  /*.box-1 {
+    height: 50%;
+    max-height: 50%;
+
+  }
+
+  .box-2 {
+    height: 50%;
+    max-height: 50%;
+  }*/
+
+/*}*/
+
+.lapse-rate > .cm-editor {
+  /*height: 30px;*/
+}
+
+/* Limit the height of the editor */
+.tab > .cm-editor {
+  height: 280px;
+  overflow-y: auto;
+}
+
+/* Make sure the content area respects the height limit */
+.cm-scroller {
+  overflow: auto;
+}
+
+ul {
+  max-width: unset;
+}
+
+code {
+  font-size: small;
+  background: #eee;
+  padding: 2px;
+  border-radius: 3px;
+  margin: 2px;
+}
