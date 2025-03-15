@@ -784,6 +784,7 @@ export const ab = ({entrypoint='entrypoint.cul.js', defaultFS, setModel, setIntr
   div.querySelector('#filename').addEventListener('input', (e) => {div.setScope(+e.target.value)})
 
   div.querySelector('#add').addEventListener('click', async e => {
+    if (window.plausible) window.plausible('calculang_add')
     // like a custom setFS, todo better apis
     let fs = {...div.fs}
     const newEntrypoint = `my-playground-${Math.floor(Math.random()*1000)}.cul.js`
