@@ -446,7 +446,7 @@ html`🚀 <a class="active-button plausible-event-name=Action+To+Tweeks" style="
 ```
 
 <p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em;  border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
-<span style="font-size:0.8em"><strong>🎥 Video</strong>: <a style="font-weight:bold" href="https://www.youtube.com/watch?v=S-cX7CmH0eA" target="_blank">on Youtube</a> watch me <strong>sense-check the Pricing basis and explore cross-subsidies</strong> (<a style="" href="https://www.youtube.com/watch?v=S-cX7CmH0eA" target="_blank">7mins</a>)</span>
+<span style="font-size:0.8em"><strong>🎥 Video</strong>: <a style="font-weight:bold" href="https://www.youtube.com/watch?v=S-cX7CmH0eA" target="_blank">on Youtube</a> watch me <strong>sense-check the Premium calculation and explore cross-subsidies</strong> (<a style="" href="https://www.youtube.com/watch?v=S-cX7CmH0eA" target="_blank">7mins</a>)</span>
 </p>
 
 <p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em; margin-top: 0.5em;border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
