@@ -15,7 +15,9 @@
 <link rel="modulepreload" href="./_observablehq/stdlib.313a6eb4.js">
 <link rel="modulepreload" href="./_import/cookieconsent-config.88169085.js">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js">
-<link rel="modulepreload" href="./_import/components/editor.5cada004.js">
+<link rel="modulepreload" href="./_import/components/editor.b151747b.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/declann/calculang-js-browser-dev@main/helpers.js">
+<link rel="modulepreload" href="./_import/components/calcuvegadata.e2cb9852.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.c9e8879a.js">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js">
@@ -445,7 +447,7 @@ return {formula,setFormula};
 }});
 
 define({id: "3cde0bcd", inputs: ["Mutable","default_fs","setModel","setIntrospection","setCompilations","setCursor","setFormula","fmt","display"], outputs: ["ab","selection","formulae_visible","hover","set_formulae_visible","set_hover","x"], body: async (Mutable,default_fs,setModel,setIntrospection,setCompilations,setCursor,setFormula,fmt,display) => {
-const {ab} = await import("./_import/components/editor.5cada004.js");
+const {ab} = await import("./_import/components/editor.b151747b.js");
 
 const selection = Mutable({from:{line:1,column:1}, to:{line:1,column:2}})
 
@@ -469,6 +471,15 @@ const x = ab({entrypoint: 'playground.cul.js', defaultFS: default_fs /* optimisa
 
 display(x)
 return {ab,selection,formulae_visible,hover,set_formulae_visible,set_hover,x};
+}});
+
+define({id: "897dde68", outputs: ["calcuvizspec","calcuvegadata"], body: async () => {
+const [{calcuvizspec}, {calcuvegadata}] = await Promise.all([import("https://cdn.jsdelivr.net/gh/declann/calculang-js-browser-dev@main/helpers.js"), import("./_import/components/calcuvegadata.e2cb9852.js")]);
+
+
+
+
+return {calcuvizspec,calcuvegadata};
 }});
 
 define({id: "5fa6d536", body: () => {
@@ -892,6 +903,7 @@ background: linear-gradient(skyblue, #9198e5);    /*border-radius: 4px;*/
 <div class="observablehq observablehq--block"><!--:bafa6f85:--></div>
 <div class="observablehq observablehq--block"><!--:a76371a0:--></div>
 <div class="observablehq observablehq--block"><!--:3cde0bcd:--></div>
+<div class="observablehq observablehq--block"><!--:897dde68:--></div>
 <div class="observablehq observablehq--block"><!--:5fa6d536:--></div>
 <div class="observablehq observablehq--block"><!--:8bc0671c:--></div>
 <div class="observablehq observablehq--block"><!--:db8bcf1f:--></div>

@@ -15,7 +15,7 @@
 <link rel="modulepreload" href="./_observablehq/stdlib.313a6eb4.js">
 <link rel="modulepreload" href="./_import/cookieconsent-config.88169085.js">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js">
-<link rel="modulepreload" href="./_import/components/editor.5cada004.js">
+<link rel="modulepreload" href="./_import/components/editor.b151747b.js">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/declann/calculang-js-browser-dev@main/helpers.js">
 <link rel="modulepreload" href="./_import/components/calcuvegadata.e2cb9852.js">
 <link rel="modulepreload" href="./_import/components/Editor.21717d0b.js">
@@ -162,9 +162,9 @@
 import {define} from "./_observablehq/client.f2ac0650.js";
 import {registerFile} from "./_observablehq/stdlib.313a6eb4.js";
 
-registerFile("./cul/basicterm-tables.cul.js", {"name":"./cul/basicterm-tables.cul.js","mimeType":"text/javascript","path":"./_file/cul/basicterm-tables.cul.b51f60f8.js","lastModified":1741868846896,"size":30991});
-registerFile("./cul/basicterm.cul.js", {"name":"./cul/basicterm.cul.js","mimeType":"text/javascript","path":"./_file/cul/basicterm.cul.d3d17af7.js","lastModified":1741868846896,"size":9154});
-registerFile("./cul/playground.cul.js", {"name":"./cul/playground.cul.js","mimeType":"text/javascript","path":"./_file/cul/playground.cul.c4844d5b.js","lastModified":1741868846933,"size":6341});
+registerFile("./cul/basicterm-tables.cul.js", {"name":"./cul/basicterm-tables.cul.js","mimeType":"text/javascript","path":"./_file/cul/basicterm-tables.cul.b51f60f8.js","lastModified":1742047497266,"size":30991});
+registerFile("./cul/basicterm.cul.js", {"name":"./cul/basicterm.cul.js","mimeType":"text/javascript","path":"./_file/cul/basicterm.cul.d3d17af7.js","lastModified":1742047497266,"size":9154});
+registerFile("./cul/playground.cul.js", {"name":"./cul/playground.cul.js","mimeType":"text/javascript","path":"./_file/cul/playground.cul.c4844d5b.js","lastModified":1742047497268,"size":6341});
 
 define({id: "5173d93c", body: () => {
 /*const watcher = window.matchMedia("(max-width: 768px) and (orientation: landscape)")
@@ -762,7 +762,7 @@ return {formula,setFormula};
 }});
 
 define({id: "3cde0bcd", inputs: ["Mutable","default_fs","setModel","setIntrospection","setCompilations","setCursor","setFormula","fmt","display"], outputs: ["ab","selection","formulae_visible","hover","set_formulae_visible","set_hover","x"], body: async (Mutable,default_fs,setModel,setIntrospection,setCompilations,setCursor,setFormula,fmt,display) => {
-const {ab} = await import("./_import/components/editor.5cada004.js");
+const {ab} = await import("./_import/components/editor.b151747b.js");
 
 const selection = Mutable({from:{line:1,column:1}, to:{line:1,column:2}})
 
@@ -1715,14 +1715,16 @@ const calcudata = (await import("https://cdn.jsdelivr.net/gh/calculang/calculang
 return {calcudata};
 }});
 
-define({id: "2d6c0ec5", inputs: ["model","calcudata","cursor","_"], outputs: ["outputs","cfs_data"], body: (model,calcudata,cursor,_) => {
+define({id: "0f680b35", inputs: ["model"], outputs: ["outputs"], body: (model) => {
 const outputs =  ['pv_premiums','pv_claims','pv_commissions', 'pv_expenses'/*, 'pv_d_reserves'*/, 'pv_placeholder', 'pv_placeholder2'].filter(d => {return model[d] != undefined}) // necessary filter: if I ask for a formula that doesn't exist, will fail
 // there are 2x HEAVY RUNS, why?
 //console.log('RUNNING MODEL', model, cursor) // reacts to model, cursor, multiple times?
 // fut perf idea: split into A/B calls and cursors, but would it make much difference?
 // common params => need to recalc 2x unless I can detect no stress/B, stress params => calc 1x but memo etc?
+return {outputs};
+}});
 
-
+define({id: "e6d42884", inputs: ["calcudata","model","cursor","_","outputs"], outputs: ["cfs_data"], body: (calcudata,model,cursor,_,outputs) => {
 const cfs_data = calcudata({
   type: 'arquero',
   orientation: 'rows',
@@ -1740,7 +1742,7 @@ const cfs_data = calcudata({
   outputs,
 })
 
-return {outputs,cfs_data};
+return {cfs_data};
 }});
 
 define({id: "5e5c057a", inputs: ["highlighting","cashflows_keep_add_subtract","cfs_data","aq"], outputs: ["cfs_highlights"], body: (highlighting,cashflows_keep_add_subtract,cfs_data,aq) => {
@@ -2300,7 +2302,10 @@ background: linear-gradient(skyblue, #9198e5);    /*border-radius: 4px;*/
 </style>
 <div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:be010c47:--></div>
 <div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:a00b67b4:--></div>
-<p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em; border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
+<p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em;  border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
+<span style="font-size:0.8em"><strong>🎥 Video</strong>: <a style="font-weight:bold" href="https://www.youtube.com/watch?v=S-cX7CmH0eA" target="_blank" rel="noopener noreferrer">on Youtube</a> watch me <strong>sense-check the Pricing basis and explore cross-subsidies</strong> (<a style="" href="https://www.youtube.com/watch?v=S-cX7CmH0eA" target="_blank" rel="noopener noreferrer">7mins</a>)</span>
+</p>
+<p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em; margin-top: 0.5em;border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
 <span style="font-size:0.8em"><strong>🧪 Experimental</strong>: inspect and tweak <strong><i><a href="https://calculang.dev" target="_blank" rel="noopener noreferrer">calculang</a> formulas</i></strong> under 💬</span>
 </p>
 </div>
@@ -2502,7 +2507,8 @@ div#checkbox {
 <div class="observablehq observablehq--block"><!--:e8ad6d93:--></div>
 <div class="observablehq observablehq--block"><!--:26a04bb2:--></div>
 <div class="observablehq observablehq--block"><!--:1e4b576c:--></div>
-<div class="observablehq observablehq--block"><!--:2d6c0ec5:--></div>
+<div class="observablehq observablehq--block"><!--:0f680b35:--></div>
+<div class="observablehq observablehq--block"><!--:e6d42884:--></div>
 <div class="observablehq observablehq--block"><!--:5e5c057a:--></div>
 <div class="observablehq observablehq--block"><!--:063dae57:--></div>
 <div class="observablehq observablehq--block"><!--:f17405db:--></div>

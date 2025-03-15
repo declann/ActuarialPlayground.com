@@ -7,3 +7,4 @@ yarn-error.log
 #slides-revealjs.html
 #slides_files
 test*.html
+test*.js

@@ -587,6 +587,14 @@ const x = ab({entrypoint: 'playground.cul.js', defaultFS: default_fs /* optimisa
 
 display(x)
 ```
+```js
+import { calcuvizspec } from "https://cdn.jsdelivr.net/gh/declann/calculang-js-browser-dev@main/helpers.js"
+
+import {calcuvegadata} from './components/calcuvegadata.js'
+
+
+
+```
 
 ```js
 //x.compile();

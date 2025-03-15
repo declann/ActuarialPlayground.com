@@ -445,7 +445,11 @@ html`🚀 <a class="active-button plausible-event-name=Action+To+Tweeks" style="
   })}}>Inspect and tweak <strong>model point</strong>, <strong>assumption</strong>, <strong>stress</strong> and <strong>pricing</strong> parameters below the visual ⬇️</a> 🔧`
 ```
 
-<p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em; border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
+<p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em;  border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
+<span style="font-size:0.8em"><strong>🎥 Video</strong>: <a style="font-weight:bold" href="https://www.youtube.com/watch?v=S-cX7CmH0eA" target="_blank">on Youtube</a> watch me <strong>sense-check the Pricing basis and explore cross-subsidies</strong> (<a style="" href="https://www.youtube.com/watch?v=S-cX7CmH0eA" target="_blank">7mins</a>)</span>
+</p>
+
+<p style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; line-height:1em; margin-top: 0.5em;border: 1px solid lightgrey; padding:3px; background: color-mix(in srgb, lightyellow 80%, transparent); display:inline-block">
 <span style="font-size:0.8em"><strong>🧪 Experimental</strong>: inspect and tweak <strong><i><a href="https://calculang.dev">calculang</a> formulas</i></strong> under 💬</span>
 </p>
 
@@ -1058,7 +1062,9 @@ const outputs =  ['pv_premiums','pv_claims','pv_commissions', 'pv_expenses'/*, '
 //console.log('RUNNING MODEL', model, cursor) // reacts to model, cursor, multiple times?
 // fut perf idea: split into A/B calls and cursors, but would it make much difference?
 // common params => need to recalc 2x unless I can detect no stress/B, stress params => calc 1x but memo etc?
+```
 
+```js
 
 const cfs_data = calcudata({
   type: 'arquero',

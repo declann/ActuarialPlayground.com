@@ -3,7 +3,8 @@
 import { MergeView, unifiedMergeView, updateOriginalDoc, originalDocChangeEffect, getOriginalDoc } from "@codemirror/merge"
 import { EditorView  } from 'codemirror'
 import { EditorView as  EditorView_old } from 'codemirror' // needed for merge view ?!
-//import { basicSetup } from "codemirror"
+import { basicSetup } from "codemirror"
+// I tried to remove basicSetup to turn off lineNumbers, but this broke Enter key for some reason - versions of imports?
 //import { basicSetup } from "codemirror"
 
 
@@ -562,7 +563,7 @@ export const a = ({ parent, div, set_formulae_visible, set_hover, setCursor, set
   extensions: [
     //lineNumbers(), //chk https://www.npmjs.com/package/codemirror?activeTab=code replacing basicSetup removing lineNumebrs mainly
     //highlightActiveLineGutter(),
-    highlightSpecialChars(),
+    /*highlightSpecialChars(),
     history(),
     foldGutter(),
     drawSelection(),
@@ -584,9 +585,9 @@ export const a = ({ parent, div, set_formulae_visible, set_hover, setCursor, set
         ...foldKeymap,
         ...completionKeymap,
         ...lintKeymap
-    ]),
+    ]),*/ // some reason can't press enter
 
-    //basicSetup, // todo turn off line numbers
+    basicSetup, // todo turn off line numbers
     //EditorView.lineWrapping, conflicts with hardcoded tables 
     javascript(),
 
