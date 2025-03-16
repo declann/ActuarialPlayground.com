@@ -22,6 +22,10 @@ Also includes testcases in [./test](./test), including static bundle build
 
 Some technical notes in the Actuarial Playground UI under '?' tab. (TODO: make this link-able)
 
+## Build Instructions
+
+- In `index.md`, you will need to update the reference to `TEMPLATE_metal_open.md`
+
 ## license
 
 Code in this repository is free software licensed under the [GNU Affero General Public License Version 3](LICENSE).

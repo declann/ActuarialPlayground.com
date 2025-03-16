@@ -1,9 +1,9 @@
 // this editor is from https://observablehq.observablehq.cloud/framework-example-codemirror/
 
-import {javascript} from "../../_npm/@codemirror/lang-javascript@6.2.3/991176aa.js";
+import {javascript} from "../../_npm/@codemirror/lang-javascript@6.2.3/5180cf82.js";
 import {EditorView, keymap} from "../../_npm/@codemirror/view@6.36.4/9426135b.js";
 import {button} from "../../_observablehq/stdlib/inputs.c9e8879a.js";
-import {basicSetup} from "../../_npm/codemirror@6.0.1/d2aea0c6.js";
+import {basicSetup} from "../../_npm/codemirror@6.0.1/53082ac8.js";
 
 export function Editor({
   value = "",
