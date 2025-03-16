@@ -269,7 +269,7 @@ function fmt(formula, v) {
 ```
 
 
-<!-- @include: /home/declan/repos/smite-puzzle/src/TEMPLATE_metal_open.md -->
+<!-- @include: /home/declan/repos/ActuarialPlayground.com/src/TEMPLATE_metal_open.md -->
 
 <!--</div>
 
