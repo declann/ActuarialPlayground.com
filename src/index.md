@@ -1274,7 +1274,7 @@ import embed from 'npm:vega-embed';
 
 <div>-->
 
-<!-- @include: /home/declan/repos/smite-puzzle/src/TEMPLATE_metal_close.md -->
+<!-- @include: /home/declan/repos/ActuarialPlayground.com/src/TEMPLATE_metal_close.md -->
 
 
 <img style="display:none" src="./thumb.png" />
