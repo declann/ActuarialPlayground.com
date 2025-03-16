@@ -6,7 +6,7 @@ Source code for [Actuarial Playground](https://actuarialplayground.com).
 
 - Visualization, arquero transformations, and codemirror editor pieces are in [./src/components](./src/components).
 
-- Notebook/reactive JS in `index.md` and TEMPLATE_x.md`.
+- Notebook/reactive JS in `index.md` and `TEMPLATE_x.md`.
 
 Also includes testcases in [./test](./test), including static bundle build
   - some tests track bundles: will probably remove this
