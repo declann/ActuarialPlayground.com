@@ -14,8 +14,8 @@
 <link rel="modulepreload" href="./_observablehq/runtime.e080113b.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.313a6eb4.js">
 <link rel="modulepreload" href="./_import/cookieconsent-config.88169085.js">
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js">
-<link rel="modulepreload" href="./_import/components/editor.87d48004.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@ee658db/packages/standalone/index.js">
+<link rel="modulepreload" href="./_import/components/editor.21ae722b.js">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/declann/calculang-js-browser-dev@main/helpers.js">
 <link rel="modulepreload" href="./_import/components/calcuvegadata.e2cb9852.js">
 <link rel="modulepreload" href="./_import/components/Editor.c4c81805.js">
@@ -41,8 +41,7 @@
 <link rel="modulepreload" href="./_node/@codemirror/lang-javascript@6.2.3/index.75ce0233.js">
 <link rel="modulepreload" href="./_node/@codemirror/language@6.10.8/index.4544127e.js">
 <link rel="modulepreload" href="./_node/globals@15.15.0/index.5cb8aa48.js">
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@f9535c0/packages/standalone/index.js">
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@f9535c0/packages/standalone/pre_fetch.mjs">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@ee658db/packages/standalone/pre_fetch.mjs">
 <link rel="modulepreload" href="./_node/@viz-js/viz@3.11.0/index.103b05db.js">
 <link rel="modulepreload" href="./_node/htl@0.3.1/index.0caf36e7.js">
 <link rel="modulepreload" href="./_node/codemirror-6-snippetbuilder@1.0.1/index.15716d65.js">
@@ -377,8 +376,8 @@ function fmt(formula, v) {
 return {fmt_default_1,fmt};
 }});
 
-define({id: "9f72019d", inputs: ["compilations"], outputs: ["getIntrospection","compile_new","bundleIntoOne","packageCalculang_new","calls_fromDefinition","compiled"], body: async (compilations) => {
-const {introspection: getIntrospection, compile_new, bundleIntoOne, packageCalculang_new, calls_fromDefinition} = await import("https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js");
+define({id: "4932e8b7", inputs: ["compilations"], outputs: ["getIntrospection","compile_new","bundleIntoOne","packageCalculang_new","calls_fromDefinition","compiled"], body: async (compilations) => {
+const {introspection: getIntrospection, compile_new, bundleIntoOne, packageCalculang_new, calls_fromDefinition} = await import("https://cdn.jsdelivr.net/gh/calculang/calculang@ee658db/packages/standalone/index.js");
  //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//"https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js"
 
 
@@ -762,7 +761,7 @@ return {formula,setFormula};
 }});
 
 define({id: "3cde0bcd", inputs: ["Mutable","default_fs","setModel","setIntrospection","setCompilations","setCursor","setFormula","fmt","display"], outputs: ["ab","selection","formulae_visible","hover","set_formulae_visible","set_hover","x"], body: async (Mutable,default_fs,setModel,setIntrospection,setCompilations,setCursor,setFormula,fmt,display) => {
-const {ab} = await import("./_import/components/editor.87d48004.js");
+const {ab} = await import("./_import/components/editor.21ae722b.js");
 
 const selection = Mutable({from:{line:1,column:1}, to:{line:1,column:2}})
 
@@ -1948,7 +1947,7 @@ label[for="interim-tab"]/*, label[for="module-relationships"]*//*, label[for="he
 window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
 </script>
 <!--<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>-->
-<div class="observablehq observablehq--block"><!--:9f72019d:--></div>
+<div class="observablehq observablehq--block"><!--:4932e8b7:--></div>
 <div class="observablehq observablehq--block"><!--:6261cc11:--></div>
 <div class="observablehq observablehq--block"><!--:4eb21f17:--></div>
 <style>
