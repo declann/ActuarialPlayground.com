@@ -1,15 +1,6 @@
 // for a high-level overview, see the '?' tab
 
-import {
-  all_cul,
-  mort_rate_ as mort_rate_orig,
-  lapse_rate_ as lapse_rate_orig,
-  disc_rate_ann_ as disc_rate_ann_orig,
-  premium_pp_ as premium_pp_orig,
-  net_cf_ as net_cf_orig,
-  pv_pols_if_ as pv_pols_if_orig,
-  duration_mth
-} from './basicterm.cul.js';
+import { all_cul as _orig } from './basicterm.cul.js';
 
 
 // PARAMETERS FOR CONTROLS AND STRESSES

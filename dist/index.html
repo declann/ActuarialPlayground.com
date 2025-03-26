@@ -14,8 +14,8 @@
 <link rel="modulepreload" href="./_observablehq/runtime.e080113b.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.313a6eb4.js">
 <link rel="modulepreload" href="./_import/cookieconsent-config.88169085.js">
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@ee658db/packages/standalone/index.js">
-<link rel="modulepreload" href="./_import/components/editor.21ae722b.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@373ae56/packages/standalone/index.js">
+<link rel="modulepreload" href="./_import/components/editor.69179187.js">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/declann/calculang-js-browser-dev@main/helpers.js">
 <link rel="modulepreload" href="./_import/components/calcuvegadata.e2cb9852.js">
 <link rel="modulepreload" href="./_import/components/Editor.c4c81805.js">
@@ -41,7 +41,7 @@
 <link rel="modulepreload" href="./_node/@codemirror/lang-javascript@6.2.3/index.75ce0233.js">
 <link rel="modulepreload" href="./_node/@codemirror/language@6.10.8/index.4544127e.js">
 <link rel="modulepreload" href="./_node/globals@15.15.0/index.5cb8aa48.js">
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@ee658db/packages/standalone/pre_fetch.mjs">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/gh/calculang/calculang@373ae56/packages/standalone/pre_fetch.mjs">
 <link rel="modulepreload" href="./_node/@viz-js/viz@3.11.0/index.103b05db.js">
 <link rel="modulepreload" href="./_node/htl@0.3.1/index.0caf36e7.js">
 <link rel="modulepreload" href="./_node/codemirror-6-snippetbuilder@1.0.1/index.15716d65.js">
@@ -163,7 +163,7 @@ import {registerFile} from "./_observablehq/stdlib.313a6eb4.js";
 
 registerFile("./cul/basicterm-tables.cul.js", {"name":"./cul/basicterm-tables.cul.js","mimeType":"text/javascript","path":"./_file/cul/basicterm-tables.cul.b51f60f8.js","lastModified":1742047497266,"size":30991});
 registerFile("./cul/basicterm.cul.js", {"name":"./cul/basicterm.cul.js","mimeType":"text/javascript","path":"./_file/cul/basicterm.cul.d3d17af7.js","lastModified":1742047497266,"size":9154});
-registerFile("./cul/playground.cul.js", {"name":"./cul/playground.cul.js","mimeType":"text/javascript","path":"./_file/cul/playground.cul.c4844d5b.js","lastModified":1742047497268,"size":6341});
+registerFile("./cul/playground.cul.js", {"name":"./cul/playground.cul.js","mimeType":"text/javascript","path":"./_file/cul/playground.cul.ac392b73.js","lastModified":1742991101652,"size":6132});
 
 define({id: "5173d93c", body: () => {
 /*const watcher = window.matchMedia("(max-width: 768px) and (orientation: landscape)")
@@ -376,8 +376,8 @@ function fmt(formula, v) {
 return {fmt_default_1,fmt};
 }});
 
-define({id: "4932e8b7", inputs: ["compilations"], outputs: ["getIntrospection","compile_new","bundleIntoOne","packageCalculang_new","calls_fromDefinition","compiled"], body: async (compilations) => {
-const {introspection: getIntrospection, compile_new, bundleIntoOne, packageCalculang_new, calls_fromDefinition} = await import("https://cdn.jsdelivr.net/gh/calculang/calculang@ee658db/packages/standalone/index.js");
+define({id: "65ffdccf", inputs: ["compilations"], outputs: ["getIntrospection","compile_new","bundleIntoOne","packageCalculang_new","calls_fromDefinition","compiled"], body: async (compilations) => {
+const {introspection: getIntrospection, compile_new, bundleIntoOne, packageCalculang_new, calls_fromDefinition} = await import("https://cdn.jsdelivr.net/gh/calculang/calculang@373ae56/packages/standalone/index.js");
  //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//"https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js"
 
 
@@ -761,7 +761,7 @@ return {formula,setFormula};
 }});
 
 define({id: "3cde0bcd", inputs: ["Mutable","default_fs","setModel","setIntrospection","setCompilations","setCursor","setFormula","fmt","display"], outputs: ["ab","selection","formulae_visible","hover","set_formulae_visible","set_hover","x"], body: async (Mutable,default_fs,setModel,setIntrospection,setCompilations,setCursor,setFormula,fmt,display) => {
-const {ab} = await import("./_import/components/editor.21ae722b.js");
+const {ab} = await import("./_import/components/editor.69179187.js");
 
 const selection = Mutable({from:{line:1,column:1}, to:{line:1,column:2}})
 
@@ -1947,7 +1947,7 @@ label[for="interim-tab"]/*, label[for="module-relationships"]*//*, label[for="he
 window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
 </script>
 <!--<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>-->
-<div class="observablehq observablehq--block"><!--:4932e8b7:--></div>
+<div class="observablehq observablehq--block"><!--:65ffdccf:--></div>
 <div class="observablehq observablehq--block"><!--:6261cc11:--></div>
 <div class="observablehq observablehq--block"><!--:4eb21f17:--></div>
 <style>
