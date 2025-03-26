@@ -131,7 +131,7 @@ export const expense_maint = () => 60
 export const inflation_rate = () => 0.01
 export const inflation_rate_mth = () => (1 + inflation_rate()) ** (1 / 12) - 1
 
-export const inflation_factor = () =>  (1 + inflation_rate())**(t()/12) // in playground.cul.js adding support for inflation rates that vary over time: e.g. when we delay/stress the rate, and starting inflation at policy start rather than t=0 or "now"
+export const inflation_factor = () => (1 + inflation_rate()) ** (t() / 12) // in playground.cul.js adding support for inflation rates that vary over time: e.g. when we delay/stress the rate, and starting inflation at policy start rather than t=0 or "now"
 
 // cashflows:
 
@@ -161,7 +161,7 @@ export const pols_if = () => pols_if_at(/*{ timing_in: 'BEF_MAT' }*/);
 // Leaving timing free here: I specify the timing in premium_rate_per_mille formula in playground.cul.js
 
 export const net_premium_pp = () => {
-  return -pv_fut_claims({ t_in: 0, duration_mth_in:0 }) / pv_fut_pols_if({ t_in: 0, duration_mth_in:0})
+  return -pv_fut_claims({ t_in: 0, duration_mth_in: 0 }) / pv_fut_pols_if({ t_in: 0, duration_mth_in: 0 })
 }
 
 export const premium_rate_per_mille = () =>
