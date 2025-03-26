@@ -815,7 +815,7 @@ export const ab = ({entrypoint='entrypoint.cul.js', defaultFS, setModel, setIntr
 //   This specific environment doesn't offer a lot of help - but it's possible.
 // You can ask me for recipes for all of these things.
 
-import { all_cul } from '${div.entrypoint}';
+import { all_cul as _orig } from '${div.entrypoint}';
 // note: you might notice 0s being added to all_cul as you work: you can ignore them!
 
 // NEW FORMULAS HERE:
