@@ -135,7 +135,7 @@ export const c = () => 2.2
 
 // parameterised mortality formula from https://github.com/lifelib-dev/lifelib/blob/main/lifelib/libraries/basiclife/basic_term_sample.xlsx
 // Male mortality uplift added for Playground (basicterm does't have M/F rates) (but not necessarily used in premium projection: see `gender_neutral_pricing`)
-export const mort_rate_recalc = () => Math.min(1, Math.min(1, a() * Math.exp(b() * Math.pow(age(), c()))) * Math.pow(1.1, mort_rate_select_index())) * (sex() == 'M' ? 1.2 : 1)
+export const mort_rate_recalc = () => Math.min(1, Math.min(1, a() * Math.exp(b() * Math.pow(age(), c()))) * Math.pow(1.1, mort_rate_select_index()) * (sex() == 'M' ? 1.2 : 1))
 
 export const mort_rate = () => {
   if (t() < mort_rate_factor_delay()) return mort_rate_recalc()
