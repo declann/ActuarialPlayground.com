@@ -7,8 +7,8 @@
 // Notable differences made here:
 
 // BasicTerm uses data from a model point table, here model point fields are inputs
+// I also made commission features depend on new inputs.
 
-// I changed how commissions are paramaterised, but with no impact.
 // I tweaked initial conditions in pols_if_at to allow me to show past calculated cashflows
 // Along with this I use zero_decrement_experience_in to control 0 vs. expected decrements for t<0 (past cashflows)
 // And I split the calculation of PVs:
