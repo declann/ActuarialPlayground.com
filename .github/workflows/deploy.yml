@@ -27,14 +27,17 @@ jobs:
       #  with:
       #    node-version: '22'
 
-      - name: Build
-        run: npm install && npm run build
+      - name: Install Packages
+        run: npm install
 
-      - name: Deploy
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=ActuarialPlayground.com
+          command: pages deploy dist --project-name=actuarialplayground
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
