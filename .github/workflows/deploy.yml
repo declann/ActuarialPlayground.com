@@ -2,14 +2,15 @@ name: ActuarialPlayground.com
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/deploy.yml"
-      - "src/**"
-      - "test/**" # important when I integrate tests, but is also where bundle comes from
-      - "observablehq.config.ts"
+  # Temp disabled until issue 4 fixed
+  #push:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - ".github/workflows/deploy.yml"
+  #    - "src/**"
+  #    - "test/**" # important when I integrate tests, but is also where bundle comes from
+  #    - "observablehq.config.ts"
 
 jobs:
   deploy:
