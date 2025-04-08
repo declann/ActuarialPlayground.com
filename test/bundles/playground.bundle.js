@@ -8,7 +8,6 @@ let model = {};
 
 
 
-
 // PARAMETERS FOR CONTROLS AND STRESSES
 
 // in basicterm.cul.js some things are hardcoded,
@@ -127,6 +126,7 @@ export const s0_premium_due$ = ({ premium_payment_frequency_in, t_in, duration_m
   return 0;
 };
 
+// NOT annualized
 export const s0_premium_pp$ = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, sex_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) => {
   if (!s0_premium_due({ premium_payment_frequency_in, t_in, duration_mth_in })) return 0;
   return s1_premium_pp_({ sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, sex_in, zero_spot_year_in, premium_payment_frequency_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in });
@@ -186,6 +186,10 @@ export const s0_placeholder2$ = ({}) => 0; // placeholder2 will be visualized pu
 // (when discounting)
 export const s0_pv_placeholder$ = ({ discounting_on_in, t_in }) => s1_disc_factor({ discounting_on_in, t_in }) * s0_placeholder({});
 export const s0_pv_placeholder2$ = ({ discounting_on_in, t_in }) => s1_disc_factor({ discounting_on_in, t_in }) * s0_placeholder2({});
+
+
+// policy value is present value of future cashflows, at t_in=0
+export const s0_policy_value$ = ({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s1_pv_fut_net_cf({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in, t_in: 0 });
 
 
 
@@ -439,7 +443,7 @@ export const s1_pv_fut_pols_if$ = ({ t_in, policy_term_in, duration_mth_in, timi
 // Table values reflect tables from lifelibs BasicTerm model.
 
 
-//////////////////////////////////// mortality rates: ////////////////////////////////////
+//////////////////////////////////// premium rates: ////////////////////////////////////
 
 
 export const s2_age_at_entry_ = ({ age_at_entry_in }) => age_at_entry_in;
@@ -470,7 +474,7 @@ export const s2_mort_table$ = ({}) => [{ "0": 0.0002310671048780701, "1": 0.0002
 
 export const s2_zero_spot_year = ({ zero_spot_year_in }) => zero_spot_year_in; // year as formula conflicts with simple-loan.cul.js
 
-export const s2_zero_spot$ = ({ zero_spot_year_in }) => s2_disc_rate_ann_table({})[s2_zero_spot_year({ zero_spot_year_in })].zero_spot;
+export const s2_zero_spot$ = ({ zero_spot_year_in }) => s2_disc_rate_ann_table({})[s2_zero_spot_year({ zero_spot_year_in })]?.zero_spot ?? 0;
 
 export const s2_disc_rate_ann_table$ = ({}) => [{ "year": 0, "zero_spot": 0 }, { "year": 1, "zero_spot": 0.00555 }, { "year": 2, "zero_spot": 0.006840000000000001 }, { "year": 3, "zero_spot": 0.00788 }, { "year": 4, "zero_spot": 0.00866 }, { "year": 5, "zero_spot": 0.00937 }, { "year": 6, "zero_spot": 0.00997 }, { "year": 7, "zero_spot": 0.0105 }, { "year": 8, "zero_spot": 0.01098 }, { "year": 9, "zero_spot": 0.01144 }, { "year": 10, "zero_spot": 0.01188 }, { "year": 11, "zero_spot": 0.01226 }, { "year": 12, "zero_spot": 0.01259 }, { "year": 13, "zero_spot": 0.01285 }, { "year": 14, "zero_spot": 0.01308 }, { "year": 15, "zero_spot": 0.0133 }, { "year": 16, "zero_spot": 0.01345 }, { "year": 17, "zero_spot": 0.01358 }, { "year": 18, "zero_spot": 0.01368 }, { "year": 19, "zero_spot": 0.01375 }, { "year": 20, "zero_spot": 0.01378 }, { "year": 21, "zero_spot": 0.01379 }, { "year": 22, "zero_spot": 0.01376 }, { "year": 23, "zero_spot": 0.01373 }, { "year": 24, "zero_spot": 0.01369 }, { "year": 25, "zero_spot": 0.01365 }, { "year": 26, "zero_spot": 0.01361 }, { "year": 27, "zero_spot": 0.01356 }, { "year": 28, "zero_spot": 0.01351 }, { "year": 29, "zero_spot": 0.01346 }, { "year": 30, "zero_spot": 0.0134 }, { "year": 31, "zero_spot": 0.01333 }, { "year": 32, "zero_spot": 0.01325 }, { "year": 33, "zero_spot": 0.01316 }, { "year": 34, "zero_spot": 0.01306 }, { "year": 35, "zero_spot": 0.01295 }, { "year": 36, "zero_spot": 0.01283 }, { "year": 37, "zero_spot": 0.01271 }, { "year": 38, "zero_spot": 0.0126 }, { "year": 39, "zero_spot": 0.0125 }, { "year": 40, "zero_spot": 0.01241 }, { "year": 41, "zero_spot": 0.01235 }, { "year": 42, "zero_spot": 0.01229 }, { "year": 43, "zero_spot": 0.01222 }, { "year": 44, "zero_spot": 0.01214 }, { "year": 45, "zero_spot": 0.01203 }, { "year": 46, "zero_spot": 0.0119 }, { "year": 47, "zero_spot": 0.01178 }, { "year": 48, "zero_spot": 0.01168 }, { "year": 49, "zero_spot": 0.01164 }, { "year": 50, "zero_spot": 0.01166 }, { "year": 51, "zero_spot": 0.01177 }, { "year": 52, "zero_spot": 0.01193 }, { "year": 53, "zero_spot": 0.01215 }, { "year": 54, "zero_spot": 0.01241 }, { "year": 55, "zero_spot": 0.0127 }, { "year": 56, "zero_spot": 0.01301 }, { "year": 57, "zero_spot": 0.01333 }, { "year": 58, "zero_spot": 0.01367 }, { "year": 59, "zero_spot": 0.01402 }, { "year": 60, "zero_spot": 0.01437 }, { "year": 61, "zero_spot": 0.01473 }, { "year": 62, "zero_spot": 0.01508 }, { "year": 63, "zero_spot": 0.01543 }, { "year": 64, "zero_spot": 0.01579 }, { "year": 65, "zero_spot": 0.01613 }, { "year": 66, "zero_spot": 0.01648 }, { "year": 67, "zero_spot": 0.01682 }, { "year": 68, "zero_spot": 0.01715 }, { "year": 69, "zero_spot": 0.01748 }, { "year": 70, "zero_spot": 0.0178 }, { "year": 71, "zero_spot": 0.01812 }, { "year": 72, "zero_spot": 0.01843 }, { "year": 73, "zero_spot": 0.01874 }, { "year": 74, "zero_spot": 0.01903 }, { "year": 75, "zero_spot": 0.01933 }, { "year": 76, "zero_spot": 0.01961 }, { "year": 77, "zero_spot": 0.01989 }, { "year": 78, "zero_spot": 0.02016 }, { "year": 79, "zero_spot": 0.02043 }, { "year": 80, "zero_spot": 0.02069 }, { "year": 81, "zero_spot": 0.02095 }, { "year": 82, "zero_spot": 0.0212 }, { "year": 83, "zero_spot": 0.02144 }, { "year": 84, "zero_spot": 0.02168 }, { "year": 85, "zero_spot": 0.02192 }, { "year": 86, "zero_spot": 0.02215 }, { "year": 87, "zero_spot": 0.02237 }, { "year": 88, "zero_spot": 0.02259 }, { "year": 89, "zero_spot": 0.0228 }, { "year": 90, "zero_spot": 0.02301 }, { "year": 91, "zero_spot": 0.02322 }, { "year": 92, "zero_spot": 0.02342 }, { "year": 93, "zero_spot": 0.02362 }, { "year": 94, "zero_spot": 0.02381 }, { "year": 95, "zero_spot": 0.024 }, { "year": 96, "zero_spot": 0.02419 }, { "year": 97, "zero_spot": 0.02437 }, { "year": 98, "zero_spot": 0.02455 }, { "year": 99, "zero_spot": 0.02472 }, { "year": 100, "zero_spot": 0.02489 }, { "year": 101, "zero_spot": 0.02506 }, { "year": 102, "zero_spot": 0.02522 }, { "year": 103, "zero_spot": 0.02539 }, { "year": 104, "zero_spot": 0.02554 }, { "year": 105, "zero_spot": 0.0257 }, { "year": 106, "zero_spot": 0.02585 }, { "year": 107, "zero_spot": 0.026 }, { "year": 108, "zero_spot": 0.02615 }, { "year": 109, "zero_spot": 0.02629 }, { "year": 110, "zero_spot": 0.02643 }, { "year": 111, "zero_spot": 0.02657 }, { "year": 112, "zero_spot": 0.02671 }, { "year": 113, "zero_spot": 0.02684 }, { "year": 114, "zero_spot": 0.02698 }, { "year": 115, "zero_spot": 0.02711 }, { "year": 116, "zero_spot": 0.02723 }, { "year": 117, "zero_spot": 0.02736 }, { "year": 118, "zero_spot": 0.02748 }, { "year": 119, "zero_spot": 0.0276 }, { "year": 120, "zero_spot": 0.02772 }, { "year": 121, "zero_spot": 0.02784 }, { "year": 122, "zero_spot": 0.02795 }, { "year": 123, "zero_spot": 0.02807 }, { "year": 124, "zero_spot": 0.02818 }, { "year": 125, "zero_spot": 0.02829 }, { "year": 126, "zero_spot": 0.0284 }, { "year": 127, "zero_spot": 0.0285 }, { "year": 128, "zero_spot": 0.02861000000000001 }, { "year": 129, "zero_spot": 0.02871000000000001 }, { "year": 130, "zero_spot": 0.02881 }, { "year": 131, "zero_spot": 0.02891 }, { "year": 132, "zero_spot": 0.02901 }, { "year": 133, "zero_spot": 0.02911000000000001 }, { "year": 134, "zero_spot": 0.0292 }, { "year": 135, "zero_spot": 0.0293 }, { "year": 136, "zero_spot": 0.02939 }, { "year": 137, "zero_spot": 0.02948000000000001 }, { "year": 138, "zero_spot": 0.02957 }, { "year": 139, "zero_spot": 0.02966 }, { "year": 140, "zero_spot": 0.02975 }, { "year": 141, "zero_spot": 0.02984 }, { "year": 142, "zero_spot": 0.02992 }, { "year": 143, "zero_spot": 0.03001 }, { "year": 144, "zero_spot": 0.03009 }, { "year": 145, "zero_spot": 0.03017 }, { "year": 146, "zero_spot": 0.03025 }, { "year": 147, "zero_spot": 0.03033000000000001 }, { "year": 148, "zero_spot": 0.03041000000000001 }, { "year": 149, "zero_spot": 0.03049 }, { "year": 150, "zero_spot": 0.03056000000000001 }];
 
@@ -566,6 +570,10 @@ model['s0_pv_placeholder'] = s0_pv_placeholder
 export const s0_pv_placeholder2$m = memoize(s0_pv_placeholder2$, ({discounting_on_in, t_in}) => Object.values(({discounting_on_in, t_in})).toString()); 
 export const s0_pv_placeholder2 = ({discounting_on_in, t_in}) => s0_pv_placeholder2$m({discounting_on_in, t_in})
 model['s0_pv_placeholder2'] = s0_pv_placeholder2
+
+export const s0_policy_value$m = memoize(s0_policy_value$, ({policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in}) => Object.values(({policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in})).toString()); 
+export const s0_policy_value = ({policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in}) => s0_policy_value$m({policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in})
+model['s0_policy_value'] = s0_policy_value
 
 export const s1_duration_mth_0$m = memoize(s1_duration_mth_0$, ({duration_mth_in}) => Object.values(({duration_mth_in})).toString()); 
 export const s1_duration_mth_0 = ({duration_mth_in}) => s1_duration_mth_0$m({duration_mth_in})
@@ -849,7 +857,8 @@ export const net_cf = s0_net_cf; model['net_cf'] = net_cf;
 export const placeholder = s0_placeholder; model['placeholder'] = placeholder;
 export const placeholder2 = s0_placeholder2; model['placeholder2'] = placeholder2;
 export const pv_placeholder = s0_pv_placeholder; model['pv_placeholder'] = pv_placeholder;
-export const pv_placeholder2 = s0_pv_placeholder2; model['pv_placeholder2'] = pv_placeholder2
+export const pv_placeholder2 = s0_pv_placeholder2; model['pv_placeholder2'] = pv_placeholder2;
+export const policy_value = s0_policy_value; model['policy_value'] = policy_value
 
 
 model['s0_commission_mths'] = s0_commission_mths;
@@ -892,6 +901,7 @@ model['s0_placeholder$'] = s0_placeholder$;
 model['s0_placeholder2$'] = s0_placeholder2$;
 model['s0_pv_placeholder$'] = s0_pv_placeholder$;
 model['s0_pv_placeholder2$'] = s0_pv_placeholder2$;
+model['s0_policy_value$'] = s0_policy_value$;
 model['s1_t'] = s1_t;
 model['s1_age_at_entry'] = s1_age_at_entry;
 model['s1_sex'] = s1_sex;
