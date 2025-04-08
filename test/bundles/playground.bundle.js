@@ -70,21 +70,6 @@ export const s0_mort_rate_addition$ = ({ t_in, stress_delay_in, mort_rate_Y1_add
 };
 
 
-// INFLATION BEHAVIOUR
-
-// inflation factor
-// basicterm.cul.js starts inflation at t=0 i.e. "now".
-// Playground starts inflation from the start of the policy (t=-duration_mth_0())
-// Unlike lapses and mortality no experience effect (b/c =expected basis for t<0)
-export const s0_inflation_factor$ = ({ t_in, duration_mth_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }) => {
-  if (s1_t({ t_in }) < -s1_duration_mth_0({ duration_mth_in })) return s0_inflation_factor({ duration_mth_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in, t_in: s1_t({ t_in }) + 1 }) / (1 + s1_inflation_rate_mth({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }));
-  if (s1_t({ t_in }) == -s1_duration_mth_0({ duration_mth_in })) return 1;else
-  return s0_inflation_factor({ duration_mth_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in, t_in: s1_t({ t_in }) - 1 }) * (1 + s1_inflation_rate_mth({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }));
-};
-
-
-
-
 // PRICING
 
 export const s0_loading_prem = ({ loading_prem_in }) => loading_prem_in ?? 0.5;
@@ -328,13 +313,13 @@ export const s1_expense_maint_ = ({}) => 60;
 export const s1_inflation_rate_ = ({}) => 0.01;
 export const s1_inflation_rate_mth$ = ({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }) => (1 + s0_inflation_rate({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in })) ** (1 / 12) - 1;
 
-export const s1_inflation_factor_ = ({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }) => (1 + s0_inflation_rate({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in })) ** (s1_t({ t_in }) / 12); // in playground.cul.js adding support for inflation rates that vary over time: e.g. when we delay/stress the rate, and starting inflation at policy start rather than t=0 or "now"
+export const s1_inflation_factor$ = ({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }) => (1 + s0_inflation_rate({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in })) ** (s1_t({ t_in }) / 12); // in playground.cul.js adding support for inflation rates that vary over time: e.g. when we delay/stress the rate, and starting inflation at policy start rather than t=0 or "now"
 
 // cashflows:
 
 export const s1_premiums$ = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) => s0_premium_pp({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, sex_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) * s1_pols_if_at({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, timing_in: 'BEF_DECR' });
 export const s1_claims$ = ({ sum_assured_in, duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in }) => -s1_claim_pp({ sum_assured_in }) * s1_pols_death({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in });
-export const s1_expenses$ = ({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in, duration_mth_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in }) => -(s0_expense_acq({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in }) * s1_pols_new_biz({ duration_mth_in, t_in, policy_count_in }) + s1_pols_if_at({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, timing_in: 'BEF_DECR' }) * s0_expense_maint({ t_in, stress_delay_in, expense_maint_in, expenses_factor_in }) / 12 * s0_inflation_factor({ t_in, duration_mth_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }));
+export const s1_expenses$ = ({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in, duration_mth_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in }) => -(s0_expense_acq({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in }) * s1_pols_new_biz({ duration_mth_in, t_in, policy_count_in }) + s1_pols_if_at({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, timing_in: 'BEF_DECR' }) * s0_expense_maint({ t_in, stress_delay_in, expense_maint_in, expenses_factor_in }) / 12 * s1_inflation_factor({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }));
 export const s1_commissions$ = ({ duration_mth_in, t_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in }) => s1_duration_mth({ duration_mth_in, t_in }) < s0_commission_mths({ commission_mths_in }) ? -s1_premiums({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) * s0_commission_pc({ commission_pc_in }) / 100 : 0;
 
 export const s1_commission_mths_ = ({}) => 12;
@@ -495,10 +480,6 @@ export const s0_mort_rate_addition$m = memoize(s0_mort_rate_addition$, ({t_in, s
 export const s0_mort_rate_addition = ({t_in, stress_delay_in, mort_rate_Y1_add_per_mille_in}) => s0_mort_rate_addition$m({t_in, stress_delay_in, mort_rate_Y1_add_per_mille_in})
 model['s0_mort_rate_addition'] = s0_mort_rate_addition
 
-export const s0_inflation_factor$m = memoize(s0_inflation_factor$, ({t_in, duration_mth_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in}) => Object.values(({t_in, duration_mth_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in})).toString()); 
-export const s0_inflation_factor = ({t_in, duration_mth_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in}) => s0_inflation_factor$m({t_in, duration_mth_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in})
-model['s0_inflation_factor'] = s0_inflation_factor
-
 export const s0_premium_rate_per_mille$m = memoize(s0_premium_rate_per_mille$, ({loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, sex_in, zero_spot_year_in, premium_payment_frequency_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in}) => Object.values(({loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, sex_in, zero_spot_year_in, premium_payment_frequency_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in})).toString()); 
 export const s0_premium_rate_per_mille = ({loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, sex_in, zero_spot_year_in, premium_payment_frequency_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in}) => s0_premium_rate_per_mille$m({loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, sex_in, zero_spot_year_in, premium_payment_frequency_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in})
 model['s0_premium_rate_per_mille'] = s0_premium_rate_per_mille
@@ -622,6 +603,10 @@ model['s1_pols_death'] = s1_pols_death
 export const s1_inflation_rate_mth$m = memoize(s1_inflation_rate_mth$, ({t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in}) => Object.values(({t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in})).toString()); 
 export const s1_inflation_rate_mth = ({t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in}) => s1_inflation_rate_mth$m({t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in})
 model['s1_inflation_rate_mth'] = s1_inflation_rate_mth
+
+export const s1_inflation_factor$m = memoize(s1_inflation_factor$, ({t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in}) => Object.values(({t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in})).toString()); 
+export const s1_inflation_factor = ({t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in}) => s1_inflation_factor$m({t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in})
+model['s1_inflation_factor'] = s1_inflation_factor
 
 export const s1_premiums$m = memoize(s1_premiums$, ({premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in}) => Object.values(({premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in})).toString()); 
 export const s1_premiums = ({premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in}) => s1_premiums$m({premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in})
@@ -782,7 +767,7 @@ export const expense_acq_orig = s1_expense_acq_; model['expense_acq_orig'] = exp
 export const expense_maint_orig = s1_expense_maint_; model['expense_maint_orig'] = expense_maint_orig; ;
 export const inflation_rate_orig = s1_inflation_rate_; model['inflation_rate_orig'] = inflation_rate_orig; ;
 export const inflation_rate_mth = s1_inflation_rate_mth; model['inflation_rate_mth'] = inflation_rate_mth; ;
-export const inflation_factor_orig = s1_inflation_factor_; model['inflation_factor_orig'] = inflation_factor_orig; ;
+export const inflation_factor = s1_inflation_factor; model['inflation_factor'] = inflation_factor; ;
 export const premiums = s1_premiums; model['premiums'] = premiums; ;
 export const claims = s1_claims; model['claims'] = claims; ;
 export const expenses = s1_expenses; model['expenses'] = expenses; ;
@@ -834,7 +819,6 @@ export const mort_rate_factor_delay = s0_mort_rate_factor_delay; model['mort_rat
 export const mort_rate_factor = s0_mort_rate_factor; model['mort_rate_factor'] = mort_rate_factor;
 export const mort_rate_Y1_add_per_mille = s0_mort_rate_Y1_add_per_mille; model['mort_rate_Y1_add_per_mille'] = mort_rate_Y1_add_per_mille;
 export const mort_rate_addition = s0_mort_rate_addition; model['mort_rate_addition'] = mort_rate_addition;
-export const inflation_factor = s0_inflation_factor; model['inflation_factor'] = inflation_factor;
 export const loading_prem = s0_loading_prem; model['loading_prem'] = loading_prem;
 export const gender_neutral_pricing = s0_gender_neutral_pricing; model['gender_neutral_pricing'] = gender_neutral_pricing;
 export const update_pricing_lapse_rates = s0_update_pricing_lapse_rates; model['update_pricing_lapse_rates'] = update_pricing_lapse_rates;
@@ -877,7 +861,6 @@ model['s0_mort_rate_factor_delay$'] = s0_mort_rate_factor_delay$;
 model['s0_mort_rate_factor'] = s0_mort_rate_factor;
 model['s0_mort_rate_Y1_add_per_mille'] = s0_mort_rate_Y1_add_per_mille;
 model['s0_mort_rate_addition$'] = s0_mort_rate_addition$;
-model['s0_inflation_factor$'] = s0_inflation_factor$;
 model['s0_loading_prem'] = s0_loading_prem;
 model['s0_gender_neutral_pricing'] = s0_gender_neutral_pricing;
 model['s0_update_pricing_lapse_rates'] = s0_update_pricing_lapse_rates;
@@ -930,7 +913,7 @@ model['s1_expense_acq_'] = s1_expense_acq_;
 model['s1_expense_maint_'] = s1_expense_maint_;
 model['s1_inflation_rate_'] = s1_inflation_rate_;
 model['s1_inflation_rate_mth$'] = s1_inflation_rate_mth$;
-model['s1_inflation_factor_'] = s1_inflation_factor_;
+model['s1_inflation_factor$'] = s1_inflation_factor$;
 model['s1_premiums$'] = s1_premiums$;
 model['s1_claims$'] = s1_claims$;
 model['s1_expenses$'] = s1_expenses$;

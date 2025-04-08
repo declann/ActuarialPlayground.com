@@ -64,21 +64,6 @@ export const mort_rate_addition = () => {
 }
 
 
-// INFLATION BEHAVIOUR
-
-// inflation factor
-// basicterm.cul.js starts inflation at t=0 i.e. "now".
-// Playground starts inflation from the start of the policy (t=-duration_mth_0())
-// Unlike lapses and mortality no experience effect (b/c =expected basis for t<0)
-export const inflation_factor = () => {
-  if (t() < -duration_mth_0()) return inflation_factor({ t_in: t() + 1 }) / (1 + inflation_rate_mth())
-  if (t() == -duration_mth_0()) return 1;
-  else return inflation_factor({ t_in: t() - 1 }) * (1 + inflation_rate_mth())
-}
-
-
-
-
 // PRICING
 
 export const loading_prem = () => loading_prem_in ?? 0.5
