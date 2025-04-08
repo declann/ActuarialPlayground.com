@@ -269,7 +269,7 @@ function fmt(formula, v) {
 ```
 
 
-<!-- @include: /home/declan/repos/ActuarialPlayground.com/src/TEMPLATE_metal_open.md -->
+<!-- @include: ./src/TEMPLATE_metal_open.md -->
 
 <!--</div>
 
@@ -1274,7 +1274,7 @@ import embed from 'npm:vega-embed';
 
 <div>-->
 
-<!-- @include: /home/declan/repos/ActuarialPlayground.com/src/TEMPLATE_metal_close.md -->
+<!-- @include: ./src/TEMPLATE_metal_close.md -->
 
 
 <img style="display:none" src="./thumb.png" />

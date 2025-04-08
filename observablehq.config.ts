@@ -46,15 +46,13 @@ export default {
   // search: true, // activate search
 
   markdownIt: (md: MarkdownIt) => md/*.use(MarkdownItFootnote)*/.use(include, {
-    // your options, currentPath is required
     currentPath: (env) => env.filePath,
-    /*resolvePath: (path, cwd) => {
-      if (path.startsWith("@src")) {
-        return path.replace("@src", "path/to/src/folder");
+    resolvePath: (path) => {
+      if (path.startsWith("./src")) {
+        return path.replace("./src", process.cwd() + "/src");
       }
-  
-      //return path.join(cwd, path);
-    },*/
+      return path; // only handling specific cases that index.md uses
+    }
     })
 
 };
