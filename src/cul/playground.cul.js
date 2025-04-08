@@ -2,7 +2,6 @@
 
 import { all_cul as _orig } from './basicterm.cul.js';
 
-
 // PARAMETERS FOR CONTROLS AND STRESSES
 
 // in basicterm.cul.js some things are hardcoded,
@@ -121,6 +120,7 @@ export const premium_due = () => {
   else return 0
 }
 
+// NOT annualized
 export const premium_pp = () => {
   if (!premium_due()) return 0
   return premium_pp_orig()
@@ -181,3 +181,6 @@ export const placeholder2 = () => 0 // placeholder2 will be visualized purpley
 export const pv_placeholder = () => disc_factor() * placeholder()
 export const pv_placeholder2 = () => disc_factor() * placeholder2()
 
+
+// policy value is present value of future cashflows, at t_in=0
+export const policy_value = () => pv_fut_net_cf({ t_in: 0 })
