@@ -9,13 +9,15 @@ on:
     paths:
       - ".github/workflows/deploy.yml"
       - "src/**"
-      - "test/**" # important when I integrate tests, but is also where bundle comes from
+      - "test/**"
       - "observablehq.config.ts"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy
+    strategy:
+      fail-fast: true
     permissions:
       contents: read
       deployments: write
@@ -23,13 +25,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      #- name: Setup Node.js
-      #  uses: actions/setup-node@v4
-      #  with:
-      #    node-version: '22'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
 
       - name: Install Packages
         run: npm install
+
+      - name: Run tests
+        run: npm test
 
       - name: Build
         run: npm run build
