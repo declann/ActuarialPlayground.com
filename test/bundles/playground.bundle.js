@@ -246,7 +246,7 @@ export const s1_claim_pp$ = ({ sum_assured_in }) => s1_sum_assured({ sum_assured
 // For a mortgage protection-type decrease, we can directly import from a simple-loan calculang model
 
 //import { balance } from "https://calculang.dev/models/simple-loan/simple-loan.cul.js"
-//export const claim_pp = () => balance({ principal_in: sum_assured(), i_in: .1, year_in: duration(), term_in: policy_term() })
+//export const claim_pp = () => balance({ principal_in: sum_assured(), i_in: 10 /100, year_in: duration(), term_in: policy_term() })
 
 // This is an example of model composition: calculang models can use other models
 // and an every-day URL is an effective way to share and re-use models and logic (also workings)
