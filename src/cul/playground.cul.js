@@ -1,5 +1,8 @@
 // for a high-level overview, see the '?' tab
 
+// To make the playground model reducing term assurance product types
+// see comments surrounding `claim_pp` in basicterm.cul.js
+
 import { all_cul as _orig } from './basicterm.cul.js';
 
 // PARAMETERS FOR CONTROLS AND STRESSES
