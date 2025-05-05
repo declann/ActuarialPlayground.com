@@ -54,8 +54,23 @@ export const s0_duration$ = ({ duration_mth_in, t_in }) => Math.floor(s0_duratio
 
 export const s0_age = ({ age_at_entry_in, duration_mth_in, t_in }) => s0_age_at_entry({ age_at_entry_in }) + s0_duration({ duration_mth_in, t_in });
 
-// amount to pay on claim; for level term assurance a flat sum assured:
+// AMOUNT TO PAY ON CLAIM is determed by claim_pp formula
+
+// It's used to project claims cashflows And in the claims projection to calculate premiums (see playground.cul.js `premium_rate_per_mille`)
+
+// for level term assurance, we use a flat sum assured:
 export const s0_claim_pp$ = ({ sum_assured_in }) => s0_sum_assured({ sum_assured_in });
+
+// for reducing term assurance, switch to this for a straight-line reduction:
+//export const claim_pp = () => sum_assured() * (1 - duration() / policy_term())
+
+// For a mortgage protection-type decrease, we can directly import from a simple-loan calculang model
+
+//import { balance } from "https://calculang.dev/models/simple-loan/simple-loan.cul.js"
+//export const claim_pp = () => balance({ principal_in: sum_assured(), i_in: .1, year_in: duration(), term_in: policy_term() })
+
+// This is an example of model composition: calculang models can use other models
+// and an every-day URL is an effective way to share and re-use models and logic (also workings)
 
 
 
