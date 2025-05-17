@@ -3,7 +3,7 @@
 import { expect, describe, it } from 'vitest';
 import { resolve } from 'node:path';
 
-import { compile } from 'calculang/packages/standalone/index.js';
+import { compile } from '@calculang/standalone/index.js';
 
 import { readFile } from 'fs/promises';
 
