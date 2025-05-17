@@ -3,7 +3,7 @@
 // To make the playground model reducing term assurance product types
 // see comments surrounding `claim_pp` in basicterm.cul.js
 
-import { all_cul as _orig } from './basicterm.cul.js';
+import { all_cul } from './basicterm.cul.js';
 
 // PARAMETERS FOR CONTROLS AND STRESSES
 
@@ -26,8 +26,8 @@ export const lapse_rate_factor = () => lapse_rate_factor_in ?? 1
 export const original_lapse_rates = () => original_lapse_rates_in ?? false
 
 export const lapse_rate = () => {
-  if (t() < lapse_rate_factor_delay()) return original_lapse_rates() ? Math.max(0.1 - 0.02 * duration(), 0.02) : lapse_rate_orig();
-  else return lapse_rate_factor() * (original_lapse_rates() ? Math.max(0.1 - 0.02 * duration(), 0.02) : lapse_rate_orig());
+  if (t() < lapse_rate_factor_delay()) return original_lapse_rates() ? Math.max(0.1 - 0.02 * duration(), 0.02) : lapse_rate_();
+  else return lapse_rate_factor() * (original_lapse_rates() ? Math.max(0.1 - 0.02 * duration(), 0.02) : lapse_rate_());
 }
 
 export const inflation_rate_addition = () => inflation_rate_addition_in ?? 0;
@@ -80,7 +80,7 @@ export const premium_rate_per_mille = () =>
   * net_premium_pp({ /* 1000e sum assured projection with pricing config and no stresses, and discounting always on */ sum_assured_in: 1000, original_lapse_rates_in: !update_pricing_lapse_rates(), discounting_on_in: true, sex_in: gender_neutral_pricing() ? 'F' : sex(), timing_in: 'BEF_DECR', stress_delay_in: 12 * 120, lapse_rate_factor_in: 1, mort_rate_factor_in: 1, mort_rate_Y1_add_per_mille_in: 0 });
 
 
-export const pv_pols_if = () => pv_pols_if_orig() * premium_due() // used by net_premium_pp via pv_fut_pols_if
+export const pv_pols_if = () => pv_pols_if_() * premium_due() // used by net_premium_pp via pv_fut_pols_if
 
 
 // DIFFERENT PREMIUM FREQUENCIES
@@ -111,7 +111,7 @@ export const premium_due = () => {
 // NOT annualized
 export const premium_pp = () => {
   if (!premium_due()) return 0
-  return premium_pp_orig()
+  return premium_pp_()
 }
 
 // MORTALITY RATE RECALC
@@ -140,7 +140,7 @@ export const discounting_on = () => discounting_on_in ?? true
 
 export const disc_rate_ann = () => {
   if (!discounting_on()) return 0
-  else return disc_rate_ann_orig()
+  else return disc_rate_ann_()
 }
 
 
@@ -158,7 +158,7 @@ export const status = () => duration_mth_0() == 0 ? 'New Business' : 'In Force'
 
 // spares let you add new cashflows: they are 0, but you can change them below
 // careful: manipulation in net_cf not captured in Playground outputs!
-export const net_cf = () => net_cf_orig() + placeholder() + placeholder2();
+export const net_cf = () => net_cf_() + placeholder() + placeholder2();
 
 export const placeholder = () => 0 // placeholder1 will be visualized green
 export const placeholder2 = () => 0 // placeholder2 will be visualized purpley

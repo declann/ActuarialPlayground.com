@@ -32,8 +32,8 @@ import globals from "globals";
 
 // f9535c0 is latest all_cul commit:
 
-import { introspection as getIntrospection, compile_new, bundleIntoOne, calls_fromDefinition } from "https://cdn.jsdelivr.net/gh/calculang/calculang@373ae56/packages/standalone/index.js" //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//
-import {pre_fetch} from "https://cdn.jsdelivr.net/gh/calculang/calculang@373ae56/packages/standalone/pre_fetch.mjs"
+import { introspection as getIntrospection, compile_new, bundleIntoOne, calls_fromDefinition } from "@calculang/standalone/index.js" //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//
+import {pre_fetch} from "@calculang/standalone/pre_fetch.mjs"
 
 
 import { instance } from "@viz-js/viz";  //Playground: optimize: lose this dep >1MB
@@ -815,7 +815,7 @@ export const ab = ({entrypoint='entrypoint.cul.js', defaultFS, setModel, setIntr
 //   This specific environment doesn't offer a lot of help - but it's possible.
 // You can ask me for recipes for all of these things.
 
-import { all_cul as _orig } from '${div.entrypoint}';
+import { all_cul } from '${div.entrypoint}';
 // note: you might notice 0s being added to all_cul as you work: you can ignore them!
 
 // NEW FORMULAS HERE:
