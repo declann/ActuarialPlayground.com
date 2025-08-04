@@ -33,7 +33,7 @@ import globals from "globals";
 // f9535c0 is latest all_cul commit:
 
 import { introspection as getIntrospection, compile_new, bundleIntoOne, calls_fromDefinition } from "https://cdn.jsdelivr.net/gh/calculang/calculang@db0582b/packages/standalone/index.js" //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//
-import {pre_fetch} from "@calculang/standalone/pre_fetch.mjs"
+import {pre_fetch} from "https://cdn.jsdelivr.net/gh/calculang/calculang@db0582b/packages/standalone/pre_fetch.mjs"
 
 
 import { instance } from "@viz-js/viz";  //Playground: optimize: lose this dep >1MB
