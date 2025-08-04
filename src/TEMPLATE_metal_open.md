@@ -8,7 +8,7 @@ window.plausible = window.plausible || function() { (window.plausible.q = window
 <!--<script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>-->
 
 ```js
-import { introspection as getIntrospection, compile_new, bundleIntoOne, packageCalculang_new, calls_fromDefinition } from "@calculang/standalone/index.js" //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//"https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js"
+import { introspection as getIntrospection, compile_new, bundleIntoOne, packageCalculang_new, calls_fromDefinition } from "https://cdn.jsdelivr.net/gh/calculang/calculang@db0582b/packages/standalone/index.js" //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//"https://cdn.jsdelivr.net/gh/calculang/calculang@dev/packages/standalone/index.js"
 
 
 const compiled = compilations
