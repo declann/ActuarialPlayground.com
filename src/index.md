@@ -6,6 +6,19 @@ sidebar: false
 ---
 
 ```js
+const hashParams = new URLSearchParams(location.hash.slice(1));
+const hash = hashParams.get('hash');
+```
+
+```js
+const url0 = hashParams.get('url') ?? null;
+// even though exploit risk is low, I'm using a whitelist for urls openable from hash, for now
+// for now only accepting urls from calculang org; if there are other useful urls to load I'll add them
+// this is really an ad-hoc/temporary solution.
+const url = url0 ? (url0.startsWith('https://raw.githubusercontent.com/calculang/') ? url0 : null) : null;
+```
+
+```js
 /*const watcher = window.matchMedia("(max-width: 768px) and (orientation: landscape)")
 
 const orientation = Mutable(!watcher.matches ? "portrait" : "landscape")
@@ -1010,7 +1023,7 @@ import {Editor} from "./components/Editor.js";
 ```
 
 ```js
-const default_fs = ({
+const default_fs = url ? ({'playground.cul.js': `import { all_cul } from '${url}';`}) : ({
   "./basicterm.cul.js": (await (await FileAttachment('./cul/basicterm.cul.js')).text())//,
   //"./pricing.cul.js": (await (await FileAttachment('./cul/pricing.cul.js')).text()),
   //"./experience.cul.js": (await (await FileAttachment('./cul/experience.cul.js')).text())
