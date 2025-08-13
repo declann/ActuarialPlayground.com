@@ -32,6 +32,12 @@ Some technical notes in the Actuarial Playground UI under '?' tab. (TODO: make t
 
 `npm run test` - very minimal tests
 
+## Benchmark Instructions
+
+`npm run test:benchmark`
+
+**Among other developments, I've tested very significant performance improvements relating to Actuarial modelling in calculang - feel free to reach out if this is of interest.**
+
 ## license
 
 Code in this repository is free software licensed under the [GNU Affero General Public License Version 3](LICENSE).

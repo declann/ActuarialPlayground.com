@@ -32,19 +32,19 @@ let model = {};
 
 
 // time in months, >=0 is future, <0 is past
-export const s0_t = ({ t_in }) => t_in;
+export const s0_t$ = ({ t_in }) => t_in;
 
 // 'model point' inputs
-export const s0_age_at_entry = ({ age_at_entry_in }) => age_at_entry_in;
-export const s0_sex = ({ sex_in }) => sex_in;
-export const s0_policy_term = ({ policy_term_in }) => policy_term_in;
-export const s0_policy_count = ({ policy_count_in }) => policy_count_in;
-export const s0_sum_assured = ({ sum_assured_in }) => sum_assured_in;
+export const s0_age_at_entry$ = ({ age_at_entry_in }) => age_at_entry_in;
+export const s0_sex$ = ({ sex_in }) => sex_in;
+export const s0_policy_term$ = ({ policy_term_in }) => policy_term_in;
+export const s0_policy_count$ = ({ policy_count_in }) => policy_count_in;
+export const s0_sum_assured$ = ({ sum_assured_in }) => sum_assured_in;
 
 
 // duration_mth_in is a model point input: the duration "now" since policy started (or 0 for a New Business projection)
 // but duration_mth() is the duration at t since policy started
-export const s0_duration_mth = ({ duration_mth_in, t_in }) => duration_mth_in + s0_t({ t_in });
+export const s0_duration_mth$ = ({ duration_mth_in, t_in }) => duration_mth_in + s0_t({ t_in });
 
 // duration "now" since policy started, just for convenience:
 export const s0_duration_mth_0$ = ({ duration_mth_in }) => s0_duration_mth({ duration_mth_in, t_in: 0 });
@@ -52,7 +52,7 @@ export const s0_duration_mth_0$ = ({ duration_mth_in }) => s0_duration_mth({ dur
 // duration since policy started, in years:
 export const s0_duration$ = ({ duration_mth_in, t_in }) => Math.floor(s0_duration_mth({ duration_mth_in, t_in }) / 12);
 
-export const s0_age = ({ age_at_entry_in, duration_mth_in, t_in }) => s0_age_at_entry({ age_at_entry_in }) + s0_duration({ duration_mth_in, t_in });
+export const s0_age$ = ({ age_at_entry_in, duration_mth_in, t_in }) => s0_age_at_entry({ age_at_entry_in }) + s0_duration({ duration_mth_in, t_in });
 
 // AMOUNT TO PAY ON CLAIM is determed by claim_pp formula
 
@@ -76,10 +76,10 @@ export const s0_claim_pp$ = ({ sum_assured_in }) => s0_sum_assured({ sum_assured
 
 // mortality rates, using mort_rate() from basicterm-tables.cul.js
 
-export const s0_mort_rate_select_index = ({ duration_mth_in, t_in }) => Math.max(0, Math.min(5, s0_duration({ duration_mth_in, t_in }))); // used to lookup mort_rate table
+export const s0_mort_rate_select_index$ = ({ duration_mth_in, t_in }) => Math.max(0, Math.min(5, s0_duration({ duration_mth_in, t_in }))); // used to lookup mort_rate table
 
 // I can hoist this change to playground.cul.js, but it provides context for pols_if_at behaviour here
-export const s0_zero_decrement_experience = ({ zero_decrement_experience_in }) => zero_decrement_experience_in ?? true; // todo consider without this?
+export const s0_zero_decrement_experience$ = ({ zero_decrement_experience_in }) => zero_decrement_experience_in ?? true; // todo consider without this?
 
 export const s0_mort_rate_mth$ = ({ t_in, zero_decrement_experience_in, age_at_entry_in, duration_mth_in }) => {
   if (s0_t({ t_in }) < 0 && s0_zero_decrement_experience({ zero_decrement_experience_in })) return 0;
@@ -98,7 +98,7 @@ export const s0_lapse_rate_mth$ = ({ t_in, zero_decrement_experience_in, duratio
 
 // policy survival/decrement projections
 
-export const s0_timing = ({ timing_in }) => timing_in;
+export const s0_timing$ = ({ timing_in }) => timing_in;
 
 export const s0_pols_if_init$ = ({ policy_count_in }) => s0_policy_count({ policy_count_in });
 
@@ -270,8 +270,8 @@ export const s0_pv_fut_pols_if$ = ({ t_in, policy_term_in, duration_mth_in, timi
 //////////////////////////////////// premium rates: ////////////////////////////////////
 
 
-export const s1_age_at_entry_ = ({ age_at_entry_in }) => age_at_entry_in;
-export const s1_policy_term_ = ({ policy_term_in }) => policy_term_in;
+export const s1_age_at_entry_$ = ({ age_at_entry_in }) => age_at_entry_in;
+export const s1_policy_term_$ = ({ policy_term_in }) => policy_term_in;
 
 export const s1_premium_rate$ = ({ age_at_entry_in, policy_term_in }) =>
 s1_premium_table({}).
@@ -284,9 +284,9 @@ export const s1_premium_table$ = ({}) => [{ "age_at_entry": 20, "policy_term": 1
 
 //////////////////////////////////// mortality rates: ////////////////////////////////////
 
-export const s1_age_ = ({ age_in }) => age_in;
+export const s1_age_$ = ({ age_in }) => age_in;
 
-export const s1_mort_rate_select_index_ = ({ mort_rate_select_index_in }) => mort_rate_select_index_in;
+export const s1_mort_rate_select_index_$ = ({ mort_rate_select_index_in }) => mort_rate_select_index_in;
 
 export const s1_mort_rate$ = ({ age_at_entry_in, duration_mth_in, t_in }) => s1_mort_table({}).find((d) => d.Age == s0_age({ age_at_entry_in, duration_mth_in, t_in }))[s0_mort_rate_select_index({ duration_mth_in, t_in })];
 
@@ -296,12 +296,40 @@ export const s1_mort_table$ = ({}) => [{ "0": 0.0002310671048780701, "1": 0.0002
 
 ///////////////////////////////// discounting zero spot rates: /////////////////////////////////
 
-export const s1_zero_spot_year = ({ zero_spot_year_in }) => zero_spot_year_in; // year as formula conflicts with simple-loan.cul.js
+export const s1_zero_spot_year$ = ({ zero_spot_year_in }) => zero_spot_year_in; // year as formula conflicts with simple-loan.cul.js
 
 export const s1_zero_spot$ = ({ zero_spot_year_in }) => s1_disc_rate_ann_table({})[s1_zero_spot_year({ zero_spot_year_in })]?.zero_spot ?? 0;
 
 export const s1_disc_rate_ann_table$ = ({}) => [{ "year": 0, "zero_spot": 0 }, { "year": 1, "zero_spot": 0.00555 }, { "year": 2, "zero_spot": 0.006840000000000001 }, { "year": 3, "zero_spot": 0.00788 }, { "year": 4, "zero_spot": 0.00866 }, { "year": 5, "zero_spot": 0.00937 }, { "year": 6, "zero_spot": 0.00997 }, { "year": 7, "zero_spot": 0.0105 }, { "year": 8, "zero_spot": 0.01098 }, { "year": 9, "zero_spot": 0.01144 }, { "year": 10, "zero_spot": 0.01188 }, { "year": 11, "zero_spot": 0.01226 }, { "year": 12, "zero_spot": 0.01259 }, { "year": 13, "zero_spot": 0.01285 }, { "year": 14, "zero_spot": 0.01308 }, { "year": 15, "zero_spot": 0.0133 }, { "year": 16, "zero_spot": 0.01345 }, { "year": 17, "zero_spot": 0.01358 }, { "year": 18, "zero_spot": 0.01368 }, { "year": 19, "zero_spot": 0.01375 }, { "year": 20, "zero_spot": 0.01378 }, { "year": 21, "zero_spot": 0.01379 }, { "year": 22, "zero_spot": 0.01376 }, { "year": 23, "zero_spot": 0.01373 }, { "year": 24, "zero_spot": 0.01369 }, { "year": 25, "zero_spot": 0.01365 }, { "year": 26, "zero_spot": 0.01361 }, { "year": 27, "zero_spot": 0.01356 }, { "year": 28, "zero_spot": 0.01351 }, { "year": 29, "zero_spot": 0.01346 }, { "year": 30, "zero_spot": 0.0134 }, { "year": 31, "zero_spot": 0.01333 }, { "year": 32, "zero_spot": 0.01325 }, { "year": 33, "zero_spot": 0.01316 }, { "year": 34, "zero_spot": 0.01306 }, { "year": 35, "zero_spot": 0.01295 }, { "year": 36, "zero_spot": 0.01283 }, { "year": 37, "zero_spot": 0.01271 }, { "year": 38, "zero_spot": 0.0126 }, { "year": 39, "zero_spot": 0.0125 }, { "year": 40, "zero_spot": 0.01241 }, { "year": 41, "zero_spot": 0.01235 }, { "year": 42, "zero_spot": 0.01229 }, { "year": 43, "zero_spot": 0.01222 }, { "year": 44, "zero_spot": 0.01214 }, { "year": 45, "zero_spot": 0.01203 }, { "year": 46, "zero_spot": 0.0119 }, { "year": 47, "zero_spot": 0.01178 }, { "year": 48, "zero_spot": 0.01168 }, { "year": 49, "zero_spot": 0.01164 }, { "year": 50, "zero_spot": 0.01166 }, { "year": 51, "zero_spot": 0.01177 }, { "year": 52, "zero_spot": 0.01193 }, { "year": 53, "zero_spot": 0.01215 }, { "year": 54, "zero_spot": 0.01241 }, { "year": 55, "zero_spot": 0.0127 }, { "year": 56, "zero_spot": 0.01301 }, { "year": 57, "zero_spot": 0.01333 }, { "year": 58, "zero_spot": 0.01367 }, { "year": 59, "zero_spot": 0.01402 }, { "year": 60, "zero_spot": 0.01437 }, { "year": 61, "zero_spot": 0.01473 }, { "year": 62, "zero_spot": 0.01508 }, { "year": 63, "zero_spot": 0.01543 }, { "year": 64, "zero_spot": 0.01579 }, { "year": 65, "zero_spot": 0.01613 }, { "year": 66, "zero_spot": 0.01648 }, { "year": 67, "zero_spot": 0.01682 }, { "year": 68, "zero_spot": 0.01715 }, { "year": 69, "zero_spot": 0.01748 }, { "year": 70, "zero_spot": 0.0178 }, { "year": 71, "zero_spot": 0.01812 }, { "year": 72, "zero_spot": 0.01843 }, { "year": 73, "zero_spot": 0.01874 }, { "year": 74, "zero_spot": 0.01903 }, { "year": 75, "zero_spot": 0.01933 }, { "year": 76, "zero_spot": 0.01961 }, { "year": 77, "zero_spot": 0.01989 }, { "year": 78, "zero_spot": 0.02016 }, { "year": 79, "zero_spot": 0.02043 }, { "year": 80, "zero_spot": 0.02069 }, { "year": 81, "zero_spot": 0.02095 }, { "year": 82, "zero_spot": 0.0212 }, { "year": 83, "zero_spot": 0.02144 }, { "year": 84, "zero_spot": 0.02168 }, { "year": 85, "zero_spot": 0.02192 }, { "year": 86, "zero_spot": 0.02215 }, { "year": 87, "zero_spot": 0.02237 }, { "year": 88, "zero_spot": 0.02259 }, { "year": 89, "zero_spot": 0.0228 }, { "year": 90, "zero_spot": 0.02301 }, { "year": 91, "zero_spot": 0.02322 }, { "year": 92, "zero_spot": 0.02342 }, { "year": 93, "zero_spot": 0.02362 }, { "year": 94, "zero_spot": 0.02381 }, { "year": 95, "zero_spot": 0.024 }, { "year": 96, "zero_spot": 0.02419 }, { "year": 97, "zero_spot": 0.02437 }, { "year": 98, "zero_spot": 0.02455 }, { "year": 99, "zero_spot": 0.02472 }, { "year": 100, "zero_spot": 0.02489 }, { "year": 101, "zero_spot": 0.02506 }, { "year": 102, "zero_spot": 0.02522 }, { "year": 103, "zero_spot": 0.02539 }, { "year": 104, "zero_spot": 0.02554 }, { "year": 105, "zero_spot": 0.0257 }, { "year": 106, "zero_spot": 0.02585 }, { "year": 107, "zero_spot": 0.026 }, { "year": 108, "zero_spot": 0.02615 }, { "year": 109, "zero_spot": 0.02629 }, { "year": 110, "zero_spot": 0.02643 }, { "year": 111, "zero_spot": 0.02657 }, { "year": 112, "zero_spot": 0.02671 }, { "year": 113, "zero_spot": 0.02684 }, { "year": 114, "zero_spot": 0.02698 }, { "year": 115, "zero_spot": 0.02711 }, { "year": 116, "zero_spot": 0.02723 }, { "year": 117, "zero_spot": 0.02736 }, { "year": 118, "zero_spot": 0.02748 }, { "year": 119, "zero_spot": 0.0276 }, { "year": 120, "zero_spot": 0.02772 }, { "year": 121, "zero_spot": 0.02784 }, { "year": 122, "zero_spot": 0.02795 }, { "year": 123, "zero_spot": 0.02807 }, { "year": 124, "zero_spot": 0.02818 }, { "year": 125, "zero_spot": 0.02829 }, { "year": 126, "zero_spot": 0.0284 }, { "year": 127, "zero_spot": 0.0285 }, { "year": 128, "zero_spot": 0.02861000000000001 }, { "year": 129, "zero_spot": 0.02871000000000001 }, { "year": 130, "zero_spot": 0.02881 }, { "year": 131, "zero_spot": 0.02891 }, { "year": 132, "zero_spot": 0.02901 }, { "year": 133, "zero_spot": 0.02911000000000001 }, { "year": 134, "zero_spot": 0.0292 }, { "year": 135, "zero_spot": 0.0293 }, { "year": 136, "zero_spot": 0.02939 }, { "year": 137, "zero_spot": 0.02948000000000001 }, { "year": 138, "zero_spot": 0.02957 }, { "year": 139, "zero_spot": 0.02966 }, { "year": 140, "zero_spot": 0.02975 }, { "year": 141, "zero_spot": 0.02984 }, { "year": 142, "zero_spot": 0.02992 }, { "year": 143, "zero_spot": 0.03001 }, { "year": 144, "zero_spot": 0.03009 }, { "year": 145, "zero_spot": 0.03017 }, { "year": 146, "zero_spot": 0.03025 }, { "year": 147, "zero_spot": 0.03033000000000001 }, { "year": 148, "zero_spot": 0.03041000000000001 }, { "year": 149, "zero_spot": 0.03049 }, { "year": 150, "zero_spot": 0.03056000000000001 }];
 
+
+export const s0_t$m = memoize(s0_t$, ({t_in}) => Object.values(({t_in})).toString()); 
+export const s0_t = ({t_in}) => s0_t$m({t_in})
+model['s0_t'] = s0_t
+
+export const s0_age_at_entry$m = memoize(s0_age_at_entry$, ({age_at_entry_in}) => Object.values(({age_at_entry_in})).toString()); 
+export const s0_age_at_entry = ({age_at_entry_in}) => s0_age_at_entry$m({age_at_entry_in})
+model['s0_age_at_entry'] = s0_age_at_entry
+
+export const s0_sex$m = memoize(s0_sex$, ({sex_in}) => Object.values(({sex_in})).toString()); 
+export const s0_sex = ({sex_in}) => s0_sex$m({sex_in})
+model['s0_sex'] = s0_sex
+
+export const s0_policy_term$m = memoize(s0_policy_term$, ({policy_term_in}) => Object.values(({policy_term_in})).toString()); 
+export const s0_policy_term = ({policy_term_in}) => s0_policy_term$m({policy_term_in})
+model['s0_policy_term'] = s0_policy_term
+
+export const s0_policy_count$m = memoize(s0_policy_count$, ({policy_count_in}) => Object.values(({policy_count_in})).toString()); 
+export const s0_policy_count = ({policy_count_in}) => s0_policy_count$m({policy_count_in})
+model['s0_policy_count'] = s0_policy_count
+
+export const s0_sum_assured$m = memoize(s0_sum_assured$, ({sum_assured_in}) => Object.values(({sum_assured_in})).toString()); 
+export const s0_sum_assured = ({sum_assured_in}) => s0_sum_assured$m({sum_assured_in})
+model['s0_sum_assured'] = s0_sum_assured
+
+export const s0_duration_mth$m = memoize(s0_duration_mth$, ({duration_mth_in, t_in}) => Object.values(({duration_mth_in, t_in})).toString()); 
+export const s0_duration_mth = ({duration_mth_in, t_in}) => s0_duration_mth$m({duration_mth_in, t_in})
+model['s0_duration_mth'] = s0_duration_mth
 
 export const s0_duration_mth_0$m = memoize(s0_duration_mth_0$, ({duration_mth_in}) => Object.values(({duration_mth_in})).toString()); 
 export const s0_duration_mth_0 = ({duration_mth_in}) => s0_duration_mth_0$m({duration_mth_in})
@@ -311,9 +339,21 @@ export const s0_duration$m = memoize(s0_duration$, ({duration_mth_in, t_in}) => 
 export const s0_duration = ({duration_mth_in, t_in}) => s0_duration$m({duration_mth_in, t_in})
 model['s0_duration'] = s0_duration
 
+export const s0_age$m = memoize(s0_age$, ({age_at_entry_in, duration_mth_in, t_in}) => Object.values(({age_at_entry_in, duration_mth_in, t_in})).toString()); 
+export const s0_age = ({age_at_entry_in, duration_mth_in, t_in}) => s0_age$m({age_at_entry_in, duration_mth_in, t_in})
+model['s0_age'] = s0_age
+
 export const s0_claim_pp$m = memoize(s0_claim_pp$, ({sum_assured_in}) => Object.values(({sum_assured_in})).toString()); 
 export const s0_claim_pp = ({sum_assured_in}) => s0_claim_pp$m({sum_assured_in})
 model['s0_claim_pp'] = s0_claim_pp
+
+export const s0_mort_rate_select_index$m = memoize(s0_mort_rate_select_index$, ({duration_mth_in, t_in}) => Object.values(({duration_mth_in, t_in})).toString()); 
+export const s0_mort_rate_select_index = ({duration_mth_in, t_in}) => s0_mort_rate_select_index$m({duration_mth_in, t_in})
+model['s0_mort_rate_select_index'] = s0_mort_rate_select_index
+
+export const s0_zero_decrement_experience$m = memoize(s0_zero_decrement_experience$, ({zero_decrement_experience_in}) => Object.values(({zero_decrement_experience_in})).toString()); 
+export const s0_zero_decrement_experience = ({zero_decrement_experience_in}) => s0_zero_decrement_experience$m({zero_decrement_experience_in})
+model['s0_zero_decrement_experience'] = s0_zero_decrement_experience
 
 export const s0_mort_rate_mth$m = memoize(s0_mort_rate_mth$, ({t_in, zero_decrement_experience_in, age_at_entry_in, duration_mth_in}) => Object.values(({t_in, zero_decrement_experience_in, age_at_entry_in, duration_mth_in})).toString()); 
 export const s0_mort_rate_mth = ({t_in, zero_decrement_experience_in, age_at_entry_in, duration_mth_in}) => s0_mort_rate_mth$m({t_in, zero_decrement_experience_in, age_at_entry_in, duration_mth_in})
@@ -326,6 +366,10 @@ model['s0_lapse_rate'] = s0_lapse_rate
 export const s0_lapse_rate_mth$m = memoize(s0_lapse_rate_mth$, ({t_in, zero_decrement_experience_in, duration_mth_in}) => Object.values(({t_in, zero_decrement_experience_in, duration_mth_in})).toString()); 
 export const s0_lapse_rate_mth = ({t_in, zero_decrement_experience_in, duration_mth_in}) => s0_lapse_rate_mth$m({t_in, zero_decrement_experience_in, duration_mth_in})
 model['s0_lapse_rate_mth'] = s0_lapse_rate_mth
+
+export const s0_timing$m = memoize(s0_timing$, ({timing_in}) => Object.values(({timing_in})).toString()); 
+export const s0_timing = ({timing_in}) => s0_timing$m({timing_in})
+model['s0_timing'] = s0_timing
 
 export const s0_pols_if_init$m = memoize(s0_pols_if_init$, ({policy_count_in}) => Object.values(({policy_count_in})).toString()); 
 export const s0_pols_if_init = ({policy_count_in}) => s0_pols_if_init$m({policy_count_in})
@@ -483,6 +527,14 @@ export const s0_pv_fut_pols_if$m = memoize(s0_pv_fut_pols_if$, ({t_in, policy_te
 export const s0_pv_fut_pols_if = ({t_in, policy_term_in, duration_mth_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in}) => s0_pv_fut_pols_if$m({t_in, policy_term_in, duration_mth_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in})
 model['s0_pv_fut_pols_if'] = s0_pv_fut_pols_if
 
+export const s1_age_at_entry_$m = memoize(s1_age_at_entry_$, ({age_at_entry_in}) => Object.values(({age_at_entry_in})).toString()); 
+export const s1_age_at_entry_ = ({age_at_entry_in}) => s1_age_at_entry_$m({age_at_entry_in})
+model['s1_age_at_entry_'] = s1_age_at_entry_
+
+export const s1_policy_term_$m = memoize(s1_policy_term_$, ({policy_term_in}) => Object.values(({policy_term_in})).toString()); 
+export const s1_policy_term_ = ({policy_term_in}) => s1_policy_term_$m({policy_term_in})
+model['s1_policy_term_'] = s1_policy_term_
+
 export const s1_premium_rate$m = memoize(s1_premium_rate$, ({age_at_entry_in, policy_term_in}) => Object.values(({age_at_entry_in, policy_term_in})).toString()); 
 export const s1_premium_rate = ({age_at_entry_in, policy_term_in}) => s1_premium_rate$m({age_at_entry_in, policy_term_in})
 model['s1_premium_rate'] = s1_premium_rate
@@ -491,6 +543,14 @@ export const s1_premium_table$m = memoize(s1_premium_table$, ({}) => Object.valu
 export const s1_premium_table = ({}) => s1_premium_table$m({})
 model['s1_premium_table'] = s1_premium_table
 
+export const s1_age_$m = memoize(s1_age_$, ({age_in}) => Object.values(({age_in})).toString()); 
+export const s1_age_ = ({age_in}) => s1_age_$m({age_in})
+model['s1_age_'] = s1_age_
+
+export const s1_mort_rate_select_index_$m = memoize(s1_mort_rate_select_index_$, ({mort_rate_select_index_in}) => Object.values(({mort_rate_select_index_in})).toString()); 
+export const s1_mort_rate_select_index_ = ({mort_rate_select_index_in}) => s1_mort_rate_select_index_$m({mort_rate_select_index_in})
+model['s1_mort_rate_select_index_'] = s1_mort_rate_select_index_
+
 export const s1_mort_rate$m = memoize(s1_mort_rate$, ({age_at_entry_in, duration_mth_in, t_in}) => Object.values(({age_at_entry_in, duration_mth_in, t_in})).toString()); 
 export const s1_mort_rate = ({age_at_entry_in, duration_mth_in, t_in}) => s1_mort_rate$m({age_at_entry_in, duration_mth_in, t_in})
 model['s1_mort_rate'] = s1_mort_rate
@@ -498,6 +558,10 @@ model['s1_mort_rate'] = s1_mort_rate
 export const s1_mort_table$m = memoize(s1_mort_table$, ({}) => Object.values(({})).toString()); 
 export const s1_mort_table = ({}) => s1_mort_table$m({})
 model['s1_mort_table'] = s1_mort_table
+
+export const s1_zero_spot_year$m = memoize(s1_zero_spot_year$, ({zero_spot_year_in}) => Object.values(({zero_spot_year_in})).toString()); 
+export const s1_zero_spot_year = ({zero_spot_year_in}) => s1_zero_spot_year$m({zero_spot_year_in})
+model['s1_zero_spot_year'] = s1_zero_spot_year
 
 export const s1_zero_spot$m = memoize(s1_zero_spot$, ({zero_spot_year_in}) => Object.values(({zero_spot_year_in})).toString()); 
 export const s1_zero_spot = ({zero_spot_year_in}) => s1_zero_spot$m({zero_spot_year_in})
@@ -598,23 +662,23 @@ export const pv_fut_net_cf = s0_pv_fut_net_cf; model['pv_fut_net_cf'] = pv_fut_n
 export const pv_fut_pols_if = s0_pv_fut_pols_if; model['pv_fut_pols_if'] = pv_fut_pols_if
 
 
-model['s0_t'] = s0_t;
-model['s0_age_at_entry'] = s0_age_at_entry;
-model['s0_sex'] = s0_sex;
-model['s0_policy_term'] = s0_policy_term;
-model['s0_policy_count'] = s0_policy_count;
-model['s0_sum_assured'] = s0_sum_assured;
-model['s0_duration_mth'] = s0_duration_mth;
+model['s0_t$'] = s0_t$;
+model['s0_age_at_entry$'] = s0_age_at_entry$;
+model['s0_sex$'] = s0_sex$;
+model['s0_policy_term$'] = s0_policy_term$;
+model['s0_policy_count$'] = s0_policy_count$;
+model['s0_sum_assured$'] = s0_sum_assured$;
+model['s0_duration_mth$'] = s0_duration_mth$;
 model['s0_duration_mth_0$'] = s0_duration_mth_0$;
 model['s0_duration$'] = s0_duration$;
-model['s0_age'] = s0_age;
+model['s0_age$'] = s0_age$;
 model['s0_claim_pp$'] = s0_claim_pp$;
-model['s0_mort_rate_select_index'] = s0_mort_rate_select_index;
-model['s0_zero_decrement_experience'] = s0_zero_decrement_experience;
+model['s0_mort_rate_select_index$'] = s0_mort_rate_select_index$;
+model['s0_zero_decrement_experience$'] = s0_zero_decrement_experience$;
 model['s0_mort_rate_mth$'] = s0_mort_rate_mth$;
 model['s0_lapse_rate$'] = s0_lapse_rate$;
 model['s0_lapse_rate_mth$'] = s0_lapse_rate_mth$;
-model['s0_timing'] = s0_timing;
+model['s0_timing$'] = s0_timing$;
 model['s0_pols_if_init$'] = s0_pols_if_init$;
 model['s0_pols_if_at$'] = s0_pols_if_at$;
 model['s0_pols_lapse$'] = s0_pols_lapse$;
@@ -654,15 +718,15 @@ model['s0_pv_fut_expenses$'] = s0_pv_fut_expenses$;
 model['s0_pv_fut_commissions$'] = s0_pv_fut_commissions$;
 model['s0_pv_fut_net_cf$'] = s0_pv_fut_net_cf$;
 model['s0_pv_fut_pols_if$'] = s0_pv_fut_pols_if$;
-model['s1_age_at_entry_'] = s1_age_at_entry_;
-model['s1_policy_term_'] = s1_policy_term_;
+model['s1_age_at_entry_$'] = s1_age_at_entry_$;
+model['s1_policy_term_$'] = s1_policy_term_$;
 model['s1_premium_rate$'] = s1_premium_rate$;
 model['s1_premium_table$'] = s1_premium_table$;
-model['s1_age_'] = s1_age_;
-model['s1_mort_rate_select_index_'] = s1_mort_rate_select_index_;
+model['s1_age_$'] = s1_age_$;
+model['s1_mort_rate_select_index_$'] = s1_mort_rate_select_index_$;
 model['s1_mort_rate$'] = s1_mort_rate$;
 model['s1_mort_table$'] = s1_mort_table$;
-model['s1_zero_spot_year'] = s1_zero_spot_year;
+model['s1_zero_spot_year$'] = s1_zero_spot_year$;
 model['s1_zero_spot$'] = s1_zero_spot$;
 model['s1_disc_rate_ann_table$'] = s1_disc_rate_ann_table$;
 
