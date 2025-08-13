@@ -38,7 +38,7 @@ jobs:
         run: npm test
 
       - name: Run benchmark (on calculang model) (information only)
-        run: npm test:benchmark
+        run: npm run bench
 
       - name: Build website
         run: npm run build
