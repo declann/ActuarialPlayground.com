@@ -34,7 +34,7 @@ Some technical notes in the Actuarial Playground UI under '?' tab. (TODO: make t
 
 ## Benchmark Instructions
 
-`npm run test:benchmark`
+`npm run bench`
 
 **Among other developments, I've tested very significant performance improvements relating to Actuarial modelling in calculang - feel free to reach out if this is of interest.**
 

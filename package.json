@@ -13,7 +13,7 @@
     "test:update": "vitest run --update --reporter verbose",
     "test:watch": "vitest",
     "test:coverage": "#vitest run --coverage",
-    "test:benchmark": "vitest bench"
+    "bench": "vitest bench"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.16.0",
