@@ -34,9 +34,32 @@ describe("playground.cul.js testing", async () => {
     memo: true,
   });
 
+  // track this bundle just for reference
+  const m_nomemo = await compile({
+    entrypoint: "entry.cul.js",
+    fs: {
+      "entry.cul.js": await readFile("./src/cul/playground.cul.js", "utf8"),
+      "./basicterm.cul.js": await readFile(
+        "./src/cul/basicterm.cul.js",
+        "utf8"
+      ),
+      "./basicterm-tables.cul.js": await readFile(
+        "./src/cul/basicterm-tables.cul.js",
+        "utf8"
+      ),
+    },
+    memo: false,
+  });
+
   it("compiles to a tracked JS bundle", async () => {
     await expect(m.bundle).toMatchFileSnapshot(
       "./bundles/playground.bundle.js"
+    );
+  });
+
+  it("compiles to a tracked JS bundle (no memo - for reference)", async () => {
+    await expect(m_nomemo.bundle).toMatchFileSnapshot(
+      "./bundles/playground.bundle-nomemo.js"
     );
   });
 
