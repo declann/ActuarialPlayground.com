@@ -25,7 +25,6 @@ Some technical notes in the Actuarial Playground UI under '?' tab. (TODO: make t
 ## Build Instructions
 
 - `npm install`
-- In `index.md`, you will need to update the reference to `TEMPLATE_metal_open.md`
 - `npm run build`
 
 ## Test Instructions
