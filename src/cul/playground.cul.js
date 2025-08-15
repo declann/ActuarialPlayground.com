@@ -75,9 +75,18 @@ export const gender_neutral_pricing = () => gender_neutral_pricing_in ?? true
 
 export const update_pricing_lapse_rates = () => update_pricing_lapse_rates_in ?? false
 
+export const pricing_projection = () => pricing_projection_in ?? false;
+
+export const net_premium_pp = () => {
+  if (pricing_projection())
+    return net_premium_pp_({ /* 1000e sum assured projection with pricing config and no stresses, and discounting always on */ sum_assured_in: 1000, original_lapse_rates_in: !update_pricing_lapse_rates(), discounting_on_in: true, sex_in: gender_neutral_pricing() ? 'F' : sex(), timing_in: 'BEF_DECR', stress_delay_in: 12 * 120, lapse_rate_factor_in: 1, mort_rate_factor_in: 1, mort_rate_Y1_add_per_mille_in: 0 });
+  else
+    return net_premium_pp_();
+}
+
 export const premium_rate_per_mille = () =>
   (1 + loading_prem())
-  * net_premium_pp({ /* 1000e sum assured projection with pricing config and no stresses, and discounting always on */ sum_assured_in: 1000, original_lapse_rates_in: !update_pricing_lapse_rates(), discounting_on_in: true, sex_in: gender_neutral_pricing() ? 'F' : sex(), timing_in: 'BEF_DECR', stress_delay_in: 12 * 120, lapse_rate_factor_in: 1, mort_rate_factor_in: 1, mort_rate_Y1_add_per_mille_in: 0 });
+  * net_premium_pp({pricing_projection_in: true});
 
 
 export const pv_pols_if = () => pv_pols_if_() * premium_due() // used by net_premium_pp via pv_fut_pols_if
