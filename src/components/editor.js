@@ -940,7 +940,9 @@ import { all_cul } from '${div.entrypoint}';
     //debugger
 
     //div.old_fs = ({...div.fs})
+    console.time('pre_fetch (network bound)');
     const new_fs0 = await pre_fetch(div.fs, div.entrypoint) // has all_cul -> all_cul0
+    console.timeEnd('pre_fetch (network bound)');
     let new_fs = {...div.fs}
     Object.entries(new_fs0).forEach(([k,v]) => {
       if (new_fs[k] == undefined || new_fs[k].length == 0) {
