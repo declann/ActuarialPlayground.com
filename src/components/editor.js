@@ -951,15 +951,26 @@ import { all_cul } from '${div.entrypoint}';
     div.fs = {...new_fs0} // done ?
     //debugger;
 
+    console.time('getIntrospection');
     div.introspection = await getIntrospection(div.entrypoint, new_fs)
+    console.timeEnd('getIntrospection');
     //debugger
     div.inspector.fulfilled(div.introspection)
     setIntrospection(div.introspection)
+    console.time('compile_new');
     div.compiled = await compile_new(div.entrypoint, div.introspection.fs0, div.introspection)
+    console.timeEnd('compile_new');
 
 
     try {
-      div.model = await packageCalculang_new(bundleIntoOne(div.compiled,div.introspection, true))
+      console.time('bundleIntoOne');
+      const bundled = bundleIntoOne(div.compiled, div.introspection, true);
+      console.timeEnd('bundleIntoOne');
+
+      console.time('packageCalculang_new');
+      div.model = await packageCalculang_new(bundled);
+      console.timeEnd('packageCalculang_new');
+
       div.inspector_compiled.fulfilled(div.model)
       setModel(div.model)
       setCompilations(div.compiled)
