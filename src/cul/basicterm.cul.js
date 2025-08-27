@@ -146,7 +146,7 @@ export const expense_maint = () => 60
 export const inflation_rate = () => 0.01
 export const inflation_rate_mth = () => (1 + inflation_rate()) ** (1 / 12) - 1
 
-export const inflation_factor = () => (1 + inflation_rate()) ** (t() / 12) // in playground.cul.js adding support for inflation rates that vary over time: e.g. when we delay/stress the rate, and starting inflation at policy start rather than t=0 or "now"
+export const inflation_factor = () => (1 + inflation_rate()) ** (t() / 12)
 
 // cashflows:
 
