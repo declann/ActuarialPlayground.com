@@ -8,7 +8,7 @@ import { basicSetup } from "codemirror"
 //import { basicSetup } from "codemirror"
 
 
-import { lineNumbers, highlightActiveLineGutter, highlightSpecialChars, drawSelection, dropCursor, rectangularSelection, crosshairCursor, highlightActiveLine, keymap } from '@codemirror/view';
+import { highlightActiveLineGutter, highlightSpecialChars, drawSelection, dropCursor, highlightActiveLine, keymap } from '@codemirror/view';
 
 import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
 import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
@@ -17,7 +17,6 @@ import { history, defaultKeymap, historyKeymap } from '@codemirror/commands';
 
 
 
-import { ViewPlugin, Decoration, WidgetType } from '@codemirror/view';
 
 import { EditorState } from "@codemirror/state"
 import { linter, lintGutter, lintKeymap } from "@codemirror/lint"
@@ -32,7 +31,7 @@ import globals from "globals";
 
 // f9535c0 is latest all_cul commit:
 
-import { introspection as getIntrospection, compile_new, bundleIntoOne, calls_fromDefinition } from "https://cdn.jsdelivr.net/gh/calculang/calculang@db0582b/packages/standalone/index.js" //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//
+import { introspection as getIntrospection, compile_new, bundleIntoOne } from "https://cdn.jsdelivr.net/gh/calculang/calculang@db0582b/packages/standalone/index.js" //"https://raw.githack.com/calculang/calculang/all_cul/packages/standalone/index.js"//
 import {pre_fetch} from "https://cdn.jsdelivr.net/gh/calculang/calculang@db0582b/packages/standalone/pre_fetch.mjs"
 
 
@@ -47,7 +46,6 @@ import jssnippetarray from './snippetarray.js'
 // https://github.com/observablehq/framework/blob/main/src/client/inspect.js#L3
 import { Inspector } from "@observablehq/inspector"
 
-import { range } from 'underscore'
 
 const actuarial_playground = true // disable some things that aren't presentable for AP yet
 
@@ -124,264 +122,6 @@ const decorations = false;// just messy and not setup right, but useful for navi
 
 
 
-// from calculang-at-fosdem
-
-//////////// plugin 1: decoration & cul navigation for function-level
-
-const formulaDecorations =
-  (div, set_formulae_visible) => {
-    //set(options.formulae_visible, [""]) // this was doing a lot of jank!!
-    const formulaDecorations = ViewPlugin.fromClass(
-      class {
-
-        constructor(view) {
-          this.decorations = formulaDecoration(div, view);
-        }
-
-        update(update) {
-          if (update.docChanged || update.viewportChanged)
-            this.decorations = formulaDecoration(div, update.view);
-        }
-      },
-      {
-        decorations: (v) => v.decorations,
-
-        eventHandlers: {
-          mousedown: (e, view) => { // HMMM I'll need to resolve that calls get precedence!!! Should be working:
-            let classList = [...e.target.classList, ...e.target.parentElement.classList] // very open, be aware of bugs ?!
-            if (e.target.classList.contains("cul_call")) // TODO
-              1;//set(viewof formulae_shown, [target.textContent]); TODO
-            else if (
-              //e.target.classList.contains("deposits") ||
-              //e.target.parentElement.classList.contains("deposits")
-              classList.filter(d => d.includes("calculang_f_")).length
-            )
-              /////// at-fosdem: set(options.formulae_visible, [classList.find(d => d.includes("calculang_f_")).slice("calculang_f_".length)]);
-              //debugger;
-              // mitigate overlapping event fires (call and formula)
-              if (classList.includes('calculang_call') || classList.includes('calculang_tooltip') || classList.includes('tooltiptext')) return;
-              else set_formulae_visible([classList.find(d => d.includes("calculang_f_")).slice("calculang_f_".length)])
-              // May 2024: maybe jitter below is/was due to overlapping event fires?
-              /////// causes unnecessary jitter when we already see f document.querySelector('.'+classList.find(d => d.includes("calculang_f_"))).scrollIntoView(scrollIntoViewOpts)
-              //trying it 
-              //document.querySelector('.'+classList.find(d => d.includes("calculang_f_"))).scrollIntoView(scrollIntoViewOpts)
-
-
-          }
-        }
-      }
-    );
-
-    return [formulaDecorations];
-  }
-
-
-// Decoration.lines
-const formulaDecoration = (div, view) => {
-  if (div.introspection.cul_functions == undefined) return Decoration.set([]);
-
-  return Decoration.set(
-  //formula_line_details
-  //const formula_line_details =
-  /////Object.values(/*calculang_source_*/introspection.cul_functions)
-  [...div.introspection.cul_functions.values()]
-  .filter((d) => d.reason.includes("definition") && d.name.slice(-3) != '_in' && d.cul_scope_id == div.scope)
-  .map(({ name, loc, reason }) => ({
-    name,
-    lineStart: loc?.start.line,
-    lineEnd: loc?.end.line,
-    overwritten/*AND not imported => strikethrough*/: name.slice(-1) == '_' && !(/*calculang_source_*/[...introspection.cul_functions.values()].filter(d => d.imported == name && d.cul_source_scope_id == div.scope)).length // and not explicit imported/used in parent defn
-  }))
-    .map((d) =>
-      range(d.lineStart, d.lineEnd + 0.1).map((e) =>
-        Decoration.line({
-          attributes: {
-            class: "calculang" + " " + "calculang_f_"+d.name + (d.overwritten ? ' calculang_overwritten' : '') /* +style available */ // leaving scope and other potential conflicts out
-          }
-        }).range(view.state.doc.line(e).from)
-      )
-    )
-    .flat())}
-
-
-// C&Ped above
-// const formula_line_details = Object.values(/*calculang_source_*/introspection.cul_functions)
-//   .filter((d) => d.reason.includes("definition") && d.name.slice(-3) != '_in' && d.cul_scope_id == cul_scope_id)
-//   .map(({ name, loc, reason }) => ({
-//     name,
-//     lineStart: loc?.start.line,
-//     lineEnd: loc?.end.line,
-//     overwritten: name.slice(-1) == '_' && !(Object.values(/*calculang_source_*/introspection.cul_functions).filter(d => d.imported == name && d.cul_source_scope_id == cul_scope_id)).length // and not explicit imported/used in parent defn
-//   }))
-
-// const formula_line_details_0 = Object.values(/*calculang_source_*/introspection.cul_functions)
-//   .filter((d) => d.reason.includes("definition") && d.name.slice(-3) != '_in' && d.cul_scope_id == 0)
-//   .map(({ name, loc, reason }) => ({
-//     name,
-//     lineStart: loc?.start.line,
-//     lineEnd: loc?.end.line,
-//     overwritten: name.slice(-1) == '_' && !(Object.values(/*calculang_source_*/introspection.cul_functions).filter(d => d.imported == name)).length // and not explicit imported/used in parent defn
-//   }))
-
-
-
-// from calculang-at-fosdem
-///////////////////////////
-// NOT UPDATED TO BE INDEPENDENT OF entrypoint.cul.js
-let calculang_identifier_decorations = (set_formulae_visible, set_hover, div) => {
-  return ViewPlugin.fromClass(class {
-    constructor(view) {
-      //introspection = introspection2(view.state.doc.toString())
-      //introspection = await getIntrospection("entrypoint.cul.js", div.fs)
-      
-      this.decorations = identifier_decorations(view, div);
-    }
-
-    async update(u) {
-      div.fs = ({...div.fs, [div.filename]: u.state.doc.toString() })
-      console.log('calculang_identifier_decorations UPDATE HAPPENED')
-      let introspection_new
-      try { // without a try inevitable errors break plugin (though should be off when not readonly !)
-        // TODO wrap in readonly
-        introspection_new = await getIntrospection("entrypoint.cul.js", div.fs)
-        //introspection_new = introspection2(u.state.doc.toString())
-        //console.log('TTT', introspection2(u.state.doc.toString()))
-      } catch (e) { introspection_new = introspection }
-      div.introspection = introspection_new
-      if (1 || u.docChanged || u.viewportChanged) // I need to capture fold changes too !
-        this.decorations = identifier_decorations(u.view, div);
-      /*if (1 || update.docChanged) {
-        this.decorations = identifier_decorations(view);
-        this.dom.textContent = update.state.doc.length
-      }*/
-    }
-
-    destroy() { this.dom.remove() }
-  },
-    {
-      decorations: (v) => v.decorations,
-
-
-
-      eventHandlers: {
-        mousemove: (e, view) => {
-          let classList = [...e.target.classList, ...e.target.parentElement.classList] // very open, be aware of bugs ?!
-                      let c = classList.filter(d => d.includes("calculang_call_"))
-          let cc= 'badvalue';
-          if (c.length) cc = c[0].slice("calculang_call_".length)
-
-          if (e.target.classList.contains("calculang_call") || classList.includes("calculang_title")) { // TODO only if the containing formula is visible, I have options.formulae_visible:
-          //console.log('HIHIHIEE')
-          //debugger;
-            //set(viewof hover, cc) // too many triggers !
-            set_hover(cc)
-            
-          }
-        },
-        mousedown: (e, view) => {
-          let classList = [...e.target.classList, ...e.target.parentElement.classList] // very open, be aware of bugs ?!
-                      let c = classList.filter(d => d.includes("calculang_call_") && d != "calculang_call_input")
-          let cc= 'badvalue';
-          if (c.length) cc = c[0].slice("calculang_call_".length)
-
-          if (e.target.classList.contains("calculang_call") || classList.includes("calculang_title")) { // TODO only if the containing formula is visible, I have options.formulae_visible:
-          //console.log('HIHIHIEE')
-          //debugger;
-            //set(options.formulae_visible, [cc])
-            //debugger;
-            set_formulae_visible([cc])
-            document.querySelector('.calculang_f_'+cc).scrollIntoView(scrollIntoViewOpts)
-          }
-
-          else if (
-            //e.target.classList.contains("deposits") ||
-            //e.target.parentElement.classList.contains("deposits")
-            classList.filter(d => d.includes("calculang_f_")).length
-          ) { // this is setting when you click in the area of a formula - no need to scroll
-            //set(options.formulae_visible, [classList.find(d => d.includes("calculang_f_")).slice("calculang_f_".length)]);
-            set_formulae_visible([classList.find(d => d.includes("calculang_f_")).slice("calculang_f_".length)]);
-            //document.querySelector('.'+classList.find(d => d.includes("calculang_f_"))).scrollIntoView(scrollIntoViewOpts)
-          }
-        }
-      }
-
-
-      
-    }
-  )
-}
-
-let formulae_all
-
-// Decoration.marks specified by ranges
-const identifier_decorations = (view,div) => {
-  if (div.introspection.cul_functions == undefined) return Decoration.set([]);
-  let decorations = [];
-  //introspection = introspection2(view.state.doc.toString())
-  const inputs = [...div.introspection.cul_functions.values()].filter(d => d.reason == 'input definition').map(d => d.name).sort()
-  try {
-    formulae_all = [...div.introspection.cul_functions.values()].filter(d => d.reason == 'definition' && inputs.indexOf(d.name/*+'_in'*/) == -1).map(d => d.name)//["line", "result", "wave","semi_circle", "x", "n", "radius"]
-  } catch (e) { }
-
-  //for (let { from, to } of view.visibleRanges) {
-  console.log(view.state)
-  console.log(view.visibleRanges)
-  //for (let { from, to } of [{from: 0, to: 1000}]) {
-  //debugger;
-  //debugger;
-  for (let { from, to } of view.visibleRanges) {
-    //for (let { from, to } of [{from:0, to:5000}]) {
-    //cmImports.language.syntaxTreeAvailable(view.state, )
-    //cmImports.language.forceParsing(view, )
-
-    syntaxTree(view.state).iterate({
-      from,
-      to,
-      enter: (node) => {
-        if (node.name == "VariableDefinition") {
-          let name = view.state.doc.sliceString(node.from, node.to);
-          if (formulae_all.includes(name)) {
-            //debugger
-            decorations.push(
-              Decoration.mark({ class: "calculang_title" + (inputs.includes(name + "_in") ? " calculang_title_input" : "") }).range(
-                node.from,
-                node.to
-              )
-            );
-          }
-          if (formulae_all.includes(name + '_')) {
-            decorations.push(
-              Decoration.mark({ class: "calculang_title calculang_title_renamed" }).range(
-                node.from,
-                node.to
-              )
-            );
-          }
-        }
-
-        if (node.name == "VariableName") {
-          let name = view.state.doc.sliceString(node.from, node.to);
-          if (formulae_all.includes(name)) {
-            if (inputs.includes(name + "_in"))
-              decorations.push(
-                Decoration.mark({ class: `calculang_call calculang_call_input calculang_call_${name}` }).range(
-                  node.from,
-                  node.to
-                )
-              );
-            else
-              decorations.push(
-                Decoration.mark({ class: `calculang_call calculang_call_${name}` }).range(node.from, node.to)
-              );
-          }
-        }
-      }
-    });
-  }
-  return Decoration.set(decorations);
-}
-
-
 
 //////////////////
 
@@ -424,11 +164,6 @@ export const a = ({ parent, div, set_formulae_visible, set_hover, setCursor, set
 
     //DNOFFoverlay_workings(div, set_formulae_visible, setCursor, setFormula, fmt),
     //DNOFFoverlay_answers(div, fmt),
-
-    !decorations ? EditorState.readOnly.of(readonly) : calculang_identifier_decorations(set_formulae_visible, set_hover, div),
-
-    // plugin 1
-    !decorations ? EditorState.readOnly.of(readonly) : formulaDecorations(div, set_formulae_visible),
 
     lintGutter(),
     javascriptLanguage.data.of({
