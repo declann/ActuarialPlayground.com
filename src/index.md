@@ -178,6 +178,7 @@ div#checkbox2 {
 
 ```js
 setCursor({//...cursor0,
+pricing_projection_in: false,
 update_pricing_lapse_rates_in,
 original_lapse_rates_in: null, // errors in selection_fn if i dont have every input, as entire cursor used
   data_version_in: 0, // how to support this varying with one big setCursor?

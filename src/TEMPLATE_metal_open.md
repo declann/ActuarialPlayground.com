@@ -238,49 +238,6 @@ const mapsc = [] //
 
 ```js
 
-
-// AMAZING THIS ENTIRE THING RUNS ON CURSOR CHANGE (update: conditioning on optimize_perf): NOT JUST THE selection_fn
-// THIS MUST EXPLAIN A LOT OF SLOWNESS AND CONSOLE ERRORS
-// CAN I USE inputs FROM cul_input_map?
-// AND REMOVE THIS DEPENDENCY?
-const calls_annotations = optimize_perf ? [] :
-  calls_fromDefinition(introspection).filter(d => d.reason == 'call' && d.from != '0_undefined')
-  .map (d => ({...d, cul_scope_id: +d.from/*from/to are consistent due to bringing everything into common scope*/.split('_')[0], name: d.from.split('_').slice(1).join('_')}))
-        .map((d) => ({
-        ...d,
-        mjs_loc: {
-          start: mapsc[d.cul_scope_id].generatedPositionFor({
-            ...d.loc.start,
-            source: maps[d.cul_scope_id].sources[0] //`${only_entrypoint_no_cul_js}-nomemo.cul.js` // todo update !
-          }),
-          end: mapsc[d.cul_scope_id].generatedPositionFor({
-            ...d.loc.end,
-            source: maps[d.cul_scope_id].sources[0] //`${only_entrypoint_no_cul_js}-nomemo.cul.js`
-          })
-        }
-      }))
-      .map((d) => ({
-        ...d,
-        mjs: compiled[d.cul_scope_id].code
-          .split("\n")
-        [d.mjs_loc.start.line - 1].substring(
-          d.mjs_loc.start.column,
-          d.mjs_loc.end.column
-        )
-      })) // assuming completely on one line
-      .map(d => ({...d, mjs: d.mjs.slice(-1) == ')' ? d.mjs : d.mjs+')'}))/*issue for simple-loan final call for some reason??*/
-      //.map(d => ({...d, mjs: `s${d.cul_scope_id}_${d.mjs}`}))
-       .map(d => {
-//         if (!(CONFIG.USE_HIGHLIGHTING || 0)) return d;
-//         //return d; I did stop this for some reason? DOESNT WORK FOR LIFE
-//debugger
-   const selection_fn = new Function("model", "{"+Object.keys(cursor).join(",")+"}", `Object.assign(window, model); try { return ({value:s${d.fromDefinition}${d.mjs.slice(d.name.length)}, cursor: ${d.mjs.slice(d.from.length-2)}}) } catch(e) { console.error('trap2', e)}`) // using hacky way to get cursor, for calculang-at-fosdem I used babel: `is` function
-  return {...d, ...selection_fn(model, cursor)} // try important due to cursor often not setup initially (e.g. awaiting)
- })
-```
-
-```js
-
 //console.log('fns_annotations1')
 
 const run_renamed_fns = true // more important for showing workings; Actuarial Playground doesn't. Mitigates some console errors for s1_pv_fut_pols_if_ sometimes
@@ -353,15 +310,6 @@ fns_annotations.forEach((d,i) => {
 });
 ```
 
-```js
-window.calls_annotations = calls_annotations;
-
-calls_annotations.forEach((d, i) => {
-  // error => breaks follow ups
-  if (document.getElementById('w-'+i))
-  document.getElementById('w-'+i).textContent = fmt(/*d.from.split('_').slice(1).join('_')*/d.name, d.value)//JSON.stringify(d.v) /*d3.format(',.2f')(d.v)*/ + "<div class='cm-tooltip-arrow' />"
-});
-```
 
 ```js
 const cursor = {...cursor0} // TODO add extra when I do reactive

@@ -391,62 +391,6 @@ const identifier_decorations = (view,div) => {
 //calls = calculang_source_introspection.cul_links
   //.filter(d => !d.from.includes('undefined')).filter((d) => d.reason == "call" && cul_scope_id == +d.to.split("_")[0]) // bugs for double digit scopes
 
-
-// ex CheckboxWidget
-class AnswersWorkingsOverlayWidget extends WidgetType {
-  constructor(div, v, call, call_i, type, set_formulae_visible, setCursor, setFormula, fmt) {
-    //a = v;
-    super();
-    this.div = div;
-    this.v = v;
-    this.call = call;
-    this.call_i = call_i;
-    this.type = type;
-    this.set_formulae_visible = set_formulae_visible;
-    this.setCursor = setCursor;
-    this.setFormula = setFormula;
-    this.fmt = fmt
-    //this.evals = type == "definition" ? mjs_q_eval : fns_with_mjs_q_eval;
-    //this.info = type == "definition" ? fns_with_mjs : calls_with_mjs_qualified;
-  }
-
-  toDOM() {
-    // mjs_q_eval; use this to test flicker/parse issues for plugins setting values (now set setparately by DOM calls)
-    let wrap = document.createElement("span");
-    //wrap.className = "tooltip";
-    //wrap.textContent = "101.19";
-    wrap.setAttribute("aria-hidden", "true"); // not in a good place, todo fix
-    wrap.className = "calculang_tooltip";
-    if (this.type == "definition") {
-      // ex-99999 todo calculate here Also instead? and do same in reaction to inputs?
-      return html`<span class="calculang_tooltip answer" id="c-a-${this.v}"><!--<input type="checkbox"></input>--><span id="a-${this.v}" class="tooltiptext" anchor="c-a-${this.v}">${this.fmt(window.fns_annotations[this.v].name, window.fns_annotations[this.v].v)}</span></span>`;
-    }
-    return html`<span onclick=${() => {
-      this.div.setScope(+window.calls_annotations[this.v].fromDefinition.split('_')[0])
-      this.setFormula(window.calls_annotations[this.v].fromDefinition.split('_').slice(1).join('_'))
-      this.set_formulae_visible([window.calls_annotations[this.v].from.split('_').slice(1).join('_')])
-      document.querySelector('.calculang_f_'+window.calls_annotations[this.v].fromDefinition.split('_').slice(1).join('_')).scrollIntoView(scrollIntoViewOpts)
-      //console.log(window.calls_annotations[this.v])
-      //console.log(this.set_formulae_visible, this.setCursor)
-      Object.entries(window.calls_annotations[this.v].cursor).forEach(([k,v]) => {
-        // TODO FIX this.setCursor(k, v)
-      })
-      // ex click handler
-      /* TODO*/ //set(viewof formulae_visible, [ // I'm supposed to use options.formulae_visible !!
-        //calls[this.v].from.slice(2)
-      //]);
-      //document.querySelector('.calculang_f_'+calls[this.v].from.slice(2)/*BUG for >9 scopes!*/).scrollIntoView(scrollIntoViewOpts)
-      //if (window.mjs_q_eval[modelname][cul_scope_id][this.v].handler) window.mjs_q_eval[modelname][cul_scope_id][this.v].handler();
-
-    }} class="calculang_tooltip" id="c-w-${this.call_i}"><!--&nbsp;<input type="checkbox"></input>--><span id="w-${this.call_i}" class="tooltiptext ${window.calls_annotations[this.call_i].name+'OFF'}" anchor="c-w-${this.call_i}">${this.fmt(window.calls_annotations[this.call_i].name,window.calls_annotations[this.call_i].value)}</span></span>`;
-    return wrap;
-  }
-
-  ignoreEvent() {
-    return false;
-  }
-}
-
 function workings(div, view, set_formulae_visible, setCursor, setFormula, fmt) {
   //debugger
   if (div.introspection.cul_functions == undefined) return Decoration.set([]);
