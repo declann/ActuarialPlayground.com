@@ -10,8 +10,8 @@ import { all_cul } from './basicterm.cul.js';
 // in basicterm.cul.js some things are hardcoded,
 // in the Playground we want to change them:
 
-export const commission_mths = () => commission_mths_in
-export const commission_pc = () => commission_pc_in
+export const commission_mths = () => commission_mths_in ?? 12
+export const commission_pc = () => commission_pc_in ?? 50
 
 // there are other new inputs below that are also stressed
 
@@ -19,43 +19,37 @@ export const commission_pc = () => commission_pc_in
 // see mort_rate_mth and lapse_rate_mth
 
 
-export const lapse_rate_factor_delay = () => stress_delay()
 export const lapse_rate_factor = () => lapse_rate_factor_in ?? 1
 
 // we use this optionally for pricing basis, see premium_rate_per_mille
 export const original_lapse_rates = () => original_lapse_rates_in ?? false
 
 export const lapse_rate = () => {
-  if (t() < lapse_rate_factor_delay()) return original_lapse_rates() ? Math.max(0.1 - 0.02 * duration(), 0.02) : lapse_rate_();
+  if (t() < stress_delay()) return original_lapse_rates() ? Math.max(0.1 - 0.02 * duration(), 0.02) : lapse_rate_();
   else return lapse_rate_factor() * (original_lapse_rates() ? Math.max(0.1 - 0.02 * duration(), 0.02) : lapse_rate_());
 }
 
 export const inflation_rate_addition = () => inflation_rate_addition_in ?? 0;
 
 export const inflation_rate = () => {
-  if (t() < stress_delay()) return inflation_rate_in;
-  else return inflation_rate_in + inflation_rate_addition()
+  if (t() < stress_delay()) return (inflation_rate_in ?? 0.02);
+  else return (inflation_rate_in ?? 0.02) + inflation_rate_addition()
 }
 
-export const expenses_factor = () => expenses_factor_in ?? 1
+export const maint_expenses_factor = () => maint_expenses_factor_in ?? 1
 
 // incl. configurable expenses
 export const expense_maint = () => {
-  if (t() < stress_delay()) return expense_maint_in;
-  else return expense_maint_in * expenses_factor() // additives can go here
-}
-export const expense_acq = () => {
-  if (t() < stress_delay()) return expense_acq_in;
-  else return expense_acq_in * expenses_factor()
+  if (t() < stress_delay()) return (expense_maint_in ?? 60);
+  else return (expense_maint_in ?? 60) * maint_expenses_factor() // additives can go here
 }
 
-
+// acquisition expenses not affected by stress
 
 // stressing mortality and lapse rates
 
 export const stress_delay = () => stress_delay_in ?? 0
 
-export const mort_rate_factor_delay = () => stress_delay()
 export const mort_rate_factor = () => mort_rate_factor_in ?? 1;
 
 export const mort_rate_Y1_add_per_mille = () => mort_rate_Y1_add_per_mille_in ?? 0
@@ -69,7 +63,7 @@ export const mort_rate_addition = () => {
 
 // PRICING
 
-export const loading_prem = () => loading_prem_in ?? 0.5
+export const loading_prem = () => loading_prem_in ?? 0.8
 
 export const gender_neutral_pricing = () => gender_neutral_pricing_in ?? true
 
@@ -135,7 +129,7 @@ export const c = () => 2.2
 export const mort_rate_recalc = () => Math.min(1, Math.min(1, a() * Math.exp(b() * Math.pow(age(), c()))) * Math.pow(1.1, mort_rate_select_index()) * (sex() == 'M' ? 1.2 : 1))
 
 export const mort_rate = () => {
-  if (t() < mort_rate_factor_delay()) return mort_rate_recalc()
+  if (t() < stress_delay()) return mort_rate_recalc()
   else return mort_rate_recalc() * mort_rate_factor() + mort_rate_addition() // note: added after factor on overall assumption
 }
 

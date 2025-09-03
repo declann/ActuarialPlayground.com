@@ -32,7 +32,7 @@ export const t = () => t_in
 export const age_at_entry = () => age_at_entry_in
 export const sex = () => sex_in
 export const policy_term = () => policy_term_in
-export const policy_count = () => policy_count_in
+export const policy_count = () => policy_count_in ?? 1
 export const sum_assured = () => sum_assured_in
 
 
@@ -152,6 +152,8 @@ export const inflation_factor = () => (1 + inflation_rate()) ** (t() / 12)
 
 export const premiums = () => premium_pp() * pols_if_at({ timing_in: 'BEF_DECR' })
 export const claims = () => -claim_pp() * pols_death()
+
+// acquisition expenses are not affected by inflation (questionable but consistent with BasicTerm_S https://lifelib.io/_modules/basiclife/BasicTerm_S/Projection.html#expenses)
 export const expenses = () => -(expense_acq() * pols_new_biz() + pols_if_at({ timing_in: 'BEF_DECR' }) * expense_maint() / 12 * inflation_factor())
 export const commissions = () => (duration_mth() < commission_mths()) ? (-premiums() * commission_pc() / 100) : 0
 

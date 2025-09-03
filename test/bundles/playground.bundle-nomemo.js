@@ -16,8 +16,8 @@ let model = {};
 // in basicterm.cul.js some things are hardcoded,
 // in the Playground we want to change them:
 
-export const s0_commission_mths = ({ commission_mths_in }) => commission_mths_in;
-export const s0_commission_pc = ({ commission_pc_in }) => commission_pc_in;
+export const s0_commission_mths = ({ commission_mths_in }) => commission_mths_in ?? 12;
+export const s0_commission_pc = ({ commission_pc_in }) => commission_pc_in ?? 50;
 
 // there are other new inputs below that are also stressed
 
@@ -25,43 +25,37 @@ export const s0_commission_pc = ({ commission_pc_in }) => commission_pc_in;
 // see mort_rate_mth and lapse_rate_mth
 
 
-export const s0_lapse_rate_factor_delay = ({ stress_delay_in }) => s0_stress_delay({ stress_delay_in });
 export const s0_lapse_rate_factor = ({ lapse_rate_factor_in }) => lapse_rate_factor_in ?? 1;
 
 // we use this optionally for pricing basis, see premium_rate_per_mille
 export const s0_original_lapse_rates = ({ original_lapse_rates_in }) => original_lapse_rates_in ?? false;
 
 export const s0_lapse_rate = ({ t_in, stress_delay_in, original_lapse_rates_in, duration_mth_in, lapse_rate_factor_in }) => {
-  if (s1_t({ t_in }) < s0_lapse_rate_factor_delay({ stress_delay_in })) return s0_original_lapse_rates({ original_lapse_rates_in }) ? Math.max(0.1 - 0.02 * s1_duration({ duration_mth_in, t_in }), 0.02) : s1_lapse_rate_({ duration_mth_in, t_in });else
+  if (s1_t({ t_in }) < s0_stress_delay({ stress_delay_in })) return s0_original_lapse_rates({ original_lapse_rates_in }) ? Math.max(0.1 - 0.02 * s1_duration({ duration_mth_in, t_in }), 0.02) : s1_lapse_rate_({ duration_mth_in, t_in });else
   return s0_lapse_rate_factor({ lapse_rate_factor_in }) * (s0_original_lapse_rates({ original_lapse_rates_in }) ? Math.max(0.1 - 0.02 * s1_duration({ duration_mth_in, t_in }), 0.02) : s1_lapse_rate_({ duration_mth_in, t_in }));
 };
 
 export const s0_inflation_rate_addition = ({ inflation_rate_addition_in }) => inflation_rate_addition_in ?? 0;
 
 export const s0_inflation_rate = ({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }) => {
-  if (s1_t({ t_in }) < s0_stress_delay({ stress_delay_in })) return inflation_rate_in;else
-  return inflation_rate_in + s0_inflation_rate_addition({ inflation_rate_addition_in });
+  if (s1_t({ t_in }) < s0_stress_delay({ stress_delay_in })) return inflation_rate_in ?? 0.02;else
+  return (inflation_rate_in ?? 0.02) + s0_inflation_rate_addition({ inflation_rate_addition_in });
 };
 
-export const s0_expenses_factor = ({ expenses_factor_in }) => expenses_factor_in ?? 1;
+export const s0_maint_expenses_factor = ({ maint_expenses_factor_in }) => maint_expenses_factor_in ?? 1;
 
 // incl. configurable expenses
-export const s0_expense_maint = ({ t_in, stress_delay_in, expense_maint_in, expenses_factor_in }) => {
-  if (s1_t({ t_in }) < s0_stress_delay({ stress_delay_in })) return expense_maint_in;else
-  return expense_maint_in * s0_expenses_factor({ expenses_factor_in }); // additives can go here
-};
-export const s0_expense_acq = ({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in }) => {
-  if (s1_t({ t_in }) < s0_stress_delay({ stress_delay_in })) return expense_acq_in;else
-  return expense_acq_in * s0_expenses_factor({ expenses_factor_in });
+export const s0_expense_maint = ({ t_in, stress_delay_in, expense_maint_in, maint_expenses_factor_in }) => {
+  if (s1_t({ t_in }) < s0_stress_delay({ stress_delay_in })) return expense_maint_in ?? 60;else
+  return (expense_maint_in ?? 60) * s0_maint_expenses_factor({ maint_expenses_factor_in }); // additives can go here
 };
 
-
+// acquisition expenses not affected by stress
 
 // stressing mortality and lapse rates
 
 export const s0_stress_delay = ({ stress_delay_in }) => stress_delay_in ?? 0;
 
-export const s0_mort_rate_factor_delay = ({ stress_delay_in }) => s0_stress_delay({ stress_delay_in });
 export const s0_mort_rate_factor = ({ mort_rate_factor_in }) => mort_rate_factor_in ?? 1;
 
 export const s0_mort_rate_Y1_add_per_mille = ({ mort_rate_Y1_add_per_mille_in }) => mort_rate_Y1_add_per_mille_in ?? 0;
@@ -75,7 +69,7 @@ export const s0_mort_rate_addition = ({ t_in, stress_delay_in, mort_rate_Y1_add_
 
 // PRICING
 
-export const s0_loading_prem = ({ loading_prem_in }) => loading_prem_in ?? 0.5;
+export const s0_loading_prem = ({ loading_prem_in }) => loading_prem_in ?? 0.8;
 
 export const s0_gender_neutral_pricing = ({ gender_neutral_pricing_in }) => gender_neutral_pricing_in ?? true;
 
@@ -141,7 +135,7 @@ export const s0_c = ({}) => 2.2;
 export const s0_mort_rate_recalc = ({ age_at_entry_in, duration_mth_in, t_in, sex_in }) => Math.min(1, Math.min(1, s0_a({}) * Math.exp(s0_b({}) * Math.pow(s1_age({ age_at_entry_in, duration_mth_in, t_in }), s0_c({})))) * Math.pow(1.1, s1_mort_rate_select_index({ duration_mth_in, t_in })) * (s1_sex({ sex_in }) == 'M' ? 1.2 : 1));
 
 export const s0_mort_rate = ({ t_in, stress_delay_in, age_at_entry_in, duration_mth_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in }) => {
-  if (s1_t({ t_in }) < s0_mort_rate_factor_delay({ stress_delay_in })) return s0_mort_rate_recalc({ age_at_entry_in, duration_mth_in, t_in, sex_in });else
+  if (s1_t({ t_in }) < s0_stress_delay({ stress_delay_in })) return s0_mort_rate_recalc({ age_at_entry_in, duration_mth_in, t_in, sex_in });else
   return s0_mort_rate_recalc({ age_at_entry_in, duration_mth_in, t_in, sex_in }) * s0_mort_rate_factor({ mort_rate_factor_in }) + s0_mort_rate_addition({ t_in, stress_delay_in, mort_rate_Y1_add_per_mille_in }); // note: added after factor on overall assumption
 };
 
@@ -173,7 +167,7 @@ export const s0_status = ({ duration_mth_in }) => s1_duration_mth_0({ duration_m
 
 // spares let you add new cashflows: they are 0, but you can change them below
 // careful: manipulation in net_cf not captured in Playground outputs!
-export const s0_net_cf = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s1_net_cf_({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) + s0_placeholder({}) + s0_placeholder2({});
+export const s0_net_cf = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s1_net_cf_({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) + s0_placeholder({}) + s0_placeholder2({});
 
 export const s0_placeholder = ({}) => 0; // placeholder1 will be visualized green
 export const s0_placeholder2 = ({}) => 0; // placeholder2 will be visualized purpley
@@ -186,7 +180,7 @@ export const s0_pv_placeholder2 = ({ discounting_on_in, t_in }) => s1_disc_facto
 
 
 // policy value is present value of future cashflows, at t_in=0
-export const s0_policy_value = ({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s1_pv_fut_net_cf({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in, t_in: 0 });
+export const s0_policy_value = ({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s1_pv_fut_net_cf({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in, t_in: 0 });
 
 
 
@@ -226,7 +220,7 @@ export const s1_t = ({ t_in }) => t_in;
 export const s1_age_at_entry = ({ age_at_entry_in }) => age_at_entry_in;
 export const s1_sex = ({ sex_in }) => sex_in;
 export const s1_policy_term = ({ policy_term_in }) => policy_term_in;
-export const s1_policy_count = ({ policy_count_in }) => policy_count_in;
+export const s1_policy_count = ({ policy_count_in }) => policy_count_in ?? 1;
 export const s1_sum_assured = ({ sum_assured_in }) => sum_assured_in;
 
 
@@ -334,7 +328,7 @@ export const s1_pols_death = ({ duration_mth_in, t_in, policy_term_in, policy_co
 export const s1_premium_pp_ = ({ sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, premium_payment_frequency_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) => Math.round(s1_sum_assured({ sum_assured_in }) / 1000 * s0_premium_rate_per_mille({ loading_prem_in, policy_term_in, sum_assured_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, premium_payment_frequency_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) * 100) / 100; // round 2 decimal places
 
 
-export const s1_expense_acq_ = ({}) => 300;
+export const s1_expense_acq = ({}) => 300;
 export const s1_expense_maint_ = ({}) => 60;
 
 export const s1_inflation_rate_ = ({}) => 0.01;
@@ -346,14 +340,16 @@ export const s1_inflation_factor = ({ t_in, stress_delay_in, inflation_rate_in, 
 
 export const s1_premiums = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) => s0_premium_pp({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) * s1_pols_if_at({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, timing_in: 'BEF_DECR' });
 export const s1_claims = ({ sum_assured_in, duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in }) => -s1_claim_pp({ sum_assured_in }) * s1_pols_death({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in });
-export const s1_expenses = ({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in, duration_mth_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in }) => -(s0_expense_acq({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in }) * s1_pols_new_biz({ duration_mth_in, t_in, policy_count_in }) + s1_pols_if_at({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, timing_in: 'BEF_DECR' }) * s0_expense_maint({ t_in, stress_delay_in, expense_maint_in, expenses_factor_in }) / 12 * s1_inflation_factor({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }));
+
+// acquisition expenses are not affected by inflation (questionable but consistent with BasicTerm_S https://lifelib.io/_modules/basiclife/BasicTerm_S/Projection.html#expenses)
+export const s1_expenses = ({ duration_mth_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in }) => -(s1_expense_acq({}) * s1_pols_new_biz({ duration_mth_in, t_in, policy_count_in }) + s1_pols_if_at({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, timing_in: 'BEF_DECR' }) * s0_expense_maint({ t_in, stress_delay_in, expense_maint_in, maint_expenses_factor_in }) / 12 * s1_inflation_factor({ t_in, stress_delay_in, inflation_rate_in, inflation_rate_addition_in }));
 export const s1_commissions = ({ duration_mth_in, t_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in }) => s1_duration_mth({ duration_mth_in, t_in }) < s0_commission_mths({ commission_mths_in }) ? -s1_premiums({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) * s0_commission_pc({ commission_pc_in }) / 100 : 0;
 
 export const s1_commission_mths_ = ({}) => 12;
 export const s1_commission_pc_ = ({}) => 100;
 
 // careful: manipulation in net_cf not captured in Playground outputs!
-export const s1_net_cf_ = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s1_premiums({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) + s1_claims({ sum_assured_in, duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in }) + s1_expenses({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in, duration_mth_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in }) + s1_commissions({ duration_mth_in, t_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in });
+export const s1_net_cf_ = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s1_premiums({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) + s1_claims({ sum_assured_in, duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in }) + s1_expenses({ duration_mth_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in }) + s1_commissions({ duration_mth_in, t_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in });
 
 
 export const s1_proj_len = ({ policy_term_in, duration_mth_in }) => Math.max(12 * s1_policy_term({ policy_term_in }) - s1_duration_mth({ duration_mth_in, t_in: 0 }) + 1, 0);
@@ -402,9 +398,9 @@ export const s1_disc_factor = ({ discounting_on_in, t_in }) => (1 + s1_disc_rate
 // 1. pv_x is the present value is month t
 export const s1_pv_claims = ({ sum_assured_in, duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in }) => s1_claims({ sum_assured_in, duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in }) * s1_disc_factor({ discounting_on_in, t_in });
 export const s1_pv_premiums = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) => s1_premiums({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in }) * s1_disc_factor({ discounting_on_in, t_in });
-export const s1_pv_expenses = ({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in, duration_mth_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, discounting_on_in }) => s1_expenses({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in, duration_mth_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in }) * s1_disc_factor({ discounting_on_in, t_in });
+export const s1_pv_expenses = ({ duration_mth_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, discounting_on_in }) => s1_expenses({ duration_mth_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in }) * s1_disc_factor({ discounting_on_in, t_in });
 export const s1_pv_commissions = ({ duration_mth_in, t_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in }) => s1_commissions({ duration_mth_in, t_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in }) * s1_disc_factor({ discounting_on_in, t_in });
-export const s1_pv_net_cf = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s0_net_cf({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) * s1_disc_factor({ discounting_on_in, t_in });
+export const s1_pv_net_cf = ({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => s0_net_cf({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) * s1_disc_factor({ discounting_on_in, t_in });
 export const s1_pv_pols_if_ = ({ duration_mth_in, t_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, discounting_on_in }) => s1_pols_if({ duration_mth_in, t_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in }) * s1_disc_factor({ discounting_on_in, t_in }); // BasicTerm_M, for pricing table calc reconciliation
 
 // 2. pv_fut_x is sum of future present values >= t:
@@ -418,9 +414,9 @@ export const s1_pv_fut_premiums = ({ t_in, policy_term_in, duration_mth_in, prem
   return s1_pv_fut_premiums({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, t_in: s1_t({ t_in }) + 1 }) + s1_pv_premiums({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in });
 };
 
-export const s1_pv_fut_expenses = ({ t_in, policy_term_in, duration_mth_in, stress_delay_in, expense_acq_in, expenses_factor_in, policy_count_in, timing_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, discounting_on_in, zero_spot_year_in }) => {
+export const s1_pv_fut_expenses = ({ t_in, policy_term_in, duration_mth_in, policy_count_in, timing_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, discounting_on_in, zero_spot_year_in }) => {
   if (s1_t({ t_in }) >= s1_proj_len({ policy_term_in, duration_mth_in })) return 0;
-  return s1_pv_fut_expenses({ policy_term_in, duration_mth_in, stress_delay_in, expense_acq_in, expenses_factor_in, policy_count_in, timing_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, discounting_on_in, zero_spot_year_in, t_in: s1_t({ t_in }) + 1 }) + s1_pv_expenses({ t_in, stress_delay_in, expense_acq_in, expenses_factor_in, duration_mth_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, discounting_on_in });
+  return s1_pv_fut_expenses({ policy_term_in, duration_mth_in, policy_count_in, timing_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, discounting_on_in, zero_spot_year_in, t_in: s1_t({ t_in }) + 1 }) + s1_pv_expenses({ duration_mth_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, discounting_on_in });
 };
 
 export const s1_pv_fut_commissions = ({ t_in, policy_term_in, duration_mth_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in }) => {
@@ -428,9 +424,9 @@ export const s1_pv_fut_commissions = ({ t_in, policy_term_in, duration_mth_in, c
   return s1_pv_fut_commissions({ policy_term_in, duration_mth_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in, t_in: s1_t({ t_in }) + 1 }) + s1_pv_commissions({ duration_mth_in, t_in, commission_mths_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, commission_pc_in });
 };
 
-export const s1_pv_fut_net_cf = ({ t_in, policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => {
+export const s1_pv_fut_net_cf = ({ t_in, policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in }) => {
   if (s1_t({ t_in }) >= s1_proj_len({ policy_term_in, duration_mth_in })) return 0;
-  return s1_pv_fut_net_cf({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in, t_in: s1_t({ t_in }) + 1 }) + s1_pv_net_cf({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_acq_in, expenses_factor_in, expense_maint_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in });
+  return s1_pv_fut_net_cf({ policy_term_in, duration_mth_in, premium_payment_frequency_in, sum_assured_in, loading_prem_in, pricing_projection_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in, t_in: s1_t({ t_in }) + 1 }) + s1_pv_net_cf({ premium_payment_frequency_in, t_in, duration_mth_in, sum_assured_in, loading_prem_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, original_lapse_rates_in, lapse_rate_factor_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, discounting_on_in, zero_spot_year_in, update_pricing_lapse_rates_in, gender_neutral_pricing_in, expense_maint_in, maint_expenses_factor_in, inflation_rate_in, inflation_rate_addition_in, commission_mths_in, commission_pc_in });
 };
 
 export const s1_pv_fut_pols_if = ({ t_in, policy_term_in, duration_mth_in, timing_in, policy_count_in, zero_decrement_experience_in, stress_delay_in, age_at_entry_in, sex_in, mort_rate_factor_in, mort_rate_Y1_add_per_mille_in, original_lapse_rates_in, lapse_rate_factor_in, discounting_on_in, zero_spot_year_in, premium_payment_frequency_in }) => {
@@ -523,7 +519,7 @@ export const pols_maturity = s1_pols_maturity; model['pols_maturity'] = pols_mat
 export const pols_new_biz = s1_pols_new_biz; model['pols_new_biz'] = pols_new_biz; ;
 export const pols_death = s1_pols_death; model['pols_death'] = pols_death; ;
 export const premium_ppw = s1_premium_pp_; model['premium_ppw'] = premium_ppw; ;
-export const expense_acqw = s1_expense_acq_; model['expense_acqw'] = expense_acqw; ;
+export const expense_acq = s1_expense_acq; model['expense_acq'] = expense_acq; ;
 export const expense_maintw = s1_expense_maint_; model['expense_maintw'] = expense_maintw; ;
 export const inflation_ratew = s1_inflation_rate_; model['inflation_ratew'] = inflation_ratew; ;
 export const inflation_rate_mth = s1_inflation_rate_mth; model['inflation_rate_mth'] = inflation_rate_mth; ;
@@ -565,17 +561,14 @@ export const pv_fut_pols_if = s1_pv_fut_pols_if; model['pv_fut_pols_if'] = pv_fu
 
 export const commission_mths = s0_commission_mths; model['commission_mths'] = commission_mths;
 export const commission_pc = s0_commission_pc; model['commission_pc'] = commission_pc;
-export const lapse_rate_factor_delay = s0_lapse_rate_factor_delay; model['lapse_rate_factor_delay'] = lapse_rate_factor_delay;
 export const lapse_rate_factor = s0_lapse_rate_factor; model['lapse_rate_factor'] = lapse_rate_factor;
 export const original_lapse_rates = s0_original_lapse_rates; model['original_lapse_rates'] = original_lapse_rates;
 export const lapse_rate = s0_lapse_rate; model['lapse_rate'] = lapse_rate;
 export const inflation_rate_addition = s0_inflation_rate_addition; model['inflation_rate_addition'] = inflation_rate_addition;
 export const inflation_rate = s0_inflation_rate; model['inflation_rate'] = inflation_rate;
-export const expenses_factor = s0_expenses_factor; model['expenses_factor'] = expenses_factor;
+export const maint_expenses_factor = s0_maint_expenses_factor; model['maint_expenses_factor'] = maint_expenses_factor;
 export const expense_maint = s0_expense_maint; model['expense_maint'] = expense_maint;
-export const expense_acq = s0_expense_acq; model['expense_acq'] = expense_acq;
 export const stress_delay = s0_stress_delay; model['stress_delay'] = stress_delay;
-export const mort_rate_factor_delay = s0_mort_rate_factor_delay; model['mort_rate_factor_delay'] = mort_rate_factor_delay;
 export const mort_rate_factor = s0_mort_rate_factor; model['mort_rate_factor'] = mort_rate_factor;
 export const mort_rate_Y1_add_per_mille = s0_mort_rate_Y1_add_per_mille; model['mort_rate_Y1_add_per_mille'] = mort_rate_Y1_add_per_mille;
 export const mort_rate_addition = s0_mort_rate_addition; model['mort_rate_addition'] = mort_rate_addition;
@@ -609,17 +602,14 @@ export const policy_value = s0_policy_value; model['policy_value'] = policy_valu
 
 model['s0_commission_mths'] = s0_commission_mths;
 model['s0_commission_pc'] = s0_commission_pc;
-model['s0_lapse_rate_factor_delay'] = s0_lapse_rate_factor_delay;
 model['s0_lapse_rate_factor'] = s0_lapse_rate_factor;
 model['s0_original_lapse_rates'] = s0_original_lapse_rates;
 model['s0_lapse_rate'] = s0_lapse_rate;
 model['s0_inflation_rate_addition'] = s0_inflation_rate_addition;
 model['s0_inflation_rate'] = s0_inflation_rate;
-model['s0_expenses_factor'] = s0_expenses_factor;
+model['s0_maint_expenses_factor'] = s0_maint_expenses_factor;
 model['s0_expense_maint'] = s0_expense_maint;
-model['s0_expense_acq'] = s0_expense_acq;
 model['s0_stress_delay'] = s0_stress_delay;
-model['s0_mort_rate_factor_delay'] = s0_mort_rate_factor_delay;
 model['s0_mort_rate_factor'] = s0_mort_rate_factor;
 model['s0_mort_rate_Y1_add_per_mille'] = s0_mort_rate_Y1_add_per_mille;
 model['s0_mort_rate_addition'] = s0_mort_rate_addition;
@@ -673,7 +663,7 @@ model['s1_pols_maturity'] = s1_pols_maturity;
 model['s1_pols_new_biz'] = s1_pols_new_biz;
 model['s1_pols_death'] = s1_pols_death;
 model['s1_premium_pp_'] = s1_premium_pp_;
-model['s1_expense_acq_'] = s1_expense_acq_;
+model['s1_expense_acq'] = s1_expense_acq;
 model['s1_expense_maint_'] = s1_expense_maint_;
 model['s1_inflation_rate_'] = s1_inflation_rate_;
 model['s1_inflation_rate_mth'] = s1_inflation_rate_mth;

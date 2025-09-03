@@ -198,7 +198,7 @@ t_in: t_in,
 /*expense_acq_in: 300, // draggables can't be set in this cell like this
 expense_maint_in: 60,
 inflation_rate_in: 0.01,
-expenses_factor_in: 1,
+maint_expenses_factor_in: 1,
 inflation_rate_addition_in: 0,
 loading_prem_in: 0.5,*/
 //gender_neutral_pricing_in,
@@ -224,11 +224,11 @@ setCursor(expenses_commissions_defaults);
 ```
 
 ```js
-setCursor({expenses_factor_in: 1,inflation_rate_addition_in: 0, mort_rate_Y1_add_per_mille_in:0});
+setCursor({maint_expenses_factor_in: 1,inflation_rate_addition_in: 0, mort_rate_Y1_add_per_mille_in:0});
 ```
 
 ```js
-const stress_defaults = ({expenses_factor_in: 1,inflation_rate_addition_in: 0, mort_rate_factor_in: 1,
+const stress_defaults = ({maint_expenses_factor_in: 1,inflation_rate_addition_in: 0, mort_rate_factor_in: 1,
 lapse_rate_factor_in: 1,stress_delay_in: 0, mort_rate_Y1_add_per_mille_in: 0});
 ```
 
@@ -540,7 +540,7 @@ window.v = cfs_viz.view;
 // A lot of calcs already done in calcudata call, but not discounting which is slow interactively
 // (do sum on calcudata result Fast option?)
 
-cfs_viz.view.signal('pv_fut_net_cf_fut_A', /*model.pv_fut_net_cf({...cursor,t_in:0, mort_rate_factor_in:1, lapse_rate_factor_in:1,stress_delay_in:0, expenses_factor_in:1,mort_rate_Y1_add_per_mille_in:0, inflation_rate_addition_in:0})*/ stats.reduce( (a,v) => (a + ((v.future && (v.input_cursor_id == 0)) ? v.total : 0)), 0) ).run(); // run added to ensure syncing on stress, was redundant when using model calls and not stats
+cfs_viz.view.signal('pv_fut_net_cf_fut_A', /*model.pv_fut_net_cf({...cursor,t_in:0, mort_rate_factor_in:1, lapse_rate_factor_in:1,stress_delay_in:0, maint_expenses_factor_in:1,mort_rate_Y1_add_per_mille_in:0, inflation_rate_addition_in:0})*/ stats.reduce( (a,v) => (a + ((v.future && (v.input_cursor_id == 0)) ? v.total : 0)), 0) ).run(); // run added to ensure syncing on stress, was redundant when using model calls and not stats
 ```
 
 ```js
@@ -739,7 +739,7 @@ const highlighting = Generators.input(highlighting_Input)
 //view(Inputs.bind(Inputs.toggle({label:'highlight stress impact'}), highlighting_Input))
 ```
 
-expense assumption factor ${draggable_input({input:'expenses_factor_in', value: 1, step:0.05})}, additional inflation rate p.a. ${draggable_input({input:'inflation_rate_addition_in', value: 0, step:0.001})}
+Maintenance expenses assumption factor ${draggable_input({input:'maint_expenses_factor_in', value: 1, step:0.05})}, additional inflation rate p.a. ${draggable_input({input:'inflation_rate_addition_in', value: 0, step:0.001})}
 
 
 ```js
@@ -1085,7 +1085,7 @@ const cfs_data = calcudata({
   orientation: 'rows',
   models: [model],
   input_cursors: //[{...cursor, lapse_rate_in:.05}, cursor],
-  [{...cursor, mort_rate_factor_in:1, lapse_rate_factor_in:1,stress_delay_in:0, expenses_factor_in:1, inflation_rate_addition_in:0, mort_rate_Y1_add_per_mille_in: 0},cursor],
+  [{...cursor, mort_rate_factor_in:1, lapse_rate_factor_in:1,stress_delay_in:0, maint_expenses_factor_in:1, inflation_rate_addition_in:0, mort_rate_Y1_add_per_mille_in: 0},cursor],
     //[{...cursor, step_in:step_no-1}, {...cursor, step_in:step_no}],
   input_domains: {
     duration_mth_in: [cursor.duration_mth_in], // I need this in data atm

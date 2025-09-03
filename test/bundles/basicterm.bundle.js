@@ -38,7 +38,7 @@ export const s0_t$ = ({ t_in }) => t_in;
 export const s0_age_at_entry$ = ({ age_at_entry_in }) => age_at_entry_in;
 export const s0_sex$ = ({ sex_in }) => sex_in;
 export const s0_policy_term$ = ({ policy_term_in }) => policy_term_in;
-export const s0_policy_count$ = ({ policy_count_in }) => policy_count_in;
+export const s0_policy_count$ = ({ policy_count_in }) => policy_count_in ?? 1;
 export const s0_sum_assured$ = ({ sum_assured_in }) => sum_assured_in;
 
 
@@ -158,6 +158,8 @@ export const s0_inflation_factor$ = ({ t_in }) => (1 + s0_inflation_rate({})) **
 
 export const s0_premiums$ = ({ sum_assured_in, age_at_entry_in, policy_term_in, duration_mth_in, t_in, policy_count_in, zero_decrement_experience_in }) => s0_premium_pp({ sum_assured_in, age_at_entry_in, policy_term_in }) * s0_pols_if_at({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, timing_in: 'BEF_DECR' });
 export const s0_claims$ = ({ sum_assured_in, duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) => -s0_claim_pp({ sum_assured_in }) * s0_pols_death({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in });
+
+// acquisition expenses are not affected by inflation (questionable but consistent with BasicTerm_S https://lifelib.io/_modules/basiclife/BasicTerm_S/Projection.html#expenses)
 export const s0_expenses$ = ({ duration_mth_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in }) => -(s0_expense_acq({}) * s0_pols_new_biz({ duration_mth_in, t_in, policy_count_in }) + s0_pols_if_at({ duration_mth_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, timing_in: 'BEF_DECR' }) * s0_expense_maint({}) / 12 * s0_inflation_factor({ t_in }));
 export const s0_commissions$ = ({ duration_mth_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in }) => s0_duration_mth({ duration_mth_in, t_in }) < s0_commission_mths({}) ? -s0_premiums({ sum_assured_in, age_at_entry_in, policy_term_in, duration_mth_in, t_in, policy_count_in, zero_decrement_experience_in }) * s0_commission_pc({}) / 100 : 0;
 
