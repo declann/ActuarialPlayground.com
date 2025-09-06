@@ -1006,6 +1006,18 @@ const premiums = 70
   animation-fill-mode: forwards;  
 }
 
+@keyframes flashk {
+  0% { opacity: 1; fill:aqua }
+  60% { aqua: orange; opacity: 0.2; }
+  80% { aqua: orange; opacity: 0.2; } /*dark theme should be black, but minor*/
+  100% { opacity: 1; fill:aqua }
+}
+
+.flash {
+  animation: flashk ease 1s;
+  animation-fill-mode: forwards;  
+}
+
 .concat_0_concat_0_layer_0_marks > path {
 }
 </style>
@@ -1204,7 +1216,7 @@ To provide feedback or else for customised/purpose-built models, <span class="ac
 
 <div id="holder"><a target="_blank" href="https://github.com/declann/ActuarialPlayground.com"><img id="repo" width="25px" height="25px" src="./github-mark.png" /></a></div>
 
-<details class="plausible-event-name=Easter+Egg+Drawer" style="margin-top:100px; opacity:0.4"><summary>🥚</summary>
+<details class="plausible-event-name=Easter+Egg+Drawer" style="margin-top:100px"><summary>🥚</summary>
 
 ```js
 const graphdisplay = view(Inputs.toggle({value:false, label:'graph display?'}))
@@ -1233,6 +1245,47 @@ const disable_legend_not = view(Inputs.toggle({label:'legend', value: false}))
 ```js
 const disable_legend = !disable_legend_not
 ```
+
+<style>
+
+#magic button {
+  font-size: 1.5em;
+  margin-top:2em;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+</style>
+
+<div id="magic">
+
+```js
+const magic = view(Inputs.button('🪄', () => {}))
+```
+
+```js
+if (magic) {
+  document.getElementById('viz').classList.add('flash')
+  document.getElementById('viz').addEventListener('click', () => {
+    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+  });
+}
+```
+
+```js
+import confetti from "npm:canvas-confetti";
+```
+```js
+if (magic) {
+confetti({
+  particleCount: 100,
+  spread: 100,
+  origin: { y: 0.8 }
+});}
+```
+
+</div>
 
 
 </details>
