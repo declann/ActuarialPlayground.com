@@ -1,6 +1,6 @@
 
 // Tables for Premium rates, Mortality rates and Discounting rates, and lookup formulas.
-// The Playground recalculates Premium and Mortality rates, so those aren't used by default.
+// The Playground recalculates Premium and Mortality rates, so those aren't used by default in that model.
 // (see playground.cul.js `premium_rate_per_mille` and `mort_rate_recalc`)
 
 // This isn't the only way to get tables or data into calculang models.
