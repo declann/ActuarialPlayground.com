@@ -1268,8 +1268,9 @@ const magic = view(Inputs.button('🪄', () => {}))
 if (magic) {
   document.getElementById('viz').classList.add('flash')
   document.getElementById('viz').addEventListener('click', () => {
-    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+    window.open(`https://actuarialmodeller.com/localhost#url=https://actuarialplayground.com/_file/cul/playground.cul.js&f=policy_value&formula=policy_value&${Object.entries(window.cursor).map(([k,v]) => `${k}=${v}`).join('&')}`, '_blank');
   });
+  document.getElementById('viz').style.cursor = 'zoom-in'
 }
 ```
 
