@@ -5,6 +5,28 @@ sidebar: false
 #theme: [air, wide]
 ---
 
+<style>
+  .collapsible {
+    overflow: hidden;
+    transition: max-height 0.6s ease, opacity 0.6s ease;
+    max-height: 800px; /* over-egg seems fine */
+    opacity: 1;
+  }
+
+  .collapsible.hide {
+    max-height: 0;
+    opacity: 0;
+  }
+</style>
+
+<script>
+    document.addEventListener("keydown", (event) => {
+    if (event.key.toLowerCase() === "c")
+      document.querySelectorAll(".collapsible").forEach(d => {d.classList.toggle("hide")});
+  });
+</script>
+
+
 
 
 ```js
@@ -15,11 +37,6 @@ html`<style>
 }
 </style>
 `
-```
-
-```js
-if (presentation_mode)
-  ;//document.getElementById('msg').open = false
 ```
 
 ```js
@@ -35,7 +52,7 @@ main#observablehq-main {
 }
 
 .info {
-  ${presentation_mode ? "display: none": ""};
+  ${presentation_mode ? "/*display: none*/": ""};
 }
 </style>`
 ```
@@ -324,10 +341,10 @@ function fmt(formula, v) {
 
 </div>--> <!--turns off LHS-->
 
-
+<div class="collapsible">
 
 ```js
-if (!presentation_mode)
+//if (!presentation_mode)
 display(html`<h2>Actuarial Playground`)
 ```
 
@@ -366,70 +383,6 @@ function setOption(v) {
 ```
 
 
-
-<details open class="graphs" style="background:yellow;border-radius:10px"><summary>📈</summary>
-
-<!-- hidden for now, I have newer experiments for vizing models -->
-
-```js
-const show_renamed_fns = true
-const formulae2 = [...introspection.cul_functions.values()].filter(
-        (d) =>
-          d.reason == "definition" || (d.reason == 'definition (renamed)' && show_renamed_fns) /*&&
-          d.cul_scope_id == cul_scope_id*/
-      ).map(d => 's' + d.cul_scope_id + '_' + d.name)//model['s' + d.cul_scope_id + '_' + d.name](cursor))
-      .sort()
-```
-
-```js
-const f = view(Inputs.select(formulae2.sort(), {label: 'ƒ', value: 's1_net_cf_' /* this does get run so setting off s0_aaa -> PV calcs */, width: 200})) // TODO keeps resetting on code edit
-```
-
-```js
-//const claim_pp = _.range(0,cursor.policy_term_in+1).map(d => model[f]({...cursor, t_in:d*12-cursor.duration_mth_in}))
-
-const claim_pp = _.range(0,model.proj_len(cursor)+1).map(d => model[f]({...cursor, t_in:d-cursor.duration_mth_in}))
-```
-
-${claim_pp_spark}
-
-
-```js
-const claim_pp_spark = Plot.plot({
-  height: 80,
-  width: 200,
-  marginBottom: 15,
-  marginTop: 15,
-  marginRight: 40,
-  marginLeft: 40,
-  y: {axis: null},
-  x: {axis: null},
-  //title:'claim_pp',
-  //y: {domain: [0,25], percent: true},
-  marks: [
-    //Plot.axisX({anchor: "bottom", label: 'duration (yrs)'}),
-    //Plot.axisY({anchor: "left", label: 'lapse_rate % p.a. (incl. applicable stress)'}),
-    Plot.lineY(claim_pp, {
-      stroke: 'purple',
-      curve: 'step-after',
-      strokeWidth: 3,
-      tip: {
-        format: {
-          x: true,
-          y: true,
-          y: d => d3.format(',.7f')(d)//d.toFixed(1) + '%'//d3.format(',.1%')(d)
-        },
-        stroke: 'transparent',
-      }
-    }),
-
-    Plot.ruleY([0], {stroke: 'black'})
-
-  ]
-})
-```
-
-</details>
 
 
 
@@ -548,6 +501,73 @@ html`📙 <span class="l l-premiums">Premiums</span> are a <button class="inline
 }} class="amount-option inlined" style="-webkit-touch-callout: none; user-select: none; background-color: color-mix(in srgb, orange 20%, transparent); background-opacity:0.1; border-radius:4px; padding: 2px 5px;">➖ cashflows</button>`
 ```
 
+</div>
+
+
+<details open class="graphs" style="background:yellow;border-radius:10px"><summary>📈</summary>
+
+<!-- hidden for now, I have newer experiments for vizing models -->
+
+```js
+const show_renamed_fns = true
+const formulae2 = [...introspection.cul_functions.values()].filter(
+        (d) =>
+          d.reason == "definition" || (d.reason == 'definition (renamed)' && show_renamed_fns) /*&&
+          d.cul_scope_id == cul_scope_id*/
+      ).map(d => 's' + d.cul_scope_id + '_' + d.name)//model['s' + d.cul_scope_id + '_' + d.name](cursor))
+      .sort()
+```
+
+```js
+const f = view(Inputs.select(formulae2.sort(), {label: 'ƒ', value: 's1_net_cf_' /* this does get run so setting off s0_aaa -> PV calcs */, width: 200})) // TODO keeps resetting on code edit
+```
+
+```js
+//const claim_pp = _.range(0,cursor.policy_term_in+1).map(d => model[f]({...cursor, t_in:d*12-cursor.duration_mth_in}))
+
+const claim_pp = _.range(0,model.proj_len(cursor)+1).map(d => model[f]({...cursor, t_in:d-cursor.duration_mth_in}))
+```
+
+
+
+```js
+const claim_pp_spark = Plot.plot({
+  height: 80,
+  width: 200,
+  marginBottom: 15,
+  marginTop: 15,
+  marginRight: 40,
+  marginLeft: 40,
+  y: {axis: null},
+  x: {axis: null},
+  //title:'claim_pp',
+  //y: {domain: [0,25], percent: true},
+  marks: [
+    //Plot.axisX({anchor: "bottom", label: 'duration (yrs)'}),
+    //Plot.axisY({anchor: "left", label: 'lapse_rate % p.a. (incl. applicable stress)'}),
+    Plot.lineY(claim_pp, {
+      stroke: 'purple',
+      curve: 'step-after',
+      strokeWidth: 3,
+      tip: {
+        format: {
+          x: true,
+          y: true,
+          y: d => d3.format(',.7f')(d)//d.toFixed(1) + '%'//d3.format(',.1%')(d)
+        },
+        stroke: 'transparent',
+      }
+    }),
+
+    Plot.ruleY([0], {stroke: 'black'})
+
+  ]
+})
+
+display(claim_pp_spark)
+```
+
+</details>
 
 
 ```js
@@ -795,6 +815,8 @@ const stress_delay_in = Generators.input(stress_delay_in_Input)
 </div>
 
 
+<div class="collapsible">
+
 <div class="card">
 <details class="plausible-event-name=Lapses+Drawer"><summary>lapse rate assumption ⚙️ ${lapse_rate == "0" ? "" : zero_lapses} ${lapse_rate_changed ? lapse_rates_reset : ""} <div id="checkbox2">${lapse_rate_changed ? Inputs.bind(html`<input id="update_pricing_lapse_rates_checkbox" type="checkbox">`, update_pricing_lapse_rates_Input) : ""} ${lapse_rate_changed ? html`<label for="update_pricing_lapse_rates_checkbox">+update pricing basis?<!-- todo track this button use--></label>` : ""}</div></summary>
 
@@ -920,6 +942,8 @@ const spark = Plot.plot({
 ```
 
 </details>
+</div>
+
 </div>
 
 
@@ -1209,6 +1233,8 @@ cfs_viz.view.signal('show_stress_rule', cursor.stress_delay_in != 0);
 }
 </style>
 
+<div class="collapsible">
+
 <div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:4em;line-height:1.5em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
 
 ℹ️ **Actuarial Playground** is a project by **[Declan Naughton](https://calcwithdec.dev/about)** - developing specialized and modern **actuarial modelling** and **actuarial analysis** tools.<br/>
@@ -1231,6 +1257,8 @@ I haven’t noted these for this Playground: which is presented for demonstratio
 <div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:3em;line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
 
 To provide feedback or else for customised/purpose-built models, <span class="active-button" style="display:inline-block"><strong><a href="mailto:dcnconsultingactuarial@gmail.com">get in touch</a></strong></span>
+
+</div>
 
 </div>
 
@@ -1337,6 +1365,7 @@ import confetti from "npm:canvas-confetti";
 ```
 ```js
 if (magic) {
+      window.plausible('magic')
 confetti({
   particleCount: 100,
   spread: 100,
