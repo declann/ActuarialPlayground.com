@@ -5,6 +5,46 @@ sidebar: false
 #theme: [air, wide]
 ---
 
+
+
+```js
+html`<style>
+.cm-editor {
+  font-size: ${cm_size}px;
+  
+}
+</style>
+`
+```
+
+
+```js
+if (presentation_mode)
+  ;//document.getElementById('msg').open = false
+```
+
+```js
+const presentation_mode = true
+```
+
+```js
+html`<style>
+body {
+  font-size: large !important;
+}
+#observablehq-center {
+margin: 0;
+}
+main#observablehq-main {
+  ${presentation_mode ? "margin: 0 auto": ""};
+}
+
+.info {
+  ${presentation_mode ? "display: none": ""};
+}
+</style>`
+```
+
 ```js
 const hashParams = new URLSearchParams(location.hash.slice(1));
 const hash = hashParams.get('hash');
@@ -291,8 +331,6 @@ function fmt(formula, v) {
 
 
 
-# Actuarial Playground
-
 
 <style>
 .amount-option {
@@ -395,7 +433,7 @@ const claim_pp_spark = Plot.plot({
 
 
 
-<details id="msg" open style="margin-bottom: 2em; margin-top:1em; background-color:#eef; padding: 1px 5px; border-radius: 10px">
+<details id="msg" open style="margin-bottom: 1em; margin-top:1em; background-color:#eef; padding: 1px 5px; border-radius: 10px">
 
 <summary style="margin-top:4px">For a <strong>simple term insurance product</strong>, this interactive playground calculates and visualizes <strong><a href="https://calcwithdec.dev/posts/actuarial-terms-i">actuarial cashflows</a></strong></summary>
 
@@ -1216,7 +1254,22 @@ To provide feedback or else for customised/purpose-built models, <span class="ac
 
 <div id="holder"><a target="_blank" href="https://github.com/declann/ActuarialPlayground.com"><img id="repo" width="25px" height="25px" src="./github-mark.png" /></a></div>
 
-<details class="plausible-event-name=Easter+Egg+Drawer" style="margin-top:100px"><summary>🥚</summary>
+<style>
+  .secrets summary {
+    cursor: pointer;
+    opacity: 0.4;
+  }
+  .secrets summary:hover {
+    opacity: 1;
+  }
+</style>
+
+<details class="secrets plausible-event-name=Easter+Egg+Drawer" style="margin-top:100px"><summary>🥚</summary>
+
+
+```js
+const cm_size = view(Inputs.range([10,30], {label:'CodeMirror text size (px)', step:1, value:19}))
+```
 
 ```js
 const graphdisplay = view(Inputs.toggle({value:false, label:'graph display?'}))
