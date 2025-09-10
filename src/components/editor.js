@@ -278,7 +278,7 @@ export const ab = ({entrypoint='entrypoint.cul.js', defaultFS, setModel, setIntr
 <h3>calculang formulas 🧱</h2>
 <p>In calculang, formulas are the building blocks of calculations. You can <strong>see and change</strong> formula code under the '💬' tab.</p>
 
-<p>The Playground model (<code>playground.cul.js</code>) uses a <a target="_blank"  href="https://lifelib.io/libraries/basiclife/BasicTerm_SE.html">BasicTerm model</a> that I migrated to calculang from the <a target="_blank" href="https://lifelib.io/">lifelib</a> project - with one key change to show 'past' calculated cashflows as well as future.</p>
+<p>The Playground calculang model (<code>playground.cul.js</code>) uses a <a target="_blank"  href="https://lifelib.io/libraries/basiclife/BasicTerm_SE.html">BasicTerm calculang model</a> that I migrated from the <a target="_blank" href="https://lifelib.io/">lifelib</a> project (<a target="_blank" href="https://x.com/calculang/status/1811044584207560929">reconciliation</a>) - with one key change to show 'past' calculated cashflows as well as future.</p>
 
 <h3>Playground requirements</h3>
 

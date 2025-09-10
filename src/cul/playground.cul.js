@@ -12,6 +12,7 @@ import { all_cul } from './basicterm.cul.js';
 
 export const commission_mths = () => commission_mths_in ?? 12
 export const commission_pc = () => commission_pc_in ?? 50
+export const expense_acq = () => expense_acq_in ?? 300
 
 // there are other new inputs below that are also stressed
 
