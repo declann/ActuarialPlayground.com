@@ -32,7 +32,7 @@ summary {
 
 
 p, #observablehq-main {
-  max-width: 1200px;
+  max-width: 1300px;
 }
 .container .observablehq--block {
     margin: 0;
@@ -40,7 +40,7 @@ p, #observablehq-main {
 
   main#observablehq-main {
     margin: 0 120px;
-    max-width: 900px; /* On a desktop this seems like a big waste of space; but the layout uses height more than width. Better layouts would be interesting. */
+    max-width: 1300px; /* On a desktop this seems like a big waste of space; but the layout uses height more than width. Better layouts would be interesting. */
   }
 
   #viz {
@@ -221,9 +221,17 @@ body {
 
 /* Limit the height of the editor */
 .tab > .cm-editor {
-  height: 280px;
+  height: 380px;
   overflow-y: auto;
 }
+
+@media (max-width: 1200px) and (orientation: portrait) {
+  .tab > .cm-editor {
+    height: 280px;
+    overflow-y: auto;
+  }
+}
+
 
 /* Make sure the content area respects the height limit */
 .cm-scroller {
