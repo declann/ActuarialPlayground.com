@@ -41,8 +41,10 @@ html`<style>
 
 ```js
 html`<style>
-body {
-  font-size: large !important;
+@media not all and  (max-width: 1200px) and (orientation: portrait) {
+  body {
+    font-size: large !important;
+  }
 }
 #observablehq-center {
 margin: 0;
@@ -1365,7 +1367,7 @@ import confetti from "npm:canvas-confetti";
 ```
 ```js
 if (magic) {
-      window.plausible('magic')
+      if (window.plausible) window.plausible('magic')
 confetti({
   particleCount: 100,
   spread: 100,
