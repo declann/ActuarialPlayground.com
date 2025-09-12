@@ -21,6 +21,9 @@ sidebar: false
 
 <script>
     document.addEventListener("keydown", (event) => {
+      // exclude events from codemirror
+      if (event.target.closest('.cm-editor')) return;
+      
     if (event.key.toLowerCase() === "c")
       document.querySelectorAll(".collapsible").forEach(d => {d.classList.toggle("hide")});
   });
