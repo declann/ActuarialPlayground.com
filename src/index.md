@@ -817,8 +817,6 @@ const stress_delay_in = Generators.input(stress_delay_in_Input)
 </div>
 
 
-<div class="collapsible">
-
 <div class="card">
 <details class="plausible-event-name=Lapses+Drawer"><summary>lapse rate assumption ⚙️ ${lapse_rate == "0" ? "" : zero_lapses} ${lapse_rate_changed ? lapse_rates_reset : ""} <div id="checkbox2">${lapse_rate_changed ? Inputs.bind(html`<input id="update_pricing_lapse_rates_checkbox" type="checkbox">`, update_pricing_lapse_rates_Input) : ""} ${lapse_rate_changed ? html`<label for="update_pricing_lapse_rates_checkbox">+update pricing basis?<!-- todo track this button use--></label>` : ""}</div></summary>
 
@@ -946,7 +944,6 @@ const spark = Plot.plot({
 </details>
 </div>
 
-</div>
 
 
 ```js
