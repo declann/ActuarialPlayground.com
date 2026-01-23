@@ -38,10 +38,10 @@ export const sum_assured = () => sum_assured_in
 
 // duration_mth_in is a model point input: the duration "now" since policy started (or 0 for a New Business projection)
 // but duration_mth() is the duration at t since policy started
-export const duration_mth = () => duration_mth_in + t();
+export const duration_mth = () => duration_mth_0() + t();
 
-// duration "now" since policy started, just for convenience:
-export const duration_mth_0 = () => duration_mth({ t_in: 0 })
+// duration "now" since policy started:
+export const duration_mth_0 = () => duration_mth_0_in;
 
 // duration since policy started, in years:
 export const duration = () => Math.floor(duration_mth() / 12);
@@ -178,7 +178,7 @@ export const pols_if = () => pols_if_at(/*{ timing_in: 'BEF_MAT' }*/);
 // Leaving timing free here: I specify the timing in premium_rate_per_mille formula in playground.cul.js
 
 export const net_premium_pp = () => {
-  return -pv_fut_claims({ t_in: 0, duration_mth_in: 0 }) / pv_fut_pols_if({ t_in: 0, duration_mth_in: 0 })
+  return -pv_fut_claims({ t_in: 0, duration_mth_0_in: 0 }) / pv_fut_pols_if({ t_in: 0, duration_mth_0_in: 0 })
 }
 
 export const premium_rate_per_mille = () =>

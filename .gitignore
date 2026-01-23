@@ -8,3 +8,4 @@ yarn-error.log
 #slides_files
 test*.html
 test*.js
+public

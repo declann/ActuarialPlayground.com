@@ -291,7 +291,7 @@ lapse_rate_factor_in: 1,stress_delay_in: 0, mort_rate_Y1_add_per_mille_in: 0});
 
 ```js
 setCursor({
-duration_mth_in:0,
+duration_mth_0_in:0,
 //loading_prem_in: 0.5,
 });
 ```
@@ -328,7 +328,7 @@ function fmt(formula, v) {
   if (formula.includes('_rate') && !formula.includes('delay')&& !formula.includes('mth')&& !formula.includes('factor')) return d3.format(',.3%')(v)
   if (formula.includes('factor')) return d3.format(',.0%')(v)
   if (formula.includes('_rate') && formula.includes('mth')) return d3.format(',.5%')(v)
-  if (formula == 'duration_mth') return v + ' months'
+  if (formula == 'duration_mth_0') return v + ' months'
   if (formula.includes('_pc')) return v + "%"
   if (typeof v == "string") return v
   if (typeof v == 'boolean') return v ? 'true' : 'false'
@@ -530,7 +530,7 @@ const f = view(Inputs.select(formulae2.sort(), {label: 'ƒ', value: 's1_net_cf_'
 ```js
 //const claim_pp = _.range(0,cursor.policy_term_in+1).map(d => model[f]({...cursor, t_in:d*12-cursor.duration_mth_in}))
 
-const claim_pp = _.range(0,model.proj_len(cursor)+1).map(d => model[f]({...cursor, t_in:d-cursor.duration_mth_in}))
+const claim_pp = _.range(0,model.proj_len(cursor)+1).map(d => model[f]({...cursor, t_in:d-cursor.duration_mth_0_in}))
 ```
 
 
@@ -658,10 +658,10 @@ cfs_viz.view.signal('pv_fut_net_cf_fut_B', /*model.pv_fut_net_cf({...cursor,t_in
 </div>
 
 <div class="card">
-<details class="plausible-event-name=Model+Point+Drawer"><summary>model point ⚙️ <span style="margin-left:10px; font-style:italic">${age_at_entry_in} <span title="years old" style="border-bottom: 1px dotted black">yo</span> ${sex_in}, € ${d3.format(',.3s')(sum_assured_in)} <span title="sum assured" style="border-bottom: 1px dotted black">SA</span> <!--${policy_term_in} yr term, --><!--${cursor.duration_mth_in ? html`<span title="in-force projection (positive duration)" style="border-bottom: 1px dotted black">IF</span>` : html`<span title="new business projection (duration = 0)" style="border-bottom: 1px dotted black">NB</span>`}--></span> ${cursor.duration_mth_in ? (nb) : ""}</summary>
+<details class="plausible-event-name=Model+Point+Drawer"><summary>model point ⚙️ <span style="margin-left:10px; font-style:italic">${age_at_entry_in} <span title="years old" style="border-bottom: 1px dotted black">yo</span> ${sex_in}, € ${d3.format(',.3s')(sum_assured_in)} <span title="sum assured" style="border-bottom: 1px dotted black">SA</span> <!--${policy_term_in} yr term, --><!--${cursor.duration_mth_in ? html`<span title="in-force projection (positive duration)" style="border-bottom: 1px dotted black">IF</span>` : html`<span title="new business projection (duration = 0)" style="border-bottom: 1px dotted black">NB</span>`}--></span> ${cursor.duration_mth_0_in ? (nb) : ""}</summary>
 
 ```js
-const nb = html`<button class="reset-btn inlined" title="Go to new business projection (duration = 0 months)" onclick=${(e) => {setCursor({'duration_mth_in': 0});  e.stopPropagation(); if (window.plausible) window.plausible('NB_button') /*e.preventDefault()*/ }}>NB</button>`
+const nb = html`<button class="reset-btn inlined" title="Go to new business projection (duration = 0 months)" onclick=${(e) => {setCursor({'duration_mth_0_in': 0});  e.stopPropagation(); if (window.plausible) window.plausible('NB_button') /*e.preventDefault()*/ }}>NB</button>`
 ```
 
 ```js
@@ -671,13 +671,13 @@ const sex_in = view(Inputs.radio(['M','F'], {label: 'sex', value: 'M'}))
 const policy_term_in = view(Inputs.select([10,15,20], {label: 'term (years)', value: 20, width: 100}))
 ```
 ```js
-const duration_mth_in = 0;// view(Inputs.range([-5*12,20*12], {label: 'duration inforce', value: 30, step:1}))
+const duration_mth_0_in = 0;// view(Inputs.range([-5*12,20*12], {label: 'duration inforce', value: 30, step:1}))
 ```
 
 <!-- ZOOM OUT LEVEL CAN MAKE THIS FRACTIONAL - DO A ROUND TO STEP MULTIPLE CHK?   -->
 duration <span style="line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow; display:inline-block">
 <span style="font-size:0.8em">📣 <span class="input f" style="padding:5px;  font-style:italic">drag me</span> ↔️ 👉</span>
-</span>: ${draggable_input({input:'duration_mth_in', value: 0, step:1})}
+</span>: ${draggable_input({input:'duration_mth_0_in', value: 0, step:1})}
 
 <!--⇒ projection type <span class="f status"></span>-->
 
@@ -834,7 +834,7 @@ const update_pricing_lapse_rates_in = Generators.input(update_pricing_lapse_rate
 *lapse rate ƒ*<!-- <small>ℹ️ changes not affecting pricing basis</small>-->
 
 ```js
-const lapse_rates = _.range(0,cursor.policy_term_in+1).map(d => model.lapse_rate({...cursor, t_in:d*12-cursor.duration_mth_in}))
+const lapse_rates = _.range(0,cursor.policy_term_in+1).map(d => model.lapse_rate({...cursor, t_in:d*12-cursor.duration_mth_0_in}))
 ```
 
 ```js
@@ -1164,9 +1164,9 @@ const cfs_data = calcudata({
   [{...cursor, mort_rate_factor_in:1, lapse_rate_factor_in:1,stress_delay_in:0, maint_expenses_factor_in:1, inflation_rate_addition_in:0, mort_rate_Y1_add_per_mille_in: 0},cursor],
     //[{...cursor, step_in:step_no-1}, {...cursor, step_in:step_no}],
   input_domains: {
-    duration_mth_in: [cursor.duration_mth_in], // I need this in data atm
+    duration_mth_0_in: [cursor.duration_mth_0_in], // I need this in data atm
     t_in: _.range(
-      -cursor.duration_mth_in,
+      -cursor.duration_mth_0_in,
       model.proj_len(cursor)+1
     )///
   },
@@ -1218,7 +1218,7 @@ const cfs_highlights = highlighting ? cashflows_keep_add_subtract({
 ```
 
 ```js
-cfs_viz.view.signal('panOffset', -cursor.duration_mth_in);
+cfs_viz.view.signal('panOffset', -cursor.duration_mth_0_in);
 ```
 
 

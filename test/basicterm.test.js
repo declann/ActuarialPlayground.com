@@ -28,7 +28,7 @@ describe("basicterm.cul.js testing", async () => {
 
   it("and values for first basicterm model point matches lifelib results", async () => {
     let cursor = {
-      duration_mth_in: 1,
+      duration_mth_0_in: 1,
       age_at_entry_in: 47,
       sex_in: "M",
       policy_term_in: 10,
@@ -48,7 +48,7 @@ describe("basicterm.cul.js testing", async () => {
 
     // 3rd model point (first female)
     cursor = {
-      duration_mth_in: 15,
+      duration_mth_0_in: 15,
       age_at_entry_in: 51,
       sex_in: "F",
       policy_term_in: 10,

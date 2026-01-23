@@ -879,7 +879,7 @@ export function cashflows_summary_and_keep_add_subtract({ cfs, singular, varying
       //.derive({'value': d => d.value})
       .derive({
         //duration_mth: (d) => Math.floor((d.t_in + duration_mth_in) / 1),
-        duration_n: (d) => Math.floor((d.t_in + d.duration_mth_in) / 12)
+        duration_n: (d) => Math.floor((d.t_in + d.duration_mth_0_in) / 12)
       })
       .groupby("partition", "formula", 'varying', "duration_n")
       .derive({

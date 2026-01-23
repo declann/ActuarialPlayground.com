@@ -244,7 +244,7 @@ const run_renamed_fns = true // more important for showing workings; Actuarial P
 
 
 //debugger
-const fns_annotations = [...introspection.cul_functions.values()].filter(d => (optimize_perf == false) || ([/* todo prepend the class that fn_annots updates so that i can easier search for them for this optimization */"status", "premium_pp_0", "premium_rate_per_mille", "sum_assured", "duration_mth", "expense_acq", "expense_maint", "commission_pc", "commission_mths", "inflation_rate", "stress_delay", "mort_rate_Y1_add_per_mille", "expenses_factor", "inflation_rate_addition", "loading_prem"].includes(d.name))).filter(
+const fns_annotations = [...introspection.cul_functions.values()].filter(d => (optimize_perf == false) || ([/* todo prepend the class that fn_annots updates so that i can easier search for them for this optimization */"status", "premium_pp_0", "premium_rate_per_mille", "sum_assured", "duration_mth_0", "expense_acq", "expense_maint", "commission_pc", "commission_mths", "inflation_rate", "stress_delay", "mort_rate_Y1_add_per_mille", "expenses_factor", "inflation_rate_addition", "loading_prem"].includes(d.name))).filter(
         (d) =>
           d.reason == "definition" || (d.reason == 'definition (renamed)' && run_renamed_fns) /*&&
           d.cul_scope_id == cul_scope_id*/
