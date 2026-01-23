@@ -42,7 +42,7 @@ export const s0_policy_count$ = ({ policy_count_in }) => policy_count_in ?? 1;
 export const s0_sum_assured$ = ({ sum_assured_in }) => sum_assured_in;
 
 
-// duration_mth_in is a model point input: the duration "now" since policy started (or 0 for a New Business projection)
+// duration_mth_0_in is an input: the duration "now" since policy started (or 0 for a New Business projection)
 // but duration_mth() is the duration at t since policy started
 export const s0_duration_mth$ = ({ duration_mth_0_in, t_in }) => s0_duration_mth_0({ duration_mth_0_in }) + s0_t({ t_in });
 
