@@ -215,14 +215,14 @@ export const s0_policy_value = ({ policy_term_in, duration_mth_0_in, premium_pay
 
 
 // time in months, >=0 is future, <0 is past
-export const s1_t = ({ t_in }) => t_in;
+export const s1_t = ({ t_in }) => t_in ?? 0;
 
 // 'model point' inputs
-export const s1_age_at_entry = ({ age_at_entry_in }) => age_at_entry_in;
-export const s1_sex = ({ sex_in }) => sex_in;
-export const s1_policy_term = ({ policy_term_in }) => policy_term_in;
+export const s1_age_at_entry = ({ age_at_entry_in }) => age_at_entry_in ?? 20;
+export const s1_sex = ({ sex_in }) => sex_in ?? 'M';
+export const s1_policy_term = ({ policy_term_in }) => policy_term_in ?? 10;
 export const s1_policy_count = ({ policy_count_in }) => policy_count_in ?? 1;
-export const s1_sum_assured = ({ sum_assured_in }) => sum_assured_in;
+export const s1_sum_assured = ({ sum_assured_in }) => sum_assured_in ?? 100000;
 
 
 // duration_mth_0_in is an input: the duration "now" since policy started (or 0 for a New Business projection)
@@ -230,7 +230,7 @@ export const s1_sum_assured = ({ sum_assured_in }) => sum_assured_in;
 export const s1_duration_mth = ({ duration_mth_0_in, t_in }) => s1_duration_mth_0({ duration_mth_0_in }) + s1_t({ t_in });
 
 // duration "now" since policy started:
-export const s1_duration_mth_0 = ({ duration_mth_0_in }) => duration_mth_0_in;
+export const s1_duration_mth_0 = ({ duration_mth_0_in }) => duration_mth_0_in ?? 0;
 
 // duration since policy started, in years:
 export const s1_duration = ({ duration_mth_0_in, t_in }) => Math.floor(s1_duration_mth({ duration_mth_0_in, t_in }) / 12);
@@ -281,7 +281,7 @@ export const s1_lapse_rate_mth = ({ t_in, zero_decrement_experience_in, stress_d
 
 // policy survival/decrement projections
 
-export const s1_timing = ({ timing_in }) => timing_in;
+export const s1_timing = ({ timing_in }) => timing_in ?? 'BEF_NB';
 
 export const s1_pols_if_init = ({ policy_count_in }) => s1_policy_count({ policy_count_in });
 

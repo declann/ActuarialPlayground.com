@@ -26,14 +26,14 @@ import { premium_rate, mort_rate, zero_spot } from './basicterm-tables.cul.js'
 
 
 // time in months, >=0 is future, <0 is past
-export const t = () => t_in
+export const t = () => t_in ?? 0
 
 // 'model point' inputs
-export const age_at_entry = () => age_at_entry_in
-export const sex = () => sex_in
-export const policy_term = () => policy_term_in
+export const age_at_entry = () => age_at_entry_in ?? 20
+export const sex = () => sex_in ?? 'M'
+export const policy_term = () => policy_term_in ?? 10
 export const policy_count = () => policy_count_in ?? 1
-export const sum_assured = () => sum_assured_in
+export const sum_assured = () => sum_assured_in ?? 100000
 
 
 // duration_mth_0_in is an input: the duration "now" since policy started (or 0 for a New Business projection)
@@ -41,7 +41,7 @@ export const sum_assured = () => sum_assured_in
 export const duration_mth = () => duration_mth_0() + t();
 
 // duration "now" since policy started:
-export const duration_mth_0 = () => duration_mth_0_in;
+export const duration_mth_0 = () => duration_mth_0_in ?? 0;
 
 // duration since policy started, in years:
 export const duration = () => Math.floor(duration_mth() / 12);
@@ -92,7 +92,7 @@ export const lapse_rate_mth = () => { // factored from pols_lapse
 
 // policy survival/decrement projections
 
-export const timing = () => timing_in
+export const timing = () => timing_in ?? 'BEF_NB'
 
 export const pols_if_init = () => policy_count()
 
