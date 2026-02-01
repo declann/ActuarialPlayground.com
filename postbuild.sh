@@ -14,4 +14,7 @@ for file in "$dir"/*.cul.*.js; do
     cp "$file" "$new_file"
     
     echo "Copied $file -> $new_file"
+
+    # use find command to make a manifest of src/.observablehq/cache
+    find src/.observablehq/cache -type f > src/.observablehq/manifest.txt
 done

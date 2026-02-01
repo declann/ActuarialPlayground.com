@@ -1,6 +1,6 @@
 .DS_Store
 dist/
-src/.observablehq/cache/
+src/.observablehq*/cache/
 node_modules/
 yarn-error.log
 #slides.html
