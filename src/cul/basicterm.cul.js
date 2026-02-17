@@ -163,7 +163,9 @@ export const expenses_maint = () =>
   (expense_maint() / 12) *
   inflation_factor() *
   pols_if_at({ timing_in: "BEF_DECR" }); // monthly maintenance expenses, inflated
+
 export const expenses = () => -(expenses_acq() + expenses_maint());
+
 export const commissions = () =>
   duration_mth() < commission_mths()
     ? (-premiums() * commission_pc()) / 100

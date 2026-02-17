@@ -169,7 +169,9 @@ export const s0_expenses_maint$ = ({ t_in, duration_mth_0_in, policy_term_in, po
 s0_expense_maint({}) / 12 *
 s0_inflation_factor({ t_in }) *
 s0_pols_if_at({ duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, timing_in: "BEF_DECR" }); // monthly maintenance expenses, inflated
+
 export const s0_expenses$ = ({ duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in }) => -(s0_expenses_acq({ duration_mth_0_in, t_in, policy_count_in }) + s0_expenses_maint({ t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }));
+
 export const s0_commissions$ = ({ duration_mth_0_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in }) =>
 s0_duration_mth({ duration_mth_0_in, t_in }) < s0_commission_mths({}) ?
 -s0_premiums({ sum_assured_in, age_at_entry_in, policy_term_in, duration_mth_0_in, t_in, policy_count_in, zero_decrement_experience_in }) * s0_commission_pc({}) / 100 :
