@@ -154,7 +154,9 @@ export const premiums = () => premium_pp() * pols_if_at({ timing_in: 'BEF_DECR' 
 export const claims = () => -claim_pp() * pols_death()
 
 // acquisition expenses are not affected by inflation (questionable but consistent with BasicTerm_S https://lifelib.io/_modules/basiclife/BasicTerm_S/Projection.html#expenses)
-export const expenses = () => -(expense_acq() * pols_new_biz() + pols_if_at({ timing_in: 'BEF_DECR' }) * expense_maint() / 12 * inflation_factor())
+export const expenses_acq = () => expense_acq() * pols_new_biz()
+export const expenses_maint = () => (expense_maint() / 12) * inflation_factor() * pols_if_at({ timing_in: 'BEF_DECR' }) // monthly maintenance expenses, inflated
+export const expenses = () => -(expenses_acq() + expenses_maint())
 export const commissions = () => (duration_mth() < commission_mths()) ? (-premiums() * commission_pc() / 100) : 0
 
 export const commission_mths = () => 12
@@ -211,6 +213,8 @@ export const disc_factor = () => (1 + disc_rate_mth()) ** (-t())
 export const pv_claims = () => claims() * disc_factor()
 export const pv_premiums = () => premiums() * disc_factor()
 export const pv_expenses = () => expenses() * disc_factor()
+export const pv_expenses_maint = () => expenses_maint() * disc_factor()
+export const pv_expenses_acq = () => expenses_acq() * disc_factor()
 export const pv_commissions = () => commissions() * disc_factor()
 export const pv_net_cf = () => net_cf() * disc_factor()
 export const pv_pols_if = () => pols_if() * disc_factor() // BasicTerm_M, for pricing table calc reconciliation
@@ -229,6 +233,16 @@ export const pv_fut_premiums = () => {
 export const pv_fut_expenses = () => {
   if (t() >= proj_len()) return 0
   return (pv_fut_expenses({ t_in: t() + 1 }) + pv_expenses())
+}
+
+export const pv_fut_expenses_maint = () => {
+  if (t() >= proj_len()) return 0
+  return (pv_fut_expenses_maint({ t_in: t() + 1 }) + pv_expenses_maint())
+}
+
+export const pv_fut_expenses_acq = () => {
+  if (t() >= proj_len()) return 0
+  return (pv_fut_expenses_acq({ t_in: t() + 1 }) + pv_expenses_acq())
 }
 
 export const pv_fut_commissions = () => {

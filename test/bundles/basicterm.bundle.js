@@ -160,7 +160,9 @@ export const s0_premiums$ = ({ sum_assured_in, age_at_entry_in, policy_term_in, 
 export const s0_claims$ = ({ sum_assured_in, duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) => -s0_claim_pp({ sum_assured_in }) * s0_pols_death({ duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in });
 
 // acquisition expenses are not affected by inflation (questionable but consistent with BasicTerm_S https://lifelib.io/_modules/basiclife/BasicTerm_S/Projection.html#expenses)
-export const s0_expenses$ = ({ duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in }) => -(s0_expense_acq({}) * s0_pols_new_biz({ duration_mth_0_in, t_in, policy_count_in }) + s0_pols_if_at({ duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, timing_in: 'BEF_DECR' }) * s0_expense_maint({}) / 12 * s0_inflation_factor({ t_in }));
+export const s0_expenses_acq$ = ({ duration_mth_0_in, t_in, policy_count_in }) => s0_expense_acq({}) * s0_pols_new_biz({ duration_mth_0_in, t_in, policy_count_in });
+export const s0_expenses_maint$ = ({ t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) => s0_expense_maint({}) / 12 * s0_inflation_factor({ t_in }) * s0_pols_if_at({ duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, timing_in: 'BEF_DECR' }); // monthly maintenance expenses, inflated
+export const s0_expenses$ = ({ duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in }) => -(s0_expenses_acq({ duration_mth_0_in, t_in, policy_count_in }) + s0_expenses_maint({ t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }));
 export const s0_commissions$ = ({ duration_mth_0_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in }) => s0_duration_mth({ duration_mth_0_in, t_in }) < s0_commission_mths({}) ? -s0_premiums({ sum_assured_in, age_at_entry_in, policy_term_in, duration_mth_0_in, t_in, policy_count_in, zero_decrement_experience_in }) * s0_commission_pc({}) / 100 : 0;
 
 export const s0_commission_mths$ = ({}) => 12;
@@ -217,6 +219,8 @@ export const s0_disc_factor$ = ({ t_in }) => (1 + s0_disc_rate_mth({ t_in })) **
 export const s0_pv_claims$ = ({ sum_assured_in, duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) => s0_claims({ sum_assured_in, duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) * s0_disc_factor({ t_in });
 export const s0_pv_premiums$ = ({ sum_assured_in, age_at_entry_in, policy_term_in, duration_mth_0_in, t_in, policy_count_in, zero_decrement_experience_in }) => s0_premiums({ sum_assured_in, age_at_entry_in, policy_term_in, duration_mth_0_in, t_in, policy_count_in, zero_decrement_experience_in }) * s0_disc_factor({ t_in });
 export const s0_pv_expenses$ = ({ duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in }) => s0_expenses({ duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in }) * s0_disc_factor({ t_in });
+export const s0_pv_expenses_maint$ = ({ t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) => s0_expenses_maint({ t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) * s0_disc_factor({ t_in });
+export const s0_pv_expenses_acq$ = ({ duration_mth_0_in, t_in, policy_count_in }) => s0_expenses_acq({ duration_mth_0_in, t_in, policy_count_in }) * s0_disc_factor({ t_in });
 export const s0_pv_commissions$ = ({ duration_mth_0_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in }) => s0_commissions({ duration_mth_0_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in }) * s0_disc_factor({ t_in });
 export const s0_pv_net_cf$ = ({ sum_assured_in, age_at_entry_in, policy_term_in, duration_mth_0_in, t_in, policy_count_in, zero_decrement_experience_in }) => s0_net_cf({ sum_assured_in, age_at_entry_in, policy_term_in, duration_mth_0_in, t_in, policy_count_in, zero_decrement_experience_in }) * s0_disc_factor({ t_in });
 export const s0_pv_pols_if$ = ({ duration_mth_0_in, t_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) => s0_pols_if({ duration_mth_0_in, t_in, policy_term_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in }) * s0_disc_factor({ t_in }); // BasicTerm_M, for pricing table calc reconciliation
@@ -235,6 +239,16 @@ export const s0_pv_fut_premiums$ = ({ t_in, policy_term_in, duration_mth_0_in, s
 export const s0_pv_fut_expenses$ = ({ t_in, policy_term_in, duration_mth_0_in, policy_count_in, timing_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in }) => {
   if (s0_t({ t_in }) >= s0_proj_len({ policy_term_in, duration_mth_0_in })) return 0;
   return s0_pv_fut_expenses({ policy_term_in, duration_mth_0_in, policy_count_in, timing_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in, t_in: s0_t({ t_in }) + 1 }) + s0_pv_expenses({ duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in });
+};
+
+export const s0_pv_fut_expenses_maint$ = ({ t_in, policy_term_in, duration_mth_0_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in }) => {
+  if (s0_t({ t_in }) >= s0_proj_len({ policy_term_in, duration_mth_0_in })) return 0;
+  return s0_pv_fut_expenses_maint({ policy_term_in, duration_mth_0_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in, t_in: s0_t({ t_in }) + 1 }) + s0_pv_expenses_maint({ t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in });
+};
+
+export const s0_pv_fut_expenses_acq$ = ({ t_in, policy_term_in, duration_mth_0_in, policy_count_in, zero_spot_year_in }) => {
+  if (s0_t({ t_in }) >= s0_proj_len({ policy_term_in, duration_mth_0_in })) return 0;
+  return s0_pv_fut_expenses_acq({ policy_term_in, duration_mth_0_in, policy_count_in, zero_spot_year_in, t_in: s0_t({ t_in }) + 1 }) + s0_pv_expenses_acq({ duration_mth_0_in, t_in, policy_count_in });
 };
 
 export const s0_pv_fut_commissions$ = ({ t_in, policy_term_in, duration_mth_0_in, sum_assured_in, age_at_entry_in, timing_in, policy_count_in, zero_decrement_experience_in, zero_spot_year_in }) => {
@@ -429,6 +443,14 @@ export const s0_claims$m = memoize(s0_claims$, ({sum_assured_in, duration_mth_0_
 export const s0_claims = ({sum_assured_in, duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in}) => s0_claims$m({sum_assured_in, duration_mth_0_in, t_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in})
 model['s0_claims'] = s0_claims
 
+export const s0_expenses_acq$m = memoize(s0_expenses_acq$, ({duration_mth_0_in, t_in, policy_count_in}) => Object.values(({duration_mth_0_in, t_in, policy_count_in})).toString()); 
+export const s0_expenses_acq = ({duration_mth_0_in, t_in, policy_count_in}) => s0_expenses_acq$m({duration_mth_0_in, t_in, policy_count_in})
+model['s0_expenses_acq'] = s0_expenses_acq
+
+export const s0_expenses_maint$m = memoize(s0_expenses_maint$, ({t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in}) => Object.values(({t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in})).toString()); 
+export const s0_expenses_maint = ({t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in}) => s0_expenses_maint$m({t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in})
+model['s0_expenses_maint'] = s0_expenses_maint
+
 export const s0_expenses$m = memoize(s0_expenses$, ({duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in}) => Object.values(({duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in})).toString()); 
 export const s0_expenses = ({duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in}) => s0_expenses$m({duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in})
 model['s0_expenses'] = s0_expenses
@@ -493,6 +515,14 @@ export const s0_pv_expenses$m = memoize(s0_pv_expenses$, ({duration_mth_0_in, t_
 export const s0_pv_expenses = ({duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in}) => s0_pv_expenses$m({duration_mth_0_in, t_in, policy_count_in, policy_term_in, zero_decrement_experience_in, age_at_entry_in})
 model['s0_pv_expenses'] = s0_pv_expenses
 
+export const s0_pv_expenses_maint$m = memoize(s0_pv_expenses_maint$, ({t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in}) => Object.values(({t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in})).toString()); 
+export const s0_pv_expenses_maint = ({t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in}) => s0_pv_expenses_maint$m({t_in, duration_mth_0_in, policy_term_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in})
+model['s0_pv_expenses_maint'] = s0_pv_expenses_maint
+
+export const s0_pv_expenses_acq$m = memoize(s0_pv_expenses_acq$, ({duration_mth_0_in, t_in, policy_count_in}) => Object.values(({duration_mth_0_in, t_in, policy_count_in})).toString()); 
+export const s0_pv_expenses_acq = ({duration_mth_0_in, t_in, policy_count_in}) => s0_pv_expenses_acq$m({duration_mth_0_in, t_in, policy_count_in})
+model['s0_pv_expenses_acq'] = s0_pv_expenses_acq
+
 export const s0_pv_commissions$m = memoize(s0_pv_commissions$, ({duration_mth_0_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in}) => Object.values(({duration_mth_0_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in})).toString()); 
 export const s0_pv_commissions = ({duration_mth_0_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in}) => s0_pv_commissions$m({duration_mth_0_in, t_in, sum_assured_in, age_at_entry_in, policy_term_in, policy_count_in, zero_decrement_experience_in})
 model['s0_pv_commissions'] = s0_pv_commissions
@@ -516,6 +546,14 @@ model['s0_pv_fut_premiums'] = s0_pv_fut_premiums
 export const s0_pv_fut_expenses$m = memoize(s0_pv_fut_expenses$, ({t_in, policy_term_in, duration_mth_0_in, policy_count_in, timing_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in}) => Object.values(({t_in, policy_term_in, duration_mth_0_in, policy_count_in, timing_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in})).toString()); 
 export const s0_pv_fut_expenses = ({t_in, policy_term_in, duration_mth_0_in, policy_count_in, timing_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in}) => s0_pv_fut_expenses$m({t_in, policy_term_in, duration_mth_0_in, policy_count_in, timing_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in})
 model['s0_pv_fut_expenses'] = s0_pv_fut_expenses
+
+export const s0_pv_fut_expenses_maint$m = memoize(s0_pv_fut_expenses_maint$, ({t_in, policy_term_in, duration_mth_0_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in}) => Object.values(({t_in, policy_term_in, duration_mth_0_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in})).toString()); 
+export const s0_pv_fut_expenses_maint = ({t_in, policy_term_in, duration_mth_0_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in}) => s0_pv_fut_expenses_maint$m({t_in, policy_term_in, duration_mth_0_in, timing_in, policy_count_in, zero_decrement_experience_in, age_at_entry_in, zero_spot_year_in})
+model['s0_pv_fut_expenses_maint'] = s0_pv_fut_expenses_maint
+
+export const s0_pv_fut_expenses_acq$m = memoize(s0_pv_fut_expenses_acq$, ({t_in, policy_term_in, duration_mth_0_in, policy_count_in, zero_spot_year_in}) => Object.values(({t_in, policy_term_in, duration_mth_0_in, policy_count_in, zero_spot_year_in})).toString()); 
+export const s0_pv_fut_expenses_acq = ({t_in, policy_term_in, duration_mth_0_in, policy_count_in, zero_spot_year_in}) => s0_pv_fut_expenses_acq$m({t_in, policy_term_in, duration_mth_0_in, policy_count_in, zero_spot_year_in})
+model['s0_pv_fut_expenses_acq'] = s0_pv_fut_expenses_acq
 
 export const s0_pv_fut_commissions$m = memoize(s0_pv_fut_commissions$, ({t_in, policy_term_in, duration_mth_0_in, sum_assured_in, age_at_entry_in, timing_in, policy_count_in, zero_decrement_experience_in, zero_spot_year_in}) => Object.values(({t_in, policy_term_in, duration_mth_0_in, sum_assured_in, age_at_entry_in, timing_in, policy_count_in, zero_decrement_experience_in, zero_spot_year_in})).toString()); 
 export const s0_pv_fut_commissions = ({t_in, policy_term_in, duration_mth_0_in, sum_assured_in, age_at_entry_in, timing_in, policy_count_in, zero_decrement_experience_in, zero_spot_year_in}) => s0_pv_fut_commissions$m({t_in, policy_term_in, duration_mth_0_in, sum_assured_in, age_at_entry_in, timing_in, policy_count_in, zero_decrement_experience_in, zero_spot_year_in})
@@ -637,6 +675,8 @@ export const inflation_rate_mth = s0_inflation_rate_mth; model['inflation_rate_m
 export const inflation_factor = s0_inflation_factor; model['inflation_factor'] = inflation_factor;
 export const premiums = s0_premiums; model['premiums'] = premiums;
 export const claims = s0_claims; model['claims'] = claims;
+export const expenses_acq = s0_expenses_acq; model['expenses_acq'] = expenses_acq;
+export const expenses_maint = s0_expenses_maint; model['expenses_maint'] = expenses_maint;
 export const expenses = s0_expenses; model['expenses'] = expenses;
 export const commissions = s0_commissions; model['commissions'] = commissions;
 export const commission_mths = s0_commission_mths; model['commission_mths'] = commission_mths;
@@ -653,12 +693,16 @@ export const disc_factor = s0_disc_factor; model['disc_factor'] = disc_factor;
 export const pv_claims = s0_pv_claims; model['pv_claims'] = pv_claims;
 export const pv_premiums = s0_pv_premiums; model['pv_premiums'] = pv_premiums;
 export const pv_expenses = s0_pv_expenses; model['pv_expenses'] = pv_expenses;
+export const pv_expenses_maint = s0_pv_expenses_maint; model['pv_expenses_maint'] = pv_expenses_maint;
+export const pv_expenses_acq = s0_pv_expenses_acq; model['pv_expenses_acq'] = pv_expenses_acq;
 export const pv_commissions = s0_pv_commissions; model['pv_commissions'] = pv_commissions;
 export const pv_net_cf = s0_pv_net_cf; model['pv_net_cf'] = pv_net_cf;
 export const pv_pols_if = s0_pv_pols_if; model['pv_pols_if'] = pv_pols_if;
 export const pv_fut_claims = s0_pv_fut_claims; model['pv_fut_claims'] = pv_fut_claims;
 export const pv_fut_premiums = s0_pv_fut_premiums; model['pv_fut_premiums'] = pv_fut_premiums;
 export const pv_fut_expenses = s0_pv_fut_expenses; model['pv_fut_expenses'] = pv_fut_expenses;
+export const pv_fut_expenses_maint = s0_pv_fut_expenses_maint; model['pv_fut_expenses_maint'] = pv_fut_expenses_maint;
+export const pv_fut_expenses_acq = s0_pv_fut_expenses_acq; model['pv_fut_expenses_acq'] = pv_fut_expenses_acq;
 export const pv_fut_commissions = s0_pv_fut_commissions; model['pv_fut_commissions'] = pv_fut_commissions;
 export const pv_fut_net_cf = s0_pv_fut_net_cf; model['pv_fut_net_cf'] = pv_fut_net_cf;
 export const pv_fut_pols_if = s0_pv_fut_pols_if; model['pv_fut_pols_if'] = pv_fut_pols_if
@@ -695,6 +739,8 @@ model['s0_inflation_rate_mth$'] = s0_inflation_rate_mth$;
 model['s0_inflation_factor$'] = s0_inflation_factor$;
 model['s0_premiums$'] = s0_premiums$;
 model['s0_claims$'] = s0_claims$;
+model['s0_expenses_acq$'] = s0_expenses_acq$;
+model['s0_expenses_maint$'] = s0_expenses_maint$;
 model['s0_expenses$'] = s0_expenses$;
 model['s0_commissions$'] = s0_commissions$;
 model['s0_commission_mths$'] = s0_commission_mths$;
@@ -711,12 +757,16 @@ model['s0_disc_factor$'] = s0_disc_factor$;
 model['s0_pv_claims$'] = s0_pv_claims$;
 model['s0_pv_premiums$'] = s0_pv_premiums$;
 model['s0_pv_expenses$'] = s0_pv_expenses$;
+model['s0_pv_expenses_maint$'] = s0_pv_expenses_maint$;
+model['s0_pv_expenses_acq$'] = s0_pv_expenses_acq$;
 model['s0_pv_commissions$'] = s0_pv_commissions$;
 model['s0_pv_net_cf$'] = s0_pv_net_cf$;
 model['s0_pv_pols_if$'] = s0_pv_pols_if$;
 model['s0_pv_fut_claims$'] = s0_pv_fut_claims$;
 model['s0_pv_fut_premiums$'] = s0_pv_fut_premiums$;
 model['s0_pv_fut_expenses$'] = s0_pv_fut_expenses$;
+model['s0_pv_fut_expenses_maint$'] = s0_pv_fut_expenses_maint$;
+model['s0_pv_fut_expenses_acq$'] = s0_pv_fut_expenses_acq$;
 model['s0_pv_fut_commissions$'] = s0_pv_fut_commissions$;
 model['s0_pv_fut_net_cf$'] = s0_pv_fut_net_cf$;
 model['s0_pv_fut_pols_if$'] = s0_pv_fut_pols_if$;
