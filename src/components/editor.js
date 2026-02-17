@@ -295,7 +295,7 @@ export const ab = ({entrypoint='entrypoint.cul.js', defaultFS, setModel, setIntr
 </ul>
 
 <h3>model composition ♻️</h3>
-<p>In calculang I am able to maintain new Playground requirements in a distinct file or module (<code>playground.cul.js</code>). This <strong>imports formulas</strong> directly from the <code>basicterm.cul.js</code> model, and specifies changes for premium rate calculation, assumption, and other formulas to meet the requirements.</p><p>By systematically deleting formulas in <code>playground.cul.js</code>, you will have a Playground model that reconciles <strong><a target="_blank" href="https://x.com/calculang/status/1811044584207560929">exactly to BasicTerm</a></strong>.</p><p>This structure is an example of <strong>model composition</strong> that's possible using calculang.</p>
+<p>In calculang I am able to maintain new Playground requirements in a distinct file or module (<code>playground.cul.js</code>). This <strong>imports formulas</strong> directly from the <code>basicterm.cul.js</code> model, and specifies changes for premium rate calculation, assumption, and other formulas to meet the Playground requirements.</p><p>By systematically deleting formulas in <code>playground.cul.js</code>, you will have a Playground model that reconciles <strong><a target="_blank" href="https://x.com/calculang/status/1811044584207560929">exactly to BasicTerm</a></strong>.</p><p>This structure is an example of <strong>model composition</strong> that's possible using calculang.</p>
  
 <p>The <strong>practical usecases</strong> for model composition are far more broad than what the Playground shows.</p>
 
@@ -314,9 +314,9 @@ export const ab = ({entrypoint='entrypoint.cul.js', defaultFS, setModel, setIntr
 
     <div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:3em;line-height:1.5em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
 
-<p>ℹ️ <strong><a href="https://calculang.dev">calculang</a></strong> and <strong>Actuarial Playground</strong> are both projects by <strong><a href="https://calcwithdec.dev/about">Declan Naughton</a></strong>. Declan develops specialized and modern <strong>actuarial modelling</strong> and <strong>actuarial analysis</strong> solutions.</p>
+<p>☎️ To provide feedback or else for customised/purpose-built models and modelling training/research access, <span class="active-button" style="display:inline-block"><strong><a href="mailto:dcnconsultingactuarial@gmail.com">get in touch</a></strong></span>.</p>
 
-<p>☎️ <span class="active-button"><strong><a href="mailto:dcnconsultingactuarial@gmail.com">Contact</a></strong></span> to learn more, to view demos, or to discuss <strong>modelling or visualization</strong> <i>challenges</i> - or if you are interested in <i>guided introductions</i> to the Playground and calculang (especially if you are a <strong>teacher</strong> or <strong>mentor</strong> or if you <strong>manage a team</strong> with actuarial students)</p>
+<p>📜 free and open source software licensed under the AGPLv3 <a target="_blank" href="https://github.com/declann/ActuarialPlayground.com">on GitHub</a> | <span><strong><a href="https://calcwithdec.dev">CalcWithDec.dev</a></strong></span></p>
 
 </div>
 

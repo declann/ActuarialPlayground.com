@@ -1237,14 +1237,6 @@ cfs_viz.view.signal('show_stress_rule', cursor.stress_delay_in != 0);
 
 <div class="collapsible">
 
-<div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:4em;line-height:1.5em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
-
-ℹ️ **Actuarial Playground** is a project by **[Declan Naughton](https://calcwithdec.dev/about)** - developing specialized and modern **actuarial modelling** and **actuarial analysis** tools.<br/>
-
-☎️ <span class="active-button">**[Contact](mailto:dcnconsultingactuarial@gmail.com)**</span> to learn more, to view demos, or to discuss **modelling or visualization** *challenges* - or if you are interested in *guided introductions* to the Playground and calculang (especially if you are a **teacher** or **mentor** or if you **manage a team** with actuarial students)
-
-</div>
-
 <div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:3em;line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
 
 ⚠️ **Disclaimer**: The assumptions, methodology, limitations and issues of a model should be carefully considered for any purpose you apply it to.
@@ -1258,7 +1250,11 @@ I haven’t noted these for this Playground: which is presented for demonstratio
 
 <div class="info" style="margin-bottom:0em; margin-left: 0.5em; margin-right: 0.5em; margin-top:3em;line-height:1em; border: 1px solid lightgrey; padding:3px; background: lightyellow">
 
-To provide feedback or else for customised/purpose-built models, <span class="active-button" style="display:inline-block"><strong><a href="mailto:dcnconsultingactuarial@gmail.com">get in touch</a></strong></span>
+See ❓ tab for technical notes!
+
+☎️ To provide feedback or else for customised/purpose-built models and modelling training/research access, <span class="active-button" style="display:inline-block"><strong><a href="mailto:dcnconsultingactuarial@gmail.com">get in touch</a></strong></span>.
+
+📜 free and open source software licensed under the AGPLv3 <a target="_blank" href="https://github.com/declann/ActuarialPlayground.com">on GitHub</a> | <span><strong><a href="https://calcwithdec.dev">CalcWithDec.dev</a></strong></span>
 
 </div>
 
