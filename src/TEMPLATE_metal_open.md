@@ -675,17 +675,30 @@ function clamp(x, lo, hi) { return x < lo ? lo : x > hi ? hi : x; }
 
 function makeDraggable(state, el, step, input) {
     // from https://www.redblobgames.com/making-of/draggable/
+
+    // mobile: pointer captures can get released on re-render, so bind move/end on window where the closure outlives `el`
+    // install a non-passive touchmove blocker so the page can't scroll while a drag is active
+    function blockTouchScroll(e) { if (e.cancelable) e.preventDefault(); }
+
     function start(event) {
         if (event.button !== 0) return; // left button only
         let {x, y} = state.eventToCoordinates(event);
         state.dragging = {dx: state.pos.x - x, dy: state.pos.y - y};
         el.setPointerCapture(event.pointerId);
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', end);
+        window.addEventListener('pointercancel', end);
+        window.addEventListener('touchmove', blockTouchScroll, {passive: false});
         event.stopPropagation()
         event.preventDefault()
     }
 
     function end(_event) {
         state.dragging = null;
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', end);
+        window.removeEventListener('pointercancel', end);
+        window.removeEventListener('touchmove', blockTouchScroll, {passive: false});
         _event.stopImmediatePropagation();
         _event.stopPropagation()
         _event.preventDefault()
@@ -702,9 +715,6 @@ function makeDraggable(state, el, step, input) {
     }
 
     el.addEventListener('pointerdown', start);
-    el.addEventListener('pointerup', end);
-    el.addEventListener('pointercancel', end);
-    el.addEventListener('pointermove', move)
     el.addEventListener('touchstart', (e) => {e.preventDefault(); e.stopPropagation});
 
     // add these to stop collapsing details when inside <summary>
@@ -738,6 +748,7 @@ function makeDraggable(state, el, step, input) {
     /* mitigate safari mac context menu event? */
     -webkit-user-drag: none;
     -webkit-touch-callout: none; 
+    touch-action: none;
     pointer-events: all;
 }
 
