@@ -1,32 +1,32 @@
 // AGPL DN
 
-import { MergeView, unifiedMergeView, updateOriginalDoc, originalDocChangeEffect, getOriginalDoc } from "@codemirror/merge"
-import { EditorView  } from 'codemirror'
-import { EditorView as  EditorView_old } from 'codemirror' // needed for merge view ?!
-import { basicSetup } from "codemirror"
+import { MergeView, unifiedMergeView, updateOriginalDoc, originalDocChangeEffect, getOriginalDoc } from "npm:@codemirror/merge"
+import { EditorView  } from 'npm:codemirror'
+import { EditorView as  EditorView_old } from 'npm:codemirror' // needed for merge view ?!
+import { basicSetup } from "npm:codemirror"
 // I tried to remove basicSetup to turn off lineNumbers, but this broke Enter key for some reason - versions of imports?
 //import { basicSetup } from "codemirror"
 
 
-import { highlightActiveLineGutter, highlightSpecialChars, drawSelection, dropCursor, highlightActiveLine, keymap } from '@codemirror/view';
+import { highlightActiveLineGutter, highlightSpecialChars, drawSelection, dropCursor, highlightActiveLine, keymap } from 'npm:@codemirror/view';
 
-import { highlightSelectionMatches, searchKeymap } from '@codemirror/search';
-import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
-import { history, defaultKeymap, historyKeymap } from '@codemirror/commands';
-
-
+import { highlightSelectionMatches, searchKeymap } from 'npm:@codemirror/search';
+import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from 'npm:@codemirror/autocomplete';
+import { history, defaultKeymap, historyKeymap } from 'npm:@codemirror/commands';
 
 
 
-import { EditorState } from "@codemirror/state"
-import { linter, lintGutter, lintKeymap } from "@codemirror/lint"
-import { ChangeSet } from "@codemirror/state"
 
-import { Text } from "@codemirror/state"
 
-import * as eslint from "eslint-linter-browserify";
-import { javascript, esLint, javascriptLanguage } from "@codemirror/lang-javascript";
-import { foldGutter, indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching, foldKeymap, syntaxTree, foldAll } from '@codemirror/language';
+import { EditorState } from "npm:@codemirror/state"
+import { linter, lintGutter, lintKeymap } from "npm:@codemirror/lint"
+import { ChangeSet } from "npm:@codemirror/state"
+
+import { Text } from "npm:@codemirror/state"
+
+import * as eslint from "npm:eslint-linter-browserify";
+import { javascript, esLint, javascriptLanguage } from "npm:@codemirror/lang-javascript";
+import { foldGutter, indentOnInput, syntaxHighlighting, defaultHighlightStyle, bracketMatching, foldKeymap, syntaxTree, foldAll } from 'npm:@codemirror/language';
 import globals from "globals";
 
 // f9535c0 is latest all_cul commit:
