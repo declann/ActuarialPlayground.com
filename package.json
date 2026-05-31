@@ -1,7 +1,7 @@
 {
   "type": "module",
   "private": true,
-  "license": "All Rights Reserved",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "fixCMView": "sed -i -e 's/1e3\\/2/1e5\\/2/g' src/.observablehq/cache/_npm/@codemirror/view@6.34.1/_esm.js",
     "clean": "rimraf docs/.observablehq/cache",
