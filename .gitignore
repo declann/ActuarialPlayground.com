@@ -1,4 +1,5 @@
 android
+.license-cache
 .DS_Store
 dist/
 src/.observablehq*/cache/
